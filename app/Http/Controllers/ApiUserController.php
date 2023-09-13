@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-require 'C:\\xampp\\htdocs\\SportsApp\\vendor\\autoload.php';
 
 use app;
 use App\Models\ApiUser;
