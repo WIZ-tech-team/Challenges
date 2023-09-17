@@ -80,6 +80,9 @@ class TimeUserController extends Controller
         $timeUser->team_id = $teamid;
         $timeUser->user_id =  $Auth_id;
         $timeUser->UserStartTime = $startTime;
+        $challenge->status = 'started';
+        $challenge->save();
+        
         $timeUser->save();
         return response()->json(
           ['message' =>  'start time added successfully',

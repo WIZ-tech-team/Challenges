@@ -58,8 +58,9 @@ class ChallengeResultController extends Controller
         ->whereNotNull('result_data')
         ->whereNotNull('opponent_result')
         ->first();
-           
+         // status->started 
         $existingResult = ChallengeResult::where('challenge_id', $challenge->id)
+        ->where($challenge->status,'started')
         ->where('team_id', $teamid)
         ->when($userIds1, function ($query) use ($userIds1) {
             return $query->where('user_id', $userIds1);
