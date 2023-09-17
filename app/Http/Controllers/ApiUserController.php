@@ -219,8 +219,10 @@ class ApiUserController extends Controller
     //             ]);
     //         }
     $firebase_uid=$request->uid;
+    $fcmToken =$request->fcm_token;
     $user = ApiUser::where('firebase_uid', $firebase_uid)->first();
-            $apiToken = Str::random(60); 
+            $apiToken        = Str::random(60); 
+            $user->fcm_token = $fcmToken;
             $user->api_token = $apiToken;
             $user->save();
 
@@ -476,11 +478,32 @@ public function contactTest(Request $request ){
         ], Response::HTTP_BAD_REQUEST);
     }
       
-     $user  = Auth::guard('api')->user();
-     $phonesInput = $request->post('phones'); 
-     $phones = explode(',', $phonesInput);
-     $previousContacts = json_decode($user->contacts, true);
-     $phones = array_merge($previousContacts, $phones);
+    $user  = Auth::guard('api')->user();
+    $phonesInput = $request->post('phones'); 
+    $phones = explode(',', $phonesInput);
+  //  $previousContacts = json_decode($user->contacts, true);
+   // $phones = array_merge($previousContacts, $phones);
+   
+ if ($user->contacts !== null ) {
+       $phones = explode(',', $phonesInput);
+       $previousContacts = json_decode($user->contacts, true);
+       $phones = array_merge($previousContacts, $phones);
+       $user->contacts = $phones;
+       $user->save();
+       return response()->json([
+        'message'=>'Contact updated successfully',
+        
+        'status'=>Response::HTTP_OK,]);
+   }else{
+ $user->contacts = $phones;
+       $user->save();
+
+
+
+return response()->json([
+ 'message'=>'Contact added successfully',
+ 
+ 'status'=>Response::HTTP_OK,]);}
     
    //  $serviceAccount = ServiceAccount::fromValue(public_path('treeme-chat-firebase-adminsdk-w20bj-0ea0723bc2.json'));
     //  $firebase = (new Factory)
@@ -491,16 +514,12 @@ public function contactTest(Request $request ){
     //  $userDocument = $usersCollection->document($user->firebase_uid);
     //  $userDocument->update([
     //    ['path' => 'contact', 'value' => $phones],]);
-     $user->contacts= $phones ;
-     $user->save();
+    
   
  
 
 
-return response()->json([
-  'message'=>'Contact added successfully',
-  
-  'status'=>Response::HTTP_OK,]);
+
    
 }
 

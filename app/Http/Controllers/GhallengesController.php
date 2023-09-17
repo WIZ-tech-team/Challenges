@@ -44,7 +44,7 @@ class GhallengesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$teamID)
-    {   $validator = Validator::make($request->all(),[
+    {   $validator    = Validator::make($request->all(),[
         'title'       => ['required', 'string', 'max:255'],
         'category_id' => ['required', 'string', 'max:255'],
         'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
@@ -68,7 +68,17 @@ class GhallengesController extends Controller
         $team = Team::where('firebase_document',$teamID)->first();
         $teamID1= $team->id;
         $usersTeam = ApiUser::where('team_id', $teamID1)->first();
+        $leader = Auth::guard('api')->user();
+        if(!$leader){
+            return response()->json([
+                'message'=>'user not found'
+            ]);
+        }
+        $id = $leader->id;
+        $leaderTeam = $leader->team_id;
+        if( $userTeam == $teamID1 && $leader->type =='leader'){
 
+       
         $refree = $usersTeam->pluck('firebase_uid')->toArray();
     
         $RefreeId = $request->post('refree_id');
@@ -94,7 +104,12 @@ class GhallengesController extends Controller
         $date       = $request->post('date') ;
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
-       
+        if ($opponent_id == $teamID) {
+            return response()->json([
+                'message' => 'Opponent cannot be the same as your team',
+                'status' => Response::HTTP_BAD_REQUEST,
+            ]);
+        }
        
         $challenge = new Challenge();
         $challenge->title =$title ;
@@ -171,17 +186,28 @@ class GhallengesController extends Controller
             'document_id'=>$challengeRef->id(),
             'challenge_name'=>$categoryExists->name,
             'status' => Response::HTTP_OK,
-        ]);
-      
+        ]);}else {
+            return response()->json([
+                'message' => 'Only team leader can add challenges to this team',
+           ]);
+        }
     }
+   
+//     public function start(Request $request,$challengeID){
+//         $user =Auth::guard('api')->user();
+//         $userId = $user->id;
+//         $challenge = Challenge::find($challengeID);
+//         if($challenge->category_id == 2 && $challenge->team_id == $user->team_id )
+//         {$action = $request->action;
+//         $challenge->status = 'started';
+//          $challenge->save();
+// }else{
+//     return response()->json([
+//         'challenge category must be running'
+//     ]);
+// }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
+//     }
     
     public function show(Request $request)
     {   
