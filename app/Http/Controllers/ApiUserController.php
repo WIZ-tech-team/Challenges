@@ -221,6 +221,12 @@ class ApiUserController extends Controller
     $firebase_uid=$request->uid;
     $fcmToken =$request->fcm_token;
     $user = ApiUser::where('firebase_uid', $firebase_uid)->first();
+    if (!$user) {
+                    return response()->json([
+                        'message' => 'User not found',
+                        'status'  => Response::HTTP_NOT_FOUND,
+                    ]);
+                }
             $apiToken        = Str::random(60); 
             $user->fcm_token = $fcmToken;
             $user->api_token = $apiToken;
@@ -561,4 +567,22 @@ foreach ($finalMatchedUsers as $user) {
     ]);
 
     }
+public function refreshToken(Request $request){
+    $user = Auth::guard('api')->user();
+    if (!$user) {
+        return response()->json([
+            'message' => 'User not found.',
+            'status'  =>Response::HTTP_NOT_FOUND,
+        ]);
+    }
+    $fcmToken = $request->input('fcm_token');
+    $user->fcm_token = $fcmToken ;
+    $user->save();
+    return response()->json([
+        'message' => 'fcm token refreshed',
+        'status'  => Response::HTTP_OK,
+    ]);
+}
+
+
 }
