@@ -36,7 +36,7 @@ Route::post('/updateUser/{id}', [ApiUserController::class,'update']);
 Route::get('/getUsers/{token}', [ApiUserController::class,'getAllUsers']);
 Route::get('/search'           ,[ApiUserController::class,'search']);
 Route::get('/AllUsers'           ,[ApiUserController::class,'show']);
-
+Route::post('/refreshToken'           ,[ApiUserController::class,'refreshToken']);
 /***CHAT_PEERS */
 Route::post('/createChatPreer', [ChatPeerController::class,'store']);
 /*Categories*/
