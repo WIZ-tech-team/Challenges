@@ -97,7 +97,7 @@ class TeamController extends Controller
        ->get();
    
         $usersWithTeam = ApiUser::whereIn('firebase_uid', $usersArray)
-        ->whereNotNull('team_id')
+       
         ->get();
 
         if ($usersWithTeam->isNotEmpty()) {
@@ -110,11 +110,13 @@ class TeamController extends Controller
                 ];
             });
         
+
            /* return response()->json([
                 'message' => 'Selected users already have a team',
                 'users_with_team' => $usersWithTeamData,
                 'status' => Response::HTTP_BAD_REQUEST
             ]);*/
+
         }
 
     

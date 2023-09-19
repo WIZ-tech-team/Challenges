@@ -467,7 +467,7 @@ $user->save();
  
 public function contactTest(Request $request ){
     $validator = Validator::make($request->all(),[
-  //  $validator = $request->validate(  [
+ 
 
         'phones'=> 'required',
    
@@ -485,31 +485,31 @@ public function contactTest(Request $request ){
     }
       
     $user  = Auth::guard('api')->user();
-    $phonesInput = $request->post('phones'); 
-    $phones = explode(',', $phonesInput);
-  //  $previousContacts = json_decode($user->contacts, true);
-   // $phones = array_merge($previousContacts, $phones);
+    $phonesInput = $request->post('phones');
+    $phonesToAdd = explode(',', $phonesInput);
    
- if ($user->contacts !== null ) {
-       $phones = explode(',', $phonesInput);
-       $previousContacts = json_decode($user->contacts, true);
-       $phones = array_merge($previousContacts, $phones);
-       $user->contacts = $phones;
-       $user->save();
-       return response()->json([
-        'message'=>'Contact updated successfully',
-        
-        'status'=>Response::HTTP_OK,]);
-   }else{
- $user->contacts = $phones;
-       $user->save();
+   if ($user->contacts !== null) {
+    $previousContacts = json_decode($user->contacts, true);
 
+    $existingContacts = array_intersect($phonesToAdd, $previousContacts);
 
+    $phonesToAdd = array_diff($phonesToAdd, $previousContacts);
+
+   
+    $newContacts = array_merge($previousContacts, $phonesToAdd);
+    $user->contacts = $newContacts;
+} else {
+    $user->contacts = $phonesToAdd;
+    $existingContacts = [];
+}
+
+$user->save();
 
 return response()->json([
- 'message'=>'Contact added successfully',
- 
- 'status'=>Response::HTTP_OK,]);}
+    'message' => 'Contacts updated successfully',
+    'existing_contacts' => $existingContacts,
+    'status' => Response::HTTP_OK,
+]);}
     
    //  $serviceAccount = ServiceAccount::fromValue(public_path('treeme-chat-firebase-adminsdk-w20bj-0ea0723bc2.json'));
     //  $firebase = (new Factory)
@@ -527,7 +527,6 @@ return response()->json([
 
 
    
-}
 
 public function search(Request $request)
 {  

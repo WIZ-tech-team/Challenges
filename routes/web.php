@@ -40,21 +40,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile',  [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/createCategory',   [CategoryController::class, 'index'])->name('createCategory');
-Route::post('/createCategory',  [CategoryController::class, 'store'])->name('createCategory');
+Route::get('/createCategory',   [CategoryController::class, 'index'])->middleware('auth')->name('createCategory');
+Route::post('/createCategory',  [CategoryController::class, 'store'])->middleware('auth')->name('createCategory');
 Route::get('/editCategory/{id}',  [CategoryController::class, 'edit'])->name('editCategory');
 
-Route::post('/updateCategory/{id}',  [CategoryController::class, 'update'])->name('updateCategory');
-Route::get('/createPost',       [PostController::class, 'index'])->name('createPost');
-Route::post('/createPost',      [PostController::class, 'store'])->name('createPost');
-Route::get('/createChallenge',  [PublicChallengeController::class, 'index'])->name('createChallenge');
-Route::post('/createChallenge', [PublicChallengeController::class, 'store'])->name('createChallenge');
+Route::post('/updateCategory/{id}',  [CategoryController::class, 'update'])->name('updateCategory')->middleware('auth');
+Route::get('/createPost',       [PostController::class, 'index'])->name('createPost')->middleware('auth');
+Route::post('/createPost',      [PostController::class, 'store'])->name('createPost')->middleware('auth');
+Route::get('/createChallenge',  [PublicChallengeController::class, 'index'])->name('createChallenge')->middleware('auth');
+Route::post('/createChallenge', [PublicChallengeController::class, 'store'])->name('createChallenge')->middleware('auth');
 
-Route::get('/createHealthPlace',  [HealthPlacesController::class, 'index'])->name('createHealthPlace');
-Route::post('/createHealthPlace', [HealthPlacesController::class, 'store'])->name('createHealthPlace');
-Route::get('/readHealthyPlaces',  [HealthPlacesController::class, 'create'])->name('readHealthyPlaces');
-Route::delete('/deleteHealthPlace/{id}',[ HealthPlacesController::class,'destroy'])->name('deleteHealthPlace');
-Route::get('/readPost',  [PostController::class, 'create'])->name('readPosxt');
-Route::delete('/deletePost/{id}',[ PostController::class,'destroy'])->name('deletePost');
+Route::get('/createHealthPlace',  [HealthPlacesController::class, 'index'])->name('createHealthPlace')->middleware('auth');
+Route::post('/createHealthPlace', [HealthPlacesController::class, 'store'])->name('createHealthPlace')->middleware('auth');
+Route::get('/readHealthyPlaces',  [HealthPlacesController::class, 'create'])->name('readHealthyPlaces')->middleware('auth');
+Route::delete('/deleteHealthPlace/{id}',[ HealthPlacesController::class,'destroy'])->name('deleteHealthPlace')->middleware('auth');
+Route::get('/readPost',  [PostController::class, 'create'])->name('readPost')->middleware('auth');
+Route::delete('/deletePost/{id}',[ PostController::class,'destroy'])->name('deletePost')->middleware('auth');
 
 require __DIR__.'/auth.php';

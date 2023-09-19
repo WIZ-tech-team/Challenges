@@ -104,8 +104,7 @@ else {
 }
        
     }else{
-       
-     
+    
             return response()->json(
                 ['message' =>  'challenge category not running',
                 
