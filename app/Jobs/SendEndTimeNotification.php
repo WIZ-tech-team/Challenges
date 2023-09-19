@@ -30,9 +30,35 @@ class SendEndTimeNotification implements ShouldQueue
         $currentTime = Carbon::now($timezone);
      
         
+        $challengesToStart = Challenge::where('start_time', '=', $currentTime)
+        ->where('category_id',1)
+        ->where('status', 'created') // Change this to match your criteria
+        ->get();
+
+    foreach ($challengesToStart as $challenge) {
+        $challengeId = $challenge->id;
+
+        $challenge->status = 'started';
+        $challenge->save();
+        $teamUsers = DB::table('challenges')
+        ->join('api_users', 'challenges.team_id', '=', 'api_users.team_id')
+        ->where('challenges.id', $challengeId)
+        ->select('api_users.*')
+        ->get();
+        foreach ($teamUsers as $user) {
+            $addNotificationData = [
+                'title' => 'Challenge Reminder',
+                'body' => 'Football challenge "' . $challenge->title . '" has started.',
+                'click_action' => 'OPEN_CHAT',
+                'id' => $challenge->id,
+            ];
+            $addNotificationPayload = [
+                'to' => $user->fcm_token,
+                'notification' => $addNotificationData,];
+    }}
+
 
         $challenges = Challenge::where('end_time', '<=', $currentTime)
-        ->where('category_id', 2)
         ->where('status','started')
         ->get();
         
@@ -45,21 +71,34 @@ class SendEndTimeNotification implements ShouldQueue
                 ->where('challenges.id', $challengeId)
                 ->select('api_users.*')
                 ->get();
+
                 $challenge->status = 'ended';
                 $challenge->save();
             foreach ($teamUsers as $user) {
-                
+                if ($challenge->category_id == 2){
                 $addNotificationData = [
                     'title' => 'Challenge Reminder',
-                    'body' => 'Your team\'s challenge "' . $challenge->title . '" has ended.',
+                    'body' => 'Running challenge "' . $challenge->title . '" has ended.',
                     'click_action' => 'OPEN_CHAT',
                     'id' => $challenge->id,
                 ];
-        
                 $addNotificationPayload = [
                     'to' => $user->fcm_token,
-                    'notification' => $addNotificationData,
-                ];
+                    'notification' => $addNotificationData,];
+                }elseif($challenge->category_id == 1){
+                    $addNotificationData = [
+                        'title' => 'Challenge Reminder',
+                        'body' => 'Football challenge "' . $challenge->title . '" has ended.',
+                        'click_action' => 'OPEN_CHAT',
+                        'id' => $challenge->id,
+                    ];
+                    $addNotificationPayload = [
+                        'to' => $user->fcm_token,
+                        'notification' => $addNotificationData,];
+                }
+        
+               
+              
         
             }}
     }
