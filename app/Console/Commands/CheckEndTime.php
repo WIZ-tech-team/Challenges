@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Jobs\SendEndTimeNotification;
 
+
 class CheckEndTime extends Command
 {
     /**
@@ -29,6 +30,8 @@ class CheckEndTime extends Command
     public function handle()
     {
         dispatch(new SendEndTimeNotification()); 
+       
+
        
     }
 }

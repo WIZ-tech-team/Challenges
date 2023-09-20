@@ -93,7 +93,7 @@ class TeamController extends Controller
       // $usersArray = array_map('intval', $usersArray);
        $usersArray[] = $userAuth->firebase_uid;//add auth user to users array
        $usersToinvite = ApiUser::whereIn('firebase_uid', $usersArray1)
-       ->whereNull('team_id')
+       //->whereNull('team_id')
        ->get();
    
         $usersWithTeam = ApiUser::whereIn('firebase_uid', $usersArray)
@@ -110,7 +110,13 @@ class TeamController extends Controller
                 ];
             });
         
-          
+
+           /* return response()->json([
+                'message' => 'Selected users already have a team',
+                'users_with_team' => $usersWithTeamData,
+                'status' => Response::HTTP_BAD_REQUEST
+            ]);*/
+
         }
 
     
