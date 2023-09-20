@@ -11,7 +11,7 @@
 </head>
 <style>.success-message {
     background-color: #F5F6FA; /* Green background color */
-    color: #78829D; /* White text color */
+    color:green; /* White text color */
     padding: 10px 20px; /* Padding around the message */
     border-radius: 5px; /* Rounded corners */
     margin: 10px; /* Space from the content above */
@@ -32,7 +32,9 @@
   <input type="text"  name="longitude"   placeholder="Challenge longitude"  class="form-control  @error('longitude') is-invalid @enderror" >  <p class ="invalid-feedback ">@error('longitude')  {{ $message }} @enderror </p><br>
   <input type="text"  name="start_time"  placeholder="Challenge start_time" class="form-control  @error('start_time') is-invalid @enderror" > <p class ="invalid-feedback ">@error('start_time') {{ $message }} @enderror </p><br>
   <input type="text"  name="end_time"    placeholder="Challenge end_time"   class="form-control  @error('end_time') is-invalid @enderror" >   <p class ="invalid-feedback ">@error('end_time')   {{ $message }} @enderror </p><br>
+  <input type="text"  name="winner_points"    placeholder="Challenge winner_points"   class="form-control  @error('winner_points') is-invalid @enderror" >   <p class ="invalid-feedback ">@error('winner_points')   {{ $message }} @enderror </p><br>
 
+  
  
   <select name="category_id" class="form-control"class="btn btn-light dropdown-toggle" data-toggle="dropdown"  id="category_id">
   <option value="">Select Category</option>

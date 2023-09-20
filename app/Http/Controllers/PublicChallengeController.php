@@ -54,7 +54,7 @@ class PublicChallengeController extends Controller
            
             'category_id' => 'required',
             'image'       => 'required|image|mimes:png,jpg|max:2048',
-         
+            'winner_points' => 'required',
            
         ]);
         $title       = $request->post('title');
@@ -71,6 +71,7 @@ class PublicChallengeController extends Controller
         $team_id     = $request->post('team_id');
         $prize       = $request->post('prize');
         $image       = $request->post('image');
+        $points      = $request->post('winner_points');
         $users       = $request->post('users_id',[]);
       
         if($users == []){
@@ -94,6 +95,7 @@ class PublicChallengeController extends Controller
         $challenge->stepsNum    = $stepsNum;
         $challenge->prize       = $prize;
         $challenge->image       = $image; 
+        $challenge->winner_points       = $points;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $challenge['image'] = $file->store('/images' , 'public');}
@@ -172,21 +174,52 @@ class PublicChallengeController extends Controller
           $user = ApiUser::where('firebase_uid', $firebaseUid)->first();
           if ($user) {
             $usersRel[] = $user->id;
-    }
+            $user->points +=2;
+            $user->save();
+           
+    } elseif(!$user){
+        $notFoundUsers[] = $firebaseUid;
+                return response()->json(['message' => 'User not found.','data'=>  $notFoundUsers,'status'=>Response::HTTP_NOT_FOUND]);
+
+            }
 }
        if ($category == 1) {
+        if (!$teamF) {
+            return response()->json(['message' => 'Team not found.','status'=> Response::HTTP_NOT_FOUND]);
+        }
+        if(!$opponentF){
+            return response()->json(['message' => 'Opponent Team not found.','status'=> Response::HTTP_NOT_FOUND]);
+
+        }
         $challenge->team_id = $teamF->id;
         $challenge->opponent_id = $opponentF->id;
         $challenge->save();
         
         $challenge->users()->detach();
+        if ($teamF) {
+            $usersInTeam = ApiUser::where('team_id', $teamF->id)->get();
+            
+            foreach ($usersInTeam as $user) {
+                $user->points += 2;
+                $user->save();
+            }
+        }
+        if ($opponentF) {
+            $usersInTeam = ApiUser::where('team_id', $teamF->id)->get();
+            
+            foreach ($usersInTeam as $user) {
+                $user->points += 2;
+                $user->save();
+            }
+        }
+       
     }   elseif ($category == 2) {
         
         $challenge->team_id = null;
         $challenge->opponent_id = null;
         $challenge->save();
-      
         $challenge->users()->sync($usersRel);
+       
     }
     return response()->json([
         'message' => 'Challenge updated successfully',

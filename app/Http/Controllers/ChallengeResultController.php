@@ -48,29 +48,38 @@ class ChallengeResultController extends Controller
     $team1 = Team::find($team);
     $teamid = $team1->id;
     $AuthUser = Auth::guard('api')->user();
+    if(!$AuthUser){
+        return response()->json([
+            'message'=>'user not found',
+            'status' => Response::HTTP_NOT_FOUND,
+        ]);
+    }
     $Auth_id =$AuthUser->id;
     $result = $request->post('football_result_data');
     $opponentResult = $request->post('opponent_result');
 
     // Check if a record with the same challenge_id, team_id, and user_id (if applicable) already exists
     $existingResult1 = ChallengeResult::where('challenge_id', $challenge->id)
-    ->where($challenge->status,'ended')
+    //->where($challenge->status,'ended')
         ->where('team_id', $teamid)
         ->whereNotNull('result_data')
         ->whereNotNull('opponent_result')
         ->first();
 
         $existingResult = ChallengeResult::where('challenge_id', $challenge->id)
-        ->where($challenge->status,'started')
+       // ->where($challenge->status,'started')
         ->where('team_id', $teamid)
         ->when($userIds1, function ($query) use ($userIds1) {
             return $query->where('user_id', $userIds1);
         })
         ->first();
         
-    if ($challenge->category_id == 1 ) {
-        if ($challenge->team_id === $teamid  && $AuthUser->team_id === $teamid &&$AuthUser->type === 'leader') {
-            if ($existingResult1) {
+        if ($challenge->category_id == 1 && $challenge->status != 'ended') {
+            // Check if the challenge is not ended
+            return response()->json(['message' => 'Football Challenge is not ended yet', 'status' => Response::HTTP_BAD_REQUEST]);
+          } elseif ($challenge->category_id == 1 ) {
+            if ($challenge->team_id === $teamid && $AuthUser->team_id === $teamid &&$AuthUser->type === 'leader') {
+                if ($existingResult1) {
                 // Update the existing record
                 $existingResult1->result_data = $result;
                 $existingResult1->opponent_result = $opponentResult;
@@ -92,7 +101,9 @@ class ChallengeResultController extends Controller
             // Either the provided team is not related to the challenge or the category is not football
             return response()->json(['message' => 'Invalid team or leader for the challenge', 'status' => Response::HTTP_BAD_REQUEST]);
         }
-    } elseif ($challenge->category_id == 2  && $challenge->status ==='started'  && $userIds->team_id === $teamid ) {
+    } elseif ($challenge->category_id == 2 && $challenge->status != 'started') {
+        return response()->json(['message' => 'You cannot enter any result of this running challenge ', 'status' => Response::HTTP_BAD_REQUEST]);
+      } elseif ($challenge->category_id == 2  && $challenge->status ==='started'  && $userIds->team_id === $teamid ) {
         $userIds = $request->input('user_id');
         $resultDataArray = $request->input('result_data');
 

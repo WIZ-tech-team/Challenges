@@ -45,8 +45,8 @@ class HealthPlacesController extends Controller
         'name'        => 'required',
         'address'     => 'required',
         'image'       => 'required|image|mimes:png,jpg|max:2048',
-        'longitude'   => 'required',
-        'latitude'    => 'required',
+        'latitude'    => ['required', 'numeric', 'max:255'],
+        'longitude'   => ['required', 'max:255'],
 
        
     ]);

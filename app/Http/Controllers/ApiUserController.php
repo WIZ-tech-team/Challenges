@@ -326,7 +326,27 @@ class ApiUserController extends Controller
     {
         //
     }
-
+    public function Points(User $user)
+    {
+        // Get the user's team_id
+        $teamId = $user->team_id;
+    
+        $challengesCount = Challenge::where('team_id', $teamId)
+            ->whereHas('users', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->count();
+    
+        // Calculate field points based on your logic, for example:
+        $fieldPoints = $challengesCount * 10; // You can adjust this formula as needed
+    
+        return $fieldPoints;
+          
+    // Example usage:
+    $user = User::find(1); // Replace with the user you want to calculate field points for
+    $fieldPoints = calculateFieldPoints($user);
+    }
+  
     /**
      * Update the specified resource in storage.
      *
@@ -485,6 +505,12 @@ public function contactTest(Request $request ){
     }
       
     $user  = Auth::guard('api')->user();
+    if (!$user) {
+        return response()->json([
+            'message' => 'User not found.',
+            'status'  =>Response::HTTP_NOT_FOUND,
+        ]);
+    }
     $phonesInput = $request->post('phones');
     $phonesToAdd = explode(',', $phonesInput);
    

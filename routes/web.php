@@ -39,7 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile',   [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile',  [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+Route::get('/readUser', function () {
+    return view('readUser');
+});
 Route::get('/createCategory',   [CategoryController::class, 'index'])->middleware('auth')->name('createCategory');
 Route::post('/createCategory',  [CategoryController::class, 'store'])->middleware('auth')->name('createCategory');
 Route::get('/editCategory/{id}',  [CategoryController::class, 'edit'])->name('editCategory');

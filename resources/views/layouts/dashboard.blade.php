@@ -240,7 +240,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/pages/user-profile/overview.html">
+											<a class="menu-link" href="/readUser">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>

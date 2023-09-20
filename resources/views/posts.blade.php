@@ -3,7 +3,7 @@
 @section('content')
 <style>.success-message {
     background-color: #F5F6FA; /* Green background color */
-    color: #78829D; /* White text color */
+    color: green; /* White text color */
     padding: 10px 20px; /* Padding around the message */
     border-radius: 5px; /* Rounded corners */
     margin: 10px; /* Space from the content above */

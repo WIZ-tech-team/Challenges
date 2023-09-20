@@ -20,7 +20,7 @@
 <input type= "hidden" name="_method"  value = "delete">
 @csrf
 
-  <h1>Health Places</h1>
+  <h1>Blog Posts</h1>
   <table class="table">
   <thead class="p-3 mb-2 bg-light text-dark"> 
       <tr>

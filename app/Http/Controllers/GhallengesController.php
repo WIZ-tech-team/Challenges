@@ -67,7 +67,13 @@ class GhallengesController extends Controller
         
         $team = Team::where('firebase_document',$teamID)->first();
         $teamID1= $team->id;
-        $usersTeam = ApiUser::where('team_id', $teamID1)->first();
+       
+        $usersTeam = ApiUser::where('team_id', $teamID1)->get();
+        
+      foreach ($usersTeam as $user) {
+         $user->points  += 2;
+         $user->save();
+                                   }
         $leader = Auth::guard('api')->user();
         if(!$leader){
             return response()->json([
@@ -76,19 +82,10 @@ class GhallengesController extends Controller
         }
         $id = $leader->id;
         $leaderTeam = $leader->team_id;
-        if( $userTeam == $teamID1 && $leader->type =='leader'){
+        if( $leaderTeam == $teamID1 && $leader->type =='leader'){
 
        
-        $refree = $usersTeam->pluck('firebase_uid')->toArray();
-    
-        $RefreeId = $request->post('refree_id');
-        $refree_firebase= ApiUser::where('firebase_uid',$RefreeId)->first();
-
-        // Check if the provided refree_id is in the list of valid referee IDs
-        if (!in_array($RefreeId, $refree)) {
-            return response()->json(['message' => 'Invalid refree added',
-            'status'=>Response::HTTP_BAD_REQUEST] );
-        }
+        
         $category= $request->post('category_id');
     
         $categoryExists = Category::where('id',  $category)->first();
@@ -104,6 +101,11 @@ class GhallengesController extends Controller
         $date       = $request->post('date') ;
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
+        if (!$opponent_firebase) {
+            return response()->json([
+                'message' => 'Opponent not found',
+                'status' => Response::HTTP_NOT_FOUND,
+            ]);}
         if ($opponent_id == $teamID) {
             return response()->json([
                 'message' => 'Opponent cannot be the same as your team',
@@ -124,6 +126,16 @@ class GhallengesController extends Controller
        
 
         if ($category == 1) {
+            $refree = $usersTeam->pluck('firebase_uid')->toArray();
+    
+        $RefreeId = $request->post('refree_id');
+        $refree_firebase= ApiUser::where('firebase_uid',$RefreeId)->first();
+
+        // Check if the provided refree_id is in the list of valid referee IDs
+        if (!in_array($RefreeId, $refree)) {
+            return response()->json(['message' => 'Invalid refree added',
+            'status'=>Response::HTTP_BAD_REQUEST] );
+        }
             $challenge->refree_id = $refree_firebase->id;
             $challenge->opponent_id= $opponent_firebase->id;
 
@@ -256,10 +268,8 @@ class GhallengesController extends Controller
     return response()->json([
         'message' => 'User profile here',
         'user_data' => [
-            'name' => $user->name,
-            'avatar' => $user->avatar,
-            'points' => $user->points,
-            'uid' => $user->firebase_uid,
+           $user
+
         ],
         'challenges' => $mergedChallenges,
         'status' => Response::HTTP_OK,
