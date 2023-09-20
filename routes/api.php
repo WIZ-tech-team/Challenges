@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register',        [ApiUserController::class,'store'])->middleware('api');
 Route::post('/login',           [ApiUserController::class,'login'])->middleware('api');
 Route::post('/updateUser/{id}', [ApiUserController::class,'update']);
-Route::get('/getUsers/{token}', [ApiUserController::class,'getAllUsers']);
+Route::get('/getUser', [ApiUserController::class,'getAllUsers']);
 Route::get('/search'           ,[ApiUserController::class,'search']);
 Route::get('/AllUsers'           ,[ApiUserController::class,'show']);
 Route::post('/refreshToken'           ,[ApiUserController::class,'refreshToken']);

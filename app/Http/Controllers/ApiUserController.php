@@ -435,17 +435,21 @@ $user->save();
             ]);
     }
 
-    public function getAllUsers($token){
-      $firebaseAuth = app(AuthFirebase::class);
-      $user         = $firebaseAuth->getUser($token);
-      $apiUser      = ApiUser::where('firebase_uid',$token)->first();
-    
+    public function getAllUsers(){
+        $user    = Auth::guard('api')->user();
+         if (!$user) {
+            return response()->json([
+                'message' => 'User not found.',
+                'status'  =>Response::HTTP_NOT_FOUND,
+            ]);
+        }
+      $q=$user->load('team');
       return response()->json([
-        'user_data' =>['name'=>$apiUser->name,
-                      'avatar'=>$apiUser->avatar, 
-                      'points'=>$apiUser->points] ,
-        'challenges'=>'challenges'       ,   
-      ]);
+        'message' => 'User profile here',
+        'user_data' => $q,
+       
+        'status' => Response::HTTP_OK,
+    ], 200);
     }    
     
     

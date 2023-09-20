@@ -239,6 +239,8 @@ class GhallengesController extends Controller
                 'status'  =>Response::HTTP_NOT_FOUND,
             ]);
         }
+      $q=$user->load('team');
+       
         $userId = $user->id;
         $teamId = $user->team_id;
         $challenges = Challenge::with(['category', 'team'])
@@ -267,10 +269,7 @@ class GhallengesController extends Controller
     
     return response()->json([
         'message' => 'User profile here',
-        'user_data' => [
-           $user
-
-        ],
+        'user_data' => $q,
         'challenges' => $mergedChallenges,
         'status' => Response::HTTP_OK,
     ], 200);
