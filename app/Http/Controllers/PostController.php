@@ -72,6 +72,22 @@ class PostController extends Controller
              ]);
 
     }
+
+    public function search(Request $request)
+    {
+        $query = Post::query();
+    
+        $filter = $request->input('filter');
+        $searchQuery = $request->input('query');
+    
+        if ($filter && $searchQuery) {
+            $query->where($filter, 'like', "%$searchQuery%");
+        }
+    
+        $blogPosts = $query->get();
+    
+        return view('readPost', ['post' => $blogPosts]);
+    }
     /**
      * Display the specified resource.
      *

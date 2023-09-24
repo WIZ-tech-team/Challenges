@@ -70,6 +70,23 @@ class HealthPlacesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+     public function search(Request $request)
+{
+    $query = HealthPlace::query();
+
+    $filter = $request->input('filter');
+    $searchQuery = $request->input('query');
+
+    if ($filter && $searchQuery) {
+        $query->where($filter, 'like', "%$searchQuery%");
+    }
+
+    $healthPlaces = $query->get();
+
+    return view('readHealthyPlaces', ['health' => $healthPlaces]);
+}
     public function show($id)
     {
         //

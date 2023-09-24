@@ -16,14 +16,38 @@
 }
 </style>
 <body>
+
+
+  <h1>Health Places</h1>
+  <div class="mb-3">
+    <form action="{{ route('searchHealthPlaces') }}" method="GET" class="form-inline">
+  
+    <div class = "row">
+        <div class="col-4">
+    <div class="form-group">
+            <select name="filter" class="form-control">
+                <option value="name">Search by name</option>
+                <option value="address">Search by address</option>
+                <option value="latitude">Search by latitude</option>
+                <option value="latitude">Search by longitude</option>
+            </select>
+        </div></div>
+        <div class="col-6">
+        <div class="form-group">
+            <input type="text" name="query" class="form-control" placeholder="Enter your search query">
+        </div></div>
+        <div class="col-2">
+        <button type="submit" class="btn btn-primary">Search</button>
+        </div></div>
+    </form>
+</div>
+<br>
 <form action="" method ="post" >
 <input type= "hidden" name="_method"  value = "delete">
 @csrf
-
-  <h1>Health Places</h1>
   <table class="table">
   <thead class="p-3 mb-2 bg-light text-dark"> 
-      <tr>
+      <tr style="font-size:15px; font-weight:bold;">
         <th>Name</th>
         <th>Longitude</th>
         <th>Latitude</th>

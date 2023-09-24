@@ -17,16 +17,15 @@
 </style>
 
 <body>
-<h1>Blog Posts</h1>
+<h1>Categories</h1>
   <div class="mb-3">
-    <form action="{{ route('searchPosts') }}" method="GET" class="form-inline">
+    <form action="{{ route('searchCat') }}" method="GET" class="form-inline">
   
     <div class = "row">
         <div class="col-4">
     <div class="form-group">
             <select name="filter" class="form-control">
-                <option value="title">Search by title</option>
-                <option value="descreption">Search by description</option>
+                <option value="name">Search by title</option>
               
             </select>
         </div></div>
@@ -56,20 +55,16 @@
      </tr>
   </thead>
       <tbody>
-    @foreach ($post as $place)
+    @foreach ($category as $category)
         <tr>
-            <td>{{ $place->title }}</td>
-            <td>{{ $place->descreption }}</td>
+            <td>{{ $category->name }}</td>
+            <td>{{ $category->image }}</td>
          
-            <td><img src="{{ asset('storage/' . $place->image) }}" alt="{{ $place->name }}" width="100"></td>
-            <td><input type="submit"  class="btn btn-danger" formaction="{{ route('deletePost', ['id' => $place->id]) }}"  value="Delete"></td>
+            <td><img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" width="100"></td>
+            <td><input type="submit"  class="btn btn-danger" formaction="{{ route('deleteCategory', ['id' => $category->id]) }}"  value="Delete"></td>
            
               
-      <!-- <td>  <form action="{{ route('deleteHealthPlace', ['id' => $place->id]) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger"  onclick="confirmDelete('{{ $place->id }}')">Delete</button>
-            </form></td> -->
+
         </tr>
     @endforeach
     

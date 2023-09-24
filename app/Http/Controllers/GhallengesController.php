@@ -101,17 +101,7 @@ class GhallengesController extends Controller
         $date       = $request->post('date') ;
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
-        if (!$opponent_firebase) {
-            return response()->json([
-                'message' => 'Opponent not found',
-                'status' => Response::HTTP_NOT_FOUND,
-            ]);}
-        if ($opponent_id == $teamID) {
-            return response()->json([
-                'message' => 'Opponent cannot be the same as your team',
-                'status' => Response::HTTP_BAD_REQUEST,
-            ]);
-        }
+       
        
         $challenge = new Challenge();
         $challenge->title =$title ;
@@ -126,7 +116,18 @@ class GhallengesController extends Controller
        
 
         if ($category == 1) {
-            $refree = $usersTeam->pluck('firebase_uid')->toArray();
+            if (!$opponent_firebase) {
+                return response()->json([
+                    'message' => 'Opponent not found',
+                    'status' => Response::HTTP_NOT_FOUND,
+                ]);}
+            if ($opponent_id == $teamID) {
+                return response()->json([
+                    'message' => 'Opponent cannot be the same as your team',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ]);
+            }
+        $refree = $usersTeam->pluck('firebase_uid')->toArray();
     
         $RefreeId = $request->post('refree_id');
         $refree_firebase= ApiUser::where('firebase_uid',$RefreeId)->first();

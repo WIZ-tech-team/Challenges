@@ -24,8 +24,11 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {    $cat = Category::all();
+        return view('readCategories',[
+           'category'=> $cat ,
+        ]);
+
     }
 
     /**
@@ -64,6 +67,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     public function search(Request $request)
+     {
+         $query = Category::query();
+     
+         $filter = $request->input('filter');
+         $searchQuery = $request->input('query');
+     
+         if ($filter && $searchQuery) {
+             $query->where($filter, 'like', "%$searchQuery%");
+         }
+     
+         $healthPlaces = $query->get();
+     
+         return view('readCategories', ['category' => $healthPlaces]);
+     }
     public function show($id)
     {
      

@@ -447,7 +447,6 @@ $user->save();
       return response()->json([
         'message' => 'User profile here',
         'user_data' => $q,
-       
         'status' => Response::HTTP_OK,
     ], 200);
     }    

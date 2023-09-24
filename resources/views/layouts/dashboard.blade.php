@@ -107,6 +107,16 @@
 									</a>
 									<!--end:Menu link-->
 								</div>
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="/readCategory">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Show Categories</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
 								<!--end:Menu item--></div></div>
 
 
@@ -139,6 +149,16 @@
 												</span>
 												<span class="menu-title">Create Challenge</span>
 											</a>
+											<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="/readChallenges">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Show Challenges</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item--></div></div>

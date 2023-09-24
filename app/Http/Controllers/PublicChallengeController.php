@@ -32,7 +32,11 @@ class PublicChallengeController extends Controller
      */
     public function create()
     {
-        //
+        $Challenge = Challenge::where('type','public')->get();
+        return view ('readChallenges',[
+            'Challenge'=> $Challenge,
+        ]
+    );   
     }
 
     /**
@@ -124,6 +128,21 @@ class PublicChallengeController extends Controller
     
     }
 
+    public function search(Request $request)
+    {
+        $query = Challenge::query();
+    
+        $filter = $request->input('filter');
+        $searchQuery = $request->input('query');
+    
+        if ($filter && $searchQuery) {
+            $query->where($filter, 'like', "%$searchQuery%");
+        }
+    
+        $challenge = $query->get();
+    
+        return view('readChallenges', ['Challenge' => $challenge]);
+    }
     /**
      * Display the specified resource.
      *
