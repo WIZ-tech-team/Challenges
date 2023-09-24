@@ -133,9 +133,9 @@ class GhallengesController extends Controller
         $refree_firebase= ApiUser::where('firebase_uid',$RefreeId)->first();
 
         // Check if the provided refree_id is in the list of valid referee IDs
-        if (!in_array($RefreeId, $refree)) {
-            return response()->json(['message' => 'Invalid refree added',
-            'status'=>Response::HTTP_BAD_REQUEST] );
+        if (!$refree_firebase) {
+            return response()->json(['message' => 'Invalid refree user',
+            'status'=>Response::HTTP_NOT_FOUND] );
         }
             $challenge->refree_id = $refree_firebase->id;
             $challenge->opponent_id= $opponent_firebase->id;
