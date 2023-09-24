@@ -438,7 +438,7 @@ return response()->json([
      public function teamUsers($id)
     {
         $team       = Team::where('firebase_document',$id)->first();
-        if(!team){
+        if(!$team){
             return response()->json([
                 'message'  =>'Team Not Found',
                
