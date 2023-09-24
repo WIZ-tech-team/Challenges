@@ -49,6 +49,7 @@ Route::post('/createTeam',      [TeamController::class, 'store'])->name('createT
 Route::post('/updateTeam/{id}', [TeamController::class, 'update'])->name('updateTeam');
 Route::get('/myTeams',          [TeamController::class, 'myTeams'])->name('myTeams');
 Route::get('/allTeams',          [TeamController::class, 'index'])->name('allTeams');
+Route::get('/teamUsers/{id}',          [TeamController::class, 'teamUsers'])->name('teamUsers');
 
 Route::post('/invitation/{id}', [TeamController::class, 'invitation'])->name('invitation');;
 Route::get('/viewTeam/{id}',    [TeamController::class,  'viewTeam'] );

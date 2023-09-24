@@ -435,8 +435,16 @@ return response()->json([
  ]);
 
    }
-     public function destroy($id)
+     public function teamUsers($id)
     {
-           
+        $team       = Team::where('id',$id)->first();
+        $teamID     = $team->id;
+        $members    = ApiUser::where('team_id', $teamID)
+        ->where('type','member')->get();
+        return response()->json([
+            'message'  =>'Team Users',
+            'Members' =>$members,
+            'status'=>Response::HTTP_OK,
+         ]);
     }
 }
