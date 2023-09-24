@@ -437,7 +437,7 @@ return response()->json([
    }
      public function teamUsers($id)
     {
-        $team       = Team::where('id',$id)->first();
+        $team       = Team::where('firebase_document',$id)->first();
         $teamID     = $team->id;
         $members    = ApiUser::where('team_id', $teamID)
         ->where('type','member')->get();
