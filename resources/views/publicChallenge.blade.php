@@ -27,12 +27,12 @@
   <div class="row">
     <span><h3>Create Public Challegne</h3></span>
   <div class="col-6 bg-light p-3">
-  <input type="text"  name="title"       placeholder="Challenge title"      class="form-control  @error('title') is-invalid @enderror" >     <p class ="invalid-feedback ">@error('title')      {{ $message }}  @enderror </p><br>
-  <input type="text"  name="latitude"    placeholder="Challenge latitude"   class="form-control  @error('latitude') is-invalid @enderror" >   <p class ="invalid-feedback ">@error('latitude')   {{ $message }} @enderror </p><br>
-  <input type="text"  name="longitude"   placeholder="Challenge longitude"  class="form-control  @error('longitude') is-invalid @enderror" >  <p class ="invalid-feedback ">@error('longitude')  {{ $message }} @enderror </p><br>
-  <input type="text"  name="start_time"  placeholder="Challenge start_time" class="form-control  @error('start_time') is-invalid @enderror" > <p class ="invalid-feedback ">@error('start_time') {{ $message }} @enderror </p><br>
-  <input type="text"  name="end_time"    placeholder="Challenge end_time"   class="form-control  @error('end_time') is-invalid @enderror" >   <p class ="invalid-feedback ">@error('end_time')   {{ $message }} @enderror </p><br>
-  <input type="text"  name="winner_points"    placeholder="Challenge winner_points"   class="form-control  @error('winner_points') is-invalid @enderror" >   <p class ="invalid-feedback ">@error('winner_points')   {{ $message }} @enderror </p><br>
+  <input type="text"  name="title"       placeholder="Challenge title"      class="form-control  @error('title') is-invalid @enderror" >     <p class ="invalid-feedback "  value="{{ old('title') }}">@error('title')      {{ $message }}  @enderror </p><br>
+  <input type="text"  name="latitude"    placeholder="Challenge latitude"   class="form-control  @error('latitude') is-invalid @enderror" >   <p class ="invalid-feedback " value="{{ old('latitude') }}">@error('latitude')   {{ $message }} @enderror </p><br>
+  <input type="text"  name="longitude"   placeholder="Challenge longitude"  class="form-control  @error('longitude') is-invalid @enderror" >  <p class ="invalid-feedback " value="{{ old('longitude') }}">@error('longitude')  {{ $message }} @enderror </p><br>
+  <input type="text"  name="start_time"  placeholder="Challenge start_time" class="form-control  @error('start_time') is-invalid @enderror" > <p class ="invalid-feedback " value="{{ old('start_time') }}">@error('start_time') {{ $message }} @enderror </p><br>
+  <input type="text"  name="end_time"    placeholder="Challenge end_time"   class="form-control  @error('end_time') is-invalid @enderror" >   <p class ="invalid-feedback " value="{{ old('end_time') }}">@error('end_time')   {{ $message }} @enderror </p><br>
+  <input type="text"  name="winner_points"    placeholder="Challenge winner_points"   class="form-control  @error('winner_points') is-invalid @enderror" >   <p class ="invalid-feedback " value="{{ old('winner_points') }}">@error('winner_points')   {{ $message }} @enderror </p><br>
 
   
  
@@ -44,12 +44,12 @@
 </select><br>
   </div>
 <div class="col-6 bg-light p-3"> 
-  <input type="text"  name="date"        placeholder="Challenge date"       class="form-control   @error('date') is-invalid @enderror" ><p class ="invalid-feedback "> @error('date') {{ $message }} @enderror </p><br>
-  <input type="text"  name="prize"       placeholder="Challenge prize"      class="form-control" ><br>
+  <input type="text"  name="date"        placeholder="Challenge date"       class="form-control   @error('date') is-invalid @enderror" value="{{ old('date') }}"><p class ="invalid-feedback "> @error('date') {{ $message }} @enderror </p><br>
+  <input type="text"  name="prize"       placeholder="Challenge prize"      class="form-control"value="{{ old('winner_points') }}" ><br>
   <input type="text"  name="users_id"    placeholder="Challenge users"      class="form-control" ><br>
-  <input type="text"  name="distance"    placeholder="Challenge distance"   class="form-control"  id="distance"><br>
-  <input type="text"  name="stepsNum"    placeholder="Challenge stepsNum"   class="form-control"  id="stepsNum"><br>
-  <input type="file"  name="image"       placeholder="Challenge image"      class="form-control"  id="image" ><br>
+  <input type="text"  name="distance"    placeholder="Challenge distance"   class="form-control"  id="distance" value="{{ old('distance') }}"><br>
+  <input type="text"  name="stepsNum"    placeholder="Challenge stepsNum"   class="form-control"  id="stepsNum" value="{{ old('stepsNum') }}"><br>
+  <input type="file"  name="image"       placeholder="Challenge image"      class="form-control"  id="image" value="{{ old('image') }}"><br>
   </div></div>
   <input type="submit" class="btn btn-primary" value="Create Challenge">
 
