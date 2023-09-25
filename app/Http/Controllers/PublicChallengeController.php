@@ -187,19 +187,7 @@ class PublicChallengeController extends Controller
        $firebaseUids22 = $request->post('users_id', []);
        $firebaseUids = explode(',', $firebaseUids22);
        $usersRel = [];
-       foreach ($firebaseUids as $firebaseUid) {
-          $user = ApiUser::where('firebase_uid', $firebaseUid)->first();
-          if ($user) {
-            $usersRel[] = $user->id;
-            $user->points +=2;
-            $user->save();
-           
-    } elseif(!$user){
-        $notFoundUsers[] = $firebaseUid;
-                return response()->json(['message' => 'User not found.','data'=>  $notFoundUsers,'status'=>Response::HTTP_NOT_FOUND]);
-
-            }
-}
+      
        if ($category == 1) {
         if (!$teamF) {
             return response()->json(['message' => 'Team not found.','status'=> Response::HTTP_NOT_FOUND]);
@@ -231,7 +219,19 @@ class PublicChallengeController extends Controller
         }
        
     }   elseif ($category == 2) {
-        
+        foreach ($firebaseUids as $firebaseUid) {
+            $user = ApiUser::where('firebase_uid', $firebaseUid)->first();
+            if ($user) {
+              $usersRel[] = $user->id;
+              $user->points +=2;
+              $user->save();
+             
+      } elseif(!$user){
+          $notFoundUsers[] = $firebaseUid;
+                  return response()->json(['message' => 'User not found.','data'=>  $notFoundUsers,'status'=>Response::HTTP_NOT_FOUND]);
+  
+              }
+  }
         $challenge->team_id = null;
         $challenge->opponent_id = null;
         $challenge->save();
