@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" dir="ltr">
 	<!--begin::Head-->
 	<head><base href=""/>
-		<title>GLO</title>
+		<title>Global Online Challenge </title>
 		<meta charset="utf-8" />
 		<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
 		<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
@@ -3137,74 +3137,14 @@
 								<!--begin:Menu item-->
 								<div class="menu-item pt-5">
 									<!--begin:Menu content-->
-									<div class="menu-content">
-										<span class="menu-heading fw-bold text-uppercase fs-7">Help</span>
-									</div>
+								
 									<!--end:Menu content-->
 								</div>
 								<!--end:Menu item-->
 								<!--begin:Menu item-->
 								<div class="menu-item">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/base/utilities" target="_blank">
-										<span class="menu-icon">
-											<i class="ki-duotone ki-rocket fs-2">
-												<span class="path1"></span>
-												<span class="path2"></span>
-											</i>
-										</span>
-										<span class="menu-title">Components</span>
-									</a>
-									<!--end:Menu link-->
-								</div>
-								<!--end:Menu item-->
-								<!--begin:Menu item-->
-								<div class="menu-item">
-									<!--begin:Menu link-->
-									<a class="menu-link" href="https://preview.keenthemes.com/metronic8/demo10/layout-builder.html">
-										<span class="menu-icon">
-											<i class="ki-duotone ki-abstract-13 fs-2">
-												<span class="path1"></span>
-												<span class="path2"></span>
-											</i>
-										</span>
-										<span class="menu-title">Layout Builder</span>
-									</a>
-									<!--end:Menu link-->
-								</div>
-								<!--end:Menu item-->
-								<!--begin:Menu item-->
-								<div class="menu-item">
-									<!--begin:Menu link-->
-									<a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs" target="_blank">
-										<span class="menu-icon">
-											<i class="ki-duotone ki-abstract-26 fs-2">
-												<span class="path1"></span>
-												<span class="path2"></span>
-											</i>
-										</span>
-										<span class="menu-title">Documentation</span>
-									</a>
-									<!--end:Menu link-->
-								</div>
-								<!--end:Menu item-->
-								<!--begin:Menu item-->
-								<div class="menu-item">
-									<!--begin:Menu link-->
-									<a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog" target="_blank">
-										<span class="menu-icon">
-											<i class="ki-duotone ki-code fs-2">
-												<span class="path1"></span>
-												<span class="path2"></span>
-												<span class="path3"></span>
-												<span class="path4"></span>
-											</i>
-										</span>
-										<span class="menu-title">Changelog v8.2.0</span>
-									</a>
-									<!--end:Menu link-->
-								</div>
-								<!--end:Menu item-->
+									</div>
 							</div>
 							<!--end::Menu-->
 						</div>
@@ -3218,17 +3158,17 @@
 							<!--begin::Wrapper-->
 							<div class="d-flex align-items-center">
 								<!--begin::Avatar-->
-								<div class="symbol symbol-circle symbol-40px">
-									<img src="assets/media/avatars/300-1.jpg" alt="photo" />
+								<div class="symbol symbol-circle symbol-70px">
+									<img src="{{asset('assets/media/logos/GLO_LOGO1.png')}}" alt="photo" />
 								</div>
 								<!--end::Avatar-->
 								<!--begin::User info-->
 								<div class="ms-2">
 									<!--begin::Name-->
-									<a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">{{Auth::user()->name}}</a>
+									<h3 class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">{{Auth::user()->name}}</h3>
 									<!--end::Name-->
 									<!--begin::Major-->
-									<span class="text-muted fw-semibold d-block fs-7 lh-1">Python Dev</span>
+									<span class="text-muted fw-semibold d-block fs-7 lh-1">CHALLENGES</span>
 									<!--end::Major-->
 								</div>
 								<!--end::User info-->
@@ -3432,10 +3372,10 @@
 								</div>
 								<!--end::Aside toggle-->
 								<!--begin::Logo-->
-								<a href="../../demo10/dist/index.html">
-									<img alt="Logo" src="assets/media/logos/default-dark.svg" class="h-25px h-lg-30px d-none d-md-block" />
+								
+									<img alt="Logo" src="assets/media/logos/logo-removebg-preview.png" class="h-25px h-lg-90px d-none d-md-block" />
 									<img alt="Logo" src="assets/media/logos/default-small.svg" class="h-25px d-block d-md-none" />
-								</a>
+								
 								<!--end::Logo-->
 							</div>
 							<!--end::Brand-->
@@ -4945,92 +4885,13 @@
 									<!--begin::Wrapper-->
 									<div class="me-4">
 										<!--begin::Menu-->
-										<a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-										<i class="ki-duotone ki-filter fs-5 text-gray-500 me-1">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>Filter</a>
-										<!--begin::Menu 1-->
-										<div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_64b77682774dd">
-											<!--begin::Header-->
-											<div class="px-7 py-5">
-												<div class="fs-5 text-dark fw-bold">Filter Options</div>
-											</div>
-											<!--end::Header-->
-											<!--begin::Menu separator-->
-											<div class="separator border-gray-200"></div>
-											<!--end::Menu separator-->
-											<!--begin::Form-->
-											<div class="px-7 py-5">
-												<!--begin::Input group-->
-												<div class="mb-10">
-													<!--begin::Label-->
-													<label class="form-label fw-semibold">Status:</label>
-													<!--end::Label-->
-													<!--begin::Input-->
-													<div>
-														<select class="form-select form-select-solid" multiple="multiple" data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_64b77682774dd" data-allow-clear="true">
-															<option></option>
-															<option value="1">Approved</option>
-															<option value="2">Pending</option>
-															<option value="2">In Process</option>
-															<option value="2">Rejected</option>
-														</select>
-													</div>
-													<!--end::Input-->
-												</div>
-												<!--end::Input group-->
-												<!--begin::Input group-->
-												<div class="mb-10">
-													<!--begin::Label-->
-													<label class="form-label fw-semibold">Member Type:</label>
-													<!--end::Label-->
-													<!--begin::Options-->
-													<div class="d-flex">
-														<!--begin::Options-->
-														<label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-															<input class="form-check-input" type="checkbox" value="1" />
-															<span class="form-check-label">Author</span>
-														</label>
-														<!--end::Options-->
-														<!--begin::Options-->
-														<label class="form-check form-check-sm form-check-custom form-check-solid">
-															<input class="form-check-input" type="checkbox" value="2" checked="checked" />
-															<span class="form-check-label">Customer</span>
-														</label>
-														<!--end::Options-->
-													</div>
-													<!--end::Options-->
-												</div>
-												<!--end::Input group-->
-												<!--begin::Input group-->
-												<div class="mb-10">
-													<!--begin::Label-->
-													<label class="form-label fw-semibold">Notifications:</label>
-													<!--end::Label-->
-													<!--begin::Switch-->
-													<div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-														<input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked" />
-														<label class="form-check-label">Enabled</label>
-													</div>
-													<!--end::Switch-->
-												</div>
-												<!--end::Input group-->
-												<!--begin::Actions-->
-												<div class="d-flex justify-content-end">
-													<button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-													<button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-												</div>
-												<!--end::Actions-->
-											</div>
-											<!--end::Form-->
-										</div>
-										<!--end::Menu 1-->
+										
+										
 										<!--end::Menu-->
 									</div>
 									<!--end::Wrapper-->
 									<!--begin::Button-->
-									<a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Create</a>
+					
 									<!--end::Button-->
 								</div>
 								<!--end::Actions-->

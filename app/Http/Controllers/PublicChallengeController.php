@@ -54,7 +54,6 @@ class PublicChallengeController extends Controller
             'longitude'   => ['required', 'max:255'],
             'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
             'end_time'    => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
-            'date'        => ['required', 'date_format:Y-m-d', 'max:255'],
            
             'category_id' => 'required',
             'image'       => 'required|image|mimes:png,jpg|max:2048',
@@ -66,7 +65,6 @@ class PublicChallengeController extends Controller
         $longitude   = $request->post('longitude') ;
         $start_time  = $request->post('start_time') ;
         $end_time    = $request->post('end_time') ;
-        $date        = $request->post('date') ;
         $opponent_id = $request->post('opponent_id');
         $refree_id   = $request->post('refree_id');
         $category_id = $request->post('category_id');
@@ -91,7 +89,7 @@ class PublicChallengeController extends Controller
         $challenge->longitude   = $longitude;
         $challenge->start_time  = $start_time;
         $challenge->end_time    = $end_time;
-        $challenge->date        = $date;
+       
         $challenge->opponent_id = $opponent_id;
         $challenge->refree_id   = $refree_id;
         $challenge->category_id = $category_id;

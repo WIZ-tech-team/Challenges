@@ -1,14 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('content')<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHALLENGE</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
+
+
 <style>.success-message {
     background-color: #F5F6FA; /* Green background color */
     color:green; /* White text color */
@@ -16,7 +10,7 @@
     border-radius: 5px; /* Rounded corners */
     margin: 10px; /* Space from the content above */
 }</style>
-<body>
+
 <?php if (session()->has('success')) :?>
               <div  class="success-message">
                 <?= session()->get('success') ?>
@@ -32,7 +26,6 @@
   <input type="text"  name="longitude"   placeholder="Challenge longitude"  class="form-control  @error('longitude') is-invalid @enderror"  value="{{ old('longitude') }}">  <p class ="invalid-feedback ">@error('longitude')  {{ $message }} @enderror </p><br>
   <input type="text"  name="start_time"  placeholder="Challenge start_time" class="form-control  @error('start_time') is-invalid @enderror" value="{{ old('start_time') }}" > <p class ="invalid-feedback ">@error('start_time') {{ $message }} @enderror </p><br>
   <input type="text"  name="end_time"    placeholder="Challenge end_time"   class="form-control  @error('end_time') is-invalid @enderror"   value="{{ old('end_time') }}" >   <p class ="invalid-feedback " >@error('end_time')   {{ $message }} @enderror </p><br>
-  <input type="text"  name="winner_points"    placeholder="Challenge winner_points"   class="form-control  @error('winner_points') is-invalid @enderror"  value="{{ old('winner_points') }}">   <p class ="invalid-feedback ">@error('winner_points')   {{ $message }} @enderror </p><br>
 
   
  
@@ -44,20 +37,19 @@
 </select><br>
   </div>
 <div class="col-6 bg-light p-3"> 
-  <input type="text"  name="date"        placeholder="Challenge date"       class="form-control   @error('date') is-invalid @enderror" value="{{ old('date') }}"><p class ="invalid-feedback "> @error('date') {{ $message }} @enderror </p><br>
   <input type="text"  name="prize"       placeholder="Challenge prize"      class="form-control"value="{{ old('prize') }}" ><br>
   <input type="text"  name="users_id"    placeholder="Challenge users"      class="form-control" ><br>
   <input type="text"  name="distance"    placeholder="Challenge distance"   class="form-control"  id="distance" value="{{ old('distance') }}"><br>
   <input type="text"  name="stepsNum"    placeholder="Challenge stepsNum"   class="form-control"  id="stepsNum" value="{{ old('stepsNum') }}"><br>
   <input type="file"  name="image"       placeholder="Challenge image"      class="form-control"  id="image" value="{{ old('image') }}"><br>
-  </div></div>
+  <input type="text"  name="winner_points"    placeholder="Challenge winner_points"   class="form-control  @error('winner_points') is-invalid @enderror"  value="{{ old('winner_points') }}">   <p class ="invalid-feedback ">@error('winner_points')   {{ $message }} @enderror </p><br>
+
+</div></div>
   <input type="submit" class="btn btn-primary" value="Create Challenge">
 
 
 </form> 
-</body>
 
-</html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
    

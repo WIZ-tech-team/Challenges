@@ -22,7 +22,6 @@ class Challenge extends Model
         'category_id',
         'start_time',
         'end_time'  ,
-        'date',
         'distance',
         'stepsNum',
         'opponent_id',

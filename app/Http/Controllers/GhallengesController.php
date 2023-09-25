@@ -49,7 +49,7 @@ class GhallengesController extends Controller
         'category_id' => ['required', 'string', 'max:255'],
         'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
         'end_time'    => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
-        'date'        => ['required', 'date_format:Y-m-d', 'max:255'],
+       
         'latitude'    => ['required', 'numeric', 'max:255'],
         'longitude'   => ['required', 'numeric', 'max:255'],
     ], );
@@ -98,7 +98,7 @@ class GhallengesController extends Controller
         $longitude  = $request->post('longitude') ;
         $start_time = $request->post('start_time') ;
         $end_time   = $request->post('end_time') ;
-        $date       = $request->post('date') ;
+       
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
        
@@ -112,7 +112,7 @@ class GhallengesController extends Controller
         $challenge->team_id =$teamID1;
         $challenge->start_time = $start_time ;
         $challenge->end_time =  $end_time;
-        $challenge->date =$date;
+       
        
 
         if ($category == 1) {
@@ -172,7 +172,7 @@ class GhallengesController extends Controller
             'teamID'      => $team->firebase_document,
             'start_time'  => $start_time,
             'end_time'    => $end_time,
-            'date'        => $date,
+           
 
         ];
         $challenge->document_id = $challengeRef->id();
