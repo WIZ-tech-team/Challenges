@@ -17,9 +17,9 @@
 </style>
 
 <body>
-<h1>Public Football Challenges</h1>
+<h1>Public Running Challenges</h1>
   <div class="mb-3">
-    <form action="{{ route('searchChallenges') }}" method="GET" class="form-inline">
+    <form action="{{ route('searchRunning') }}" method="GET" class="form-inline">
   
     <div class = "row">
         <div class="col-4">
@@ -47,13 +47,19 @@
 <input type= "hidden" name="_method"  value = "delete">
 @csrf
 
+
   <table class="table table-bordered">
   <thead class="p-3 mb-2 bg-light text-dark"> 
       <tr  style="font-size:15px; font-weight:bold;">
         <th>Title</th>
+      
         <th>Latitude</th>
         <th>Longitude</th>
-        <th>Team_id</th>
+      
+      
+      
+        <th>Distance</th>
+        <th>StepsNum</th>
         <th>Start time</th>
         <th>End time</th>
         <th>Prize</th>
@@ -66,10 +72,13 @@
       <tbody>
     @foreach ($Challenge as $Challenge)
         <tr>
-            <td>{{ $Challenge->title }}</td> 
+            <td>{{ $Challenge->title }}</td>
+            
             <td>{{ $Challenge->latitude }}</td>
             <td>{{ $Challenge->longitude }}</td>
-            <td>{{ $Challenge->team_id }}</td>
+           
+            <td>{{ $Challenge->distance }}</td>
+            <td>{{ $Challenge->stepsNum }}</td>
             <td>{{ $Challenge->start_time }}</td>
             <td>{{ $Challenge->end_time }}</td>
             <td>{{ $Challenge->prize }}</td>
@@ -77,7 +86,12 @@
             <td>{{ $Challenge->winner_points }}</td>
             <td><img src="{{ asset('storage/' . $Challenge->image) }}" alt="{{ $Challenge->name }}" width="100"></td>
             <td><input type="submit"  class="btn btn-danger" formaction="{{ route('deleteChallenge', ['id' => $Challenge->id]) }}"  value="Delete"></td>
-           
+            <td>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#usersModal">
+        View Users
+    </button>
+</td>
+
               
 
         </tr>
@@ -86,10 +100,37 @@
     </tbody>
 </table>
 
-</form>
 
+</form>
+<!-- <div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usersModalLabel">Users of Challenge</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    @foreach ($users as $user)
+                        <li>{{ $user->id }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script>
+    $(document).ready(function () {
+        $('#usersModal').modal('show');
+    });
+</script> -->
 
 
 @endsection

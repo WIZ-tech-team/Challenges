@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class PublicChallengeController extends Controller
 {
@@ -32,9 +33,27 @@ class PublicChallengeController extends Controller
      */
     public function create()
     {
-        $Challenge = Challenge::where('type','public')->get();
+        $Challenge = Challenge::where('type','public')
+        ->where('category_id',1)
+        ->get();
         return view ('readChallenges',[
             'Challenge'=> $Challenge,
+        ]
+    );   
+    }
+    public function readRunning()
+    {  
+        $Challenge = Challenge::where('type','public')
+        ->where('category_id',2)
+        ->get();
+      
+
+        $users = DB::table('challenges_api_users')
+        ->where('challenge_id',16)->get();
+       
+        return view ('readRunningPublic',[
+            'Challenge'=> $Challenge,
+            'users'=> $users,
         ]
     );   
     }
@@ -128,6 +147,7 @@ class PublicChallengeController extends Controller
 
     public function search(Request $request)
     {
+        
         $query = Challenge::query();
     
         $filter = $request->input('filter');
@@ -136,11 +156,28 @@ class PublicChallengeController extends Controller
         if ($filter && $searchQuery) {
             $query->where($filter, 'like', "%$searchQuery%");
         }
-    
+        $query->where('category_id', 1);
         $challenge = $query->get();
     
         return view('readChallenges', ['Challenge' => $challenge]);
     }
+
+    public function searchRunning(Request $request)
+    {
+        $query = Challenge::query();
+    
+        $filter = $request->input('filter');
+        $searchQuery = $request->input('query');
+    
+        if ($filter && $searchQuery) {
+            $query->where($filter, 'like', "%$searchQuery%");
+        }
+      $query->where('category_id', 2);
+        $challenge = $query->get();
+    
+        return view('readRunningPublic', ['Challenge' => $challenge]);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -247,7 +284,7 @@ class PublicChallengeController extends Controller
     return response()->json(['message' => 'Only public challenges can be updated.','status'=>Response::HTTP_FORBIDDEN]);
 }
     }
-/*335a02b9d7cb4bf49eab*/
+
     /**
      * Remove the specified resource from storage.
      *

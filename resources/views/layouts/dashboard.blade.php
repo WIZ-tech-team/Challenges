@@ -155,7 +155,15 @@
 										<span class="menu-bullet">
 											<span class="bullet bullet-dot"></span>
 										</span>
-										<span class="menu-title">Show Challenges</span>
+										<span class="menu-title">Show Football Challenges</span>
+									</a>
+									<!--end:Menu link-->
+									<!--begin:Menu link-->
+									<a class="menu-link" href="/readRunning">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Show Running Challenges</span>
 									</a>
 									<!--end:Menu link-->
 								</div>
