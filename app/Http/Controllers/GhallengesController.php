@@ -383,12 +383,35 @@ class GhallengesController extends Controller
     }
  
     public function viewChallenge($id){
-$challenge = Challenge::where('id',$id)
-->where('type','private')->first();
+        
+        $user    = Auth::guard('api')->user();
+        if (!$user) {
+           return response()->json([
+               'message' => 'User not found.',
+               'status'  =>Response::HTTP_NOT_FOUND,
+           ]);
+       }
+       
+      $userTeam = $user->team_id;
+          $challenge = Challenge::with(['category', 'team', 'opponent'])
+          ->where('id',$id)
+         ->where('team_id',$userTeam)
+          ->first();
 
-return response()->json([
-    'data'=>$challenge,
-]);
+         if(!$challenge){
+            return response()->json([
+             'message'=>'Challenge not found',
+             'status'=>Response::HTTP_NOT_FOUND,
+              ]);
+          }
+          $userResults = $challenge->results->where('user_id', $user->id);
+          $latestUserResult = $userResults->last();
+          $challenge->setAttribute('user_result', $latestUserResult);
+      
+      return response()->json([
+           'data'=>$challenge,
+         
+              ]);
     }
 
 }

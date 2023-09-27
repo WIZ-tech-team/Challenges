@@ -73,7 +73,7 @@ class PublicChallengeController extends Controller
             'longitude'   => ['required', 'max:255'],
             'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
             'end_time'    => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
-           
+            'attribute' => 'required',
             'category_id' => 'required',
             'image'       => 'required|image|mimes:png,jpg|max:2048',
             'winner_points' => 'required',
@@ -86,7 +86,7 @@ class PublicChallengeController extends Controller
         $end_time    = $request->post('end_time') ;
         $opponent_id = $request->post('opponent_id');
         $refree_id   = $request->post('refree_id');
-        $category_id = $request->post('category_id');
+        $category_id = $request->input('category_id');
         $distance    = $request->post('distance');
         $stepsNum    = $request->post('stepsNum');
         $team_id     = $request->post('team_id');
@@ -94,7 +94,8 @@ class PublicChallengeController extends Controller
         $image       = $request->post('image');
         $points      = $request->post('winner_points');
         $users       = $request->post('users_id',[]);
-      
+        $attribute    = $request->post('attribute');
+       
         if($users == []){
             $usersRel=[];
         }else{
@@ -116,6 +117,7 @@ class PublicChallengeController extends Controller
         $challenge->stepsNum    = $stepsNum;
         $challenge->prize       = $prize;
         $challenge->image       = $image; 
+        $challenge->attribute       = $attribute;
         $challenge->winner_points       = $points;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -136,7 +138,7 @@ class PublicChallengeController extends Controller
             $challenge->stepsNum = null;
             $challenge->distance =null;
         }
-        
+       
         $challenge->save();
         $challenge->users()->attach($usersRel);
         return redirect('#')->with('success','Public challenge has been successfully added !');
@@ -293,6 +295,8 @@ class PublicChallengeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $public = Challenge::destroy($id);
+       
+        return back();
     }
 }

@@ -12,7 +12,20 @@
     border: 1px solid #ccc;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 1000;}
+    .center-text {
+  text-align: center;
+
+}
+
+.td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  display: block;
 }
 </style>
 
@@ -48,56 +61,46 @@
 @csrf
 
 
-  <table class="table table-bordered">
-  <thead class="p-3 mb-2 bg-light text-dark"> 
-      <tr  style="font-size:15px; font-weight:bold;">
-        <th>Title</th>
-      
-        <th>Latitude</th>
-        <th>Longitude</th>
-      
-      
-      
-        <th>Distance</th>
-        <th>StepsNum</th>
-        <th>Start time</th>
-        <th>End time</th>
-        <th>Prize</th>
-        <th>Status</th>
-        <th>Points</th>
-        <th>Image</th>
-        <th>Action</th>
-     </tr>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="center-text">Title</th>
+      <th class="center-text">Latitude</th>
+      <th class="center-text">Longitude</th>
+      <th class="center-text">Distance</th>
+      <th class="center-text">StepsNum</th>
+      <th class="center-text">Start time</th>
+      <th class="center-text">End time</th>
+      <th class="center-text">Prize</th>
+      <th class="center-text">Status</th>
+      <th class="center-text">Points</th>
+      <th class="center-text">Image</th>
+      <th class="center-text">Action</th>
+    </tr>
   </thead>
-      <tbody>
+  <tbody>
     @foreach ($Challenge as $Challenge)
-        <tr>
-            <td>{{ $Challenge->title }}</td>
-            
-            <td>{{ $Challenge->latitude }}</td>
-            <td>{{ $Challenge->longitude }}</td>
-           
-            <td>{{ $Challenge->distance }}</td>
-            <td>{{ $Challenge->stepsNum }}</td>
-            <td>{{ $Challenge->start_time }}</td>
-            <td>{{ $Challenge->end_time }}</td>
-            <td>{{ $Challenge->prize }}</td>
-            <td>{{ $Challenge->status }}</td>
-            <td>{{ $Challenge->winner_points }}</td>
-            <td><img src="{{ asset('storage/' . $Challenge->image) }}" alt="{{ $Challenge->name }}" width="100"></td>
-            <td><input type="submit"  class="btn btn-danger" formaction="{{ route('deleteChallenge', ['id' => $Challenge->id]) }}"  value="Delete"></td>
-            <td>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#usersModal">
-        View Users
-    </button>
-</td>
-
-              
-
-        </tr>
+      <tr>
+        <td class="center-text">{{ $Challenge->title }}</td>
+        <td class="center-text">{{ $Challenge->latitude }}</td>
+        <td class="center-text">{{ $Challenge->longitude }}</td>
+        <td class="center-text">{{ $Challenge->distance }}</td>
+        <td class="center-text">{{ $Challenge->stepsNum }}</td>
+        <td class="center-text">{{ $Challenge->start_time }}</td>
+        <td class="center-text">{{ $Challenge->end_time }}</td>
+        <td class="center-text">{{ $Challenge->prize }}</td>
+        <td class="center-text">{{ $Challenge->status }}</td>
+        <td class="center-text">{{ $Challenge->winner_points }}</td>
+        <td class="center-text"><img src="{{ asset('storage/' . $Challenge->image) }}" alt="{{ $Challenge->name }}" width="90" height="70"></td>
+        <td class="center-text"><input type="submit"  class="btn btn-danger btn-sm" formaction="{{ route('deleteChallenge', ['id' => $Challenge->id]) }}" value="Delete"></td>
+        <td class="center-text">
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usersModal">
+            Users
+          </button>
+        </td>
+      </tr>
     @endforeach
-    
-    </tbody>
+  </tbody>
 </table>
 
 

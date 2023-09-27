@@ -60,7 +60,9 @@ Route::post('/updatePublicChallenge/{id}',          [PublicChallengeController::
 Route::post('/ChallengeResult/{challengeID}/{team}',[ChallengeResultController::class,'store']);
 Route::get('/viewResultChallenge/{challenge}',      [ChallengeResultController::class,'show']);
 Route::get('/viewResultRunning/{challenge}',        [ChallengeResultController::class,'showRunning']);
-Route::get('/viewResultfootball/{challenge}',        [ChallengeResultController::class,'showFootball']);
+Route::get('/viewResultfootball/{challenge}',       [ChallengeResultController::class,'showFootball']);
+Route::get('/challengeDetails/{id}',                [GhallengesController::class,'viewChallenge']);
+
 
 
 Route::get('/challengeData',                        [GhallengesController::class, 'show']);
