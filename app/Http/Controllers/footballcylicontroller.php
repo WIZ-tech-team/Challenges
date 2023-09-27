@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\footballcylic;
 
 class footballcylicontroller extends Controller
 {
@@ -34,7 +35,8 @@ class footballcylicontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cylic = new footballcylic();
+
     }
 
     /**
@@ -68,7 +70,8 @@ class footballcylicontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $cylic = footballcylic::where('id',$id)->first();
+       return $cylic;
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Models\ApiUser;
 use App\Models\Category;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
+use App\Models\footballcylic;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -118,7 +119,7 @@ class PublicChallengeController extends Controller
         $challenge->prize       = $prize;
         $challenge->image       = $image; 
         $challenge->attribute       = $attribute;
-        $challenge->winner_points       = $points;
+        $challenge->winner_points   = $points;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $challenge['image'] = $file->store('/images' , 'public');}
@@ -141,6 +142,11 @@ class PublicChallengeController extends Controller
        
         $challenge->save();
         $challenge->users()->attach($usersRel);
+        if($challenge->attribute == 'cylic'){
+           $football = new footballcylic();
+           $football->challenge_id = $challenge->id;
+        }
+        $football->save();
         return redirect('#')->with('success','Public challenge has been successfully added !');
 
       

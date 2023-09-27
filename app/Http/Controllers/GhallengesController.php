@@ -402,14 +402,16 @@ class GhallengesController extends Controller
             return response()->json([
              'message'=>'Challenge not found',
              'status'=>Response::HTTP_NOT_FOUND,
-              ]);
+            ]);
           }
           $userResults = $challenge->results->where('user_id', $user->id);
           $latestUserResult = $userResults->last();
           $challenge->setAttribute('user_result', $latestUserResult);
       
       return response()->json([
+            'message'=>'Challenge Data',
            'data'=>$challenge,
+           'status'=>Response::HTTP_OK
          
               ]);
     }
