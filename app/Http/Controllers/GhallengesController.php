@@ -163,14 +163,14 @@ class GhallengesController extends Controller
             $challenge->distance =null;
         }
      
-
+        $challenge->save();
         $firebase =
         (new Factory)->withServiceAccount(public_path('challenge-88-firebase-adminsdk-7plca-d3ba680858.json'));
         $firestore = $firebase->createFirestore();
         $database = $firestore->database();
         $challengeRef = $database->collection('Challenges')->NewDocument();
         $challengeData=[
-            
+            'id'=>$challenge->id,
             'title'       => $title,
             'type'        => 'private',
             'latitude'    => $latitude,
