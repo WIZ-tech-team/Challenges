@@ -170,7 +170,7 @@ class GhallengesController extends Controller
         $database = $firestore->database();
         $challengeRef = $database->collection('Challenges')->NewDocument();
         $challengeData=[
-            'id'          => $challenge->id,
+            
             'title'       => $title,
             'type'        => 'private',
             'latitude'    => $latitude,
@@ -206,6 +206,7 @@ class GhallengesController extends Controller
             'message' => 'Challenge added successfully',
             'data' => $challengeData,
             'document_id'=>$challengeRef->id(),
+            'id'          => $challenge->id,
             'challenge_name'=>$categoryExists->name,
             'status' => Response::HTTP_OK,
         ]);}else {
