@@ -14,10 +14,7 @@ class ChallengeResult extends Model
     protected $fillable=[
 'result_data'
     ];
-    protected $casts = [
-      
-        'result_data' =>'array',
-    ];
+   
 
     public function challenge() {
         return $this->belongsTo(Challenge::class);

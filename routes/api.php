@@ -13,6 +13,7 @@ use App\Http\Controllers\TimeUserController;
 use App\Http\Controllers\GhallengesController;
 use App\Http\Controllers\footballcylicontroller;
 use App\Http\Controllers\HealthPlacesController;
+use App\Http\Controllers\footballmatchController;
 use App\Http\Controllers\ChallengeResultController;
 use App\Http\Controllers\PublicChallengeController;
 
@@ -77,5 +78,6 @@ Route::post('/addContacts',                         [ApiUserController::class,'c
 Route::post('/leaveTeam',                           [ApiUserController::class, 'destroy']);
 Route::post('/startTime/{challengeID}/{team}',      [TimeUserController::class, 'store']);
 
-Route::get('/cylic/{id}', [footballcylicontroller::class,'update']);
+Route::post('/cylic/{id}', [footballcylicontroller::class,'update'])->named('editCylic');
+Route::post('/match/{id}', [footballmatchController::class,'store']);
 

@@ -66,6 +66,12 @@ class GhallengesController extends Controller
       
         
         $team = Team::where('firebase_document',$teamID)->first();
+        if(! $team){
+            return response()->json([
+                'message'=>'Team not found',
+                'status'=>Response::HTTP_NOT_FOUND,
+            ]);
+        }
         $teamID1= $team->id;
        
         $usersTeam = ApiUser::where('team_id', $teamID1)->get();
@@ -77,7 +83,8 @@ class GhallengesController extends Controller
         $leader = Auth::guard('api')->user();
         if(!$leader){
             return response()->json([
-                'message'=>'user not found'
+                'message'=>'user not found',
+                'status'=>Response::HTTP_NOT_FOUND,
             ]);
         }
         $id = $leader->id;
@@ -104,6 +111,7 @@ class GhallengesController extends Controller
        
        
         $challenge = new Challenge();
+
         $challenge->title =$title ;
         $challenge->type ='private';
         $challenge->latitude = $latitude;
@@ -162,6 +170,7 @@ class GhallengesController extends Controller
         $database = $firestore->database();
         $challengeRef = $database->collection('Challenges')->NewDocument();
         $challengeData=[
+            'id'          => $challenge->id,
             'title'       => $title,
             'type'        => 'private',
             'latitude'    => $latitude,

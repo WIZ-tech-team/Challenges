@@ -68,6 +68,8 @@
 										
 								</div></div>
 								<!--end:Menu item-->
+								<!--begin-->
+								
 								<!--begin:Menu item-->
 								<div class="menu-item pt-5">
 									<!--begin:Menu content-->
@@ -80,6 +82,47 @@
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 							
 							<!--begin:Menu link-->
+							<span class="menu-link">
+								<span class="menu-icon">
+								<i class="fa fa-list-alt" aria-hidden="true"></i>
+
+
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>
+									</i>
+								</span>
+								<span class="menu-title">Cities</span>
+								<span class="menu-arrow"></span>
+							</span>
+							<!--end:Menu link-->
+							<!--begin:Menu sub-->
+							<div class="menu-sub menu-sub-accordion">
+								<!--begin:Menu item-->
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="/cities">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Show Cities</span>
+									</a>
+									<!--end:Menu link-->
+								</div>
+								<div class="menu-item">
+									<!--begin:Menu link-->
+									<a class="menu-link" href="{{route('create_city')}}">
+										<span class="menu-bullet">
+											<span class="bullet bullet-dot"></span>
+										</span>
+										<span class="menu-title">Add cities</span>
+									</a>
+									<!--end:Menu link-->
+							</div></div></div>
+								
+							
+							<!--begin:Menu link-->
+							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 							<span class="menu-link">
 								<span class="menu-icon">
 								<i class="fa fa-list-alt" aria-hidden="true"></i>
@@ -346,7 +389,7 @@
 									<!--begin:Menu link-->
 									<span class="menu-link">
 										<span class="menu-icon">
-											<i class="ki-duotone ki-element-plus fs-2">
+										<i class="fa-solid fa-football"></i>
 												<span class="path1"></span>
 												<span class="path2"></span>
 												<span class="path3"></span>
@@ -354,7 +397,7 @@
 												<span class="path5"></span>
 											</i>
 										</span>
-										<span class="menu-title">Account</span>
+										<span class="menu-title">Football League </span>
 										<span class="menu-arrow"></span>
 									</span>
 									<!--end:Menu link-->
@@ -363,7 +406,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/overview.html">
+											<a class="menu-link" href="/viewCylic">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -396,77 +439,7 @@
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/activity.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Activity</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/billing.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Billing</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/statements.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Statements</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/referrals.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Referrals</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/api-keys.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">API Keys</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item">
-											<!--begin:Menu link-->
-											<a class="menu-link" href="../../demo10/dist/account/logs.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Logs</span>
-											</a>
-											<!--end:Menu link-->
-										</div>
+										
 										<!--end:Menu item-->
 									</div>
 									<!--end:Menu sub-->
@@ -6415,6 +6388,7 @@
 												</div>
 												<!--end::Item-->
 												<!--begin::Item-->
+												
 												<div class="d-flex align-items-center mb-7">
 													<span class="fw-semibold fs-5 text-muted flex-grow-1">Accounting Module</span>
 													<i class="ki-duotone ki-cross-circle fs-1">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Team;
 use App\Models\ApiUser;
 use App\Models\Category;
@@ -192,9 +193,16 @@ class PublicChallengeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showCylic()
     {
-        //
+        $Challenge = Challenge::where('type','public')
+        ->where('category_id',1)
+        ->where('attribute','cylic')
+        ->get();
+        return view ('readCylicChallenges',[
+            'Challenge'=> $Challenge,
+        ]
+    );   
     }
 
     /**
@@ -203,11 +211,29 @@ class PublicChallengeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function viewCylicChallenge($id)
     {
-        //
+        $cylic = footballcylic::where('challenge_id',$id)->get();
+        $city = City::all();
+        $cityId = $city->first()->id;
+        $teams = Team::where('city', $cityId)->get();
+       
+        
+        return view('readCylic',[
+            'cylic'=> $cylic,
+            'city'=> $city,
+            'teams' => $teams,
+        ]);
     }
 
+    public function loadTeams(Request $request)
+{
+    $cityId = $request->input('citySelect');
+    $teams = Team::where('city', $cityId)->first();
+
+    $city = City::all();
+    return view('readCylic', ['teams' => $teams,'city'=> $city]);
+}
     /**
      * Update the specified resource in storage.
      *
@@ -303,6 +329,6 @@ class PublicChallengeController extends Controller
     {
         $public = Challenge::destroy($id);
        
-        return back();
+        return back()->with('success', 'City deleted successfully');
     }
 }

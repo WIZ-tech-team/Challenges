@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\Team;
 use Illuminate\Http\Request;
-use App\Models\footballcylic;
-use Illuminate\Http\Response;
+use App\Models\FootballMatch;
+use Illuminate\Support\Facades\DB;
 
-class footballcylicontroller extends Controller
+class footballmatchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,10 +34,49 @@ class footballcylicontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $cylic = new footballcylic();
+        $a = DB::table('footballcylic_team')->where('cylic_id',$id)->get();
+        $teamIds = $a->pluck('team_id')->toArray();
 
+       shuffle($teamIds);
+
+$matchPairings = [];
+
+if (!empty($teamIds)) {
+    $matchNum = 1; // Initialize match number
+
+    for ($i = 0; $i < count($teamIds) - 1; $i += 2) {
+        $team1 = $teamIds[$i];
+        $team2 = $teamIds[$i + 1];
+
+        $matchPairings[] = [
+            'team1_id' => $team1,
+            'team2_id' => $team2,
+            'match_num' => $matchNum, // Assign the same matchNum to all pairings
+        ];
+    }
+
+    if (count($teamIds) % 2 === 1) {
+        $unpairedTeam = $teamIds[count($teamIds) - 1];
+        $matchPairings[] = [
+            'team1_id' => $unpairedTeam,
+            'team2_id' => null,
+            'match_num' => $matchNum, // Assign the same matchNum to unpaired teams
+        ];
+    }
+
+    foreach ($matchPairings as $pair) {
+        $match = new FootballMatch();
+        $match->cylic_id = $id;
+        $match->team1_id = $pair['team1_id'];
+        $match->team2_id = $pair['team2_id']; 
+        $match->matchNum = $pair['match_num'];
+        $match->save();
+    }
+}
+
+return $matchPairings;
     }
 
     /**
@@ -73,26 +110,7 @@ class footballcylicontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-       $cylic = footballcylic::where('id',$id)->first();
-    
-       $teamIds = $request->post('team_id');
-       $findTeam = Team::find($team);
-       if(! $findTeam){
-          return response()->json([
-         'message'=>'Team not found',
-         'status'=> Response::HTTP_NOT_FOUND,
-         ]);
-       }
-       
-       $cylic->teams()->attach($team);
-       
-       
-
-       return response()->json([
-        'message'=>'Football cylic',
-        'data'=>$cylic,
-        'status'=> Response::HTTP_OK,
-      ]);
+        //
     }
 
     /**

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class footballcylic extends Model
 {
@@ -15,4 +16,9 @@ class footballcylic extends Model
         'result',
         'winner_team',
      ];
+
+     public function teams()
+{
+    return $this->belongsToMany(Team::class,'footballcylic_team','cylic_id','team_id');
+}
 }

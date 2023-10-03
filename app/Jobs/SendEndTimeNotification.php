@@ -29,7 +29,7 @@ class SendEndTimeNotification implements ShouldQueue
        
         $currentTime = Carbon::now($timezone);
         
-        $challengesToStart = Challenge::where('start_time', '=', $currentTime)
+        $challengesToStart = Challenge::where('start_time', '<=', $currentTime)
         ->where('category_id',1)
         ->where('status', 'created')
         ->get();

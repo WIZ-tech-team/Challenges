@@ -48,13 +48,7 @@ class ChallengeResultController extends Controller
     $team1 = Team::find($team);
     $teamid = $team1->id;
     $AuthUser = Auth::guard('api')->user();
-    if(!$AuthUser){
-        return response()->json([
-            'message'=>'user not found',
-            'status' => Response::HTTP_NOT_FOUND,
-        ]);
-    }
-    $Auth_id =$AuthUser->id;
+   
     $result = $request->post('football_result_data');
     $opponentResult = $request->post('opponent_result');
 
@@ -75,6 +69,13 @@ class ChallengeResultController extends Controller
         ->first();
         
         if ($challenge->category_id == 1 && $challenge->status != 'ended') {
+            if(!$AuthUser){
+                return response()->json([
+                    'message'=>'user not found',
+                    'status' => Response::HTTP_NOT_FOUND,
+                ]);
+            }
+            $Auth_id =$AuthUser->id;
             // Check if the challenge is not ended
             return response()->json(['message' => 'Football Challenge is not ended yet', 'status' => Response::HTTP_BAD_REQUEST]);
           } elseif ($challenge->category_id == 1 ) {
@@ -105,8 +106,7 @@ class ChallengeResultController extends Controller
         return response()->json(['message' => 'You cannot enter any result of this running challenge ', 'status' => Response::HTTP_BAD_REQUEST]);
       } elseif ($challenge->category_id == 2  && $challenge->status ==='started'  && $userIds->team_id === $teamid ) {
         $userIds = $request->input('user_id');
-        $resultDataArray = $request->input('result_data');
-
+        $resultDataArray = $request->post('result_data');
         $user = ApiUser::find($userIds);
      
         if ($existingResult) {
