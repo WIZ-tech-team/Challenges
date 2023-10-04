@@ -125,7 +125,7 @@ class ChallengeResultController extends Controller
             $result->challenge_id = $challenge->id;
             $result->team_id = $teamid;
             $result->save();
-            $existingTimeUser = TimeUser::where('challenge_id', $challengeId)
+            $existingTimeUser = TimeUser::where('challenge_id', $challenge->id)
             ->where('team_id', $userTeam)
             ->where('user_id', $id)
             ->first();
