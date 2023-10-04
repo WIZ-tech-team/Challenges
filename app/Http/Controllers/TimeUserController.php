@@ -9,6 +9,7 @@ use App\Models\Challenge;
 use Illuminate\Http\Request;
 
 use Illuminate\Http\Response;
+use App\Models\ChallengeResult;
 use Illuminate\Support\Facades\Auth;
 
 class TimeUserController extends Controller
@@ -80,14 +81,14 @@ class TimeUserController extends Controller
             );
         } else {
         $timeUser  = new TimeUser();
-      $timeUser->challenge_id  = $challenge->id;
+        $timeUser->challenge_id  = $challenge->id;
         $timeUser->team_id       = $teamid;
         $timeUser->user_id       = $Auth_id;
         $timeUser->UserStartTime = $startTime;
         $timeUser->save();
         $durationTime =$challengeEndTime - $startTime;
-$result->challenge_duration = $durationTime;
-$result->save();
+        $result->challenge_duration = $durationTime;
+        $result->save();
         return response()->json(
           ['message' =>  'start time added successfully',
             
