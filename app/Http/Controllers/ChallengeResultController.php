@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\ApiUser;
+use App\Models\TimeUser;
 use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
