@@ -261,6 +261,7 @@ class ChallengeResultController extends Controller
                            'user_image'  => optional($result->user)->avatar,
                            'user_result' => $result->result_data,
                            'challenge_id'=> $result->challenge_id,
+                           'interval'    => $result->challenge_duration,
                     ];
                 
                
