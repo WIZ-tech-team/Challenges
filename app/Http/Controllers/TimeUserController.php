@@ -65,10 +65,7 @@ class TimeUserController extends Controller
     ->where('team_id', $teamid)
     ->where('user_id', $Auth_id)
     ->first();
-    $result = ChallengeResult::where('challenge_id', $challenge->id)
-    ->where('team_id', $teamid)
-    ->where('user_id', $Auth_id)
-    ->first();
+   
       if($challenge->category_id == 2 ){
       if ($startTime >= $challengeTime && $startTime < $challengeEndTime) {
 
@@ -85,8 +82,10 @@ class TimeUserController extends Controller
         $timeUser->challenge_id  = $challenge->id;
         $timeUser->team_id       = $teamid;
         $timeUser->user_id       = $Auth_id;
+        $challenge->status ='started';
+        $challenge->save();
         $timeUser->UserStartTime = $startTime;
-        $timeUser->save();
+        
         $startTime1 = new DateTime($startTime);
         $challengeEndTime1 = new DateTime($challengeEndTime);
         $interval = $startTime1->diff($challengeEndTime1);
@@ -108,8 +107,8 @@ class TimeUserController extends Controller
         
           }
          
-        $result->challenge_duration=$durationString;
-        $result->save();
+        $timeUser->challenge_duration=$durationString;
+        $timeUser->save();
        
         return response()->json(
           ['message' =>  'start time added successfully',

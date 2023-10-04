@@ -124,6 +124,14 @@ class ChallengeResultController extends Controller
             $result->challenge_id = $challenge->id;
             $result->team_id = $teamid;
             $result->save();
+            $existingTimeUser = TimeUser::where('challenge_id', $challengeId)
+            ->where('team_id', $userTeam)
+            ->where('user_id', $id)
+            ->first();
+             if($existingTimeUser){
+                $result->challenge_duration = $existingTimeUser->challenge_duration;
+             }
+             $result->save();
         }
 
         return response()->json(['message' => 'Running results submitted successfully', 'status' => Response::HTTP_OK]);
@@ -153,6 +161,7 @@ class ChallengeResultController extends Controller
         $userTeam = $leader->team_id;
         $categoryId = $challenge->category_id; 
         $results = ChallengeResult::where('challenge_id',$challengeId)->get();
+      
         $runningResults = [];
         $footballResults = [];
         
