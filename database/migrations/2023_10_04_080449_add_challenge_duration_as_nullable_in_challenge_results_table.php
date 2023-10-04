@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('challenge_results', function (Blueprint $table) {
-           $table->datetime('challenge_duration')->nullable();
+           $table->text('challenge_duration')->nullable();
         });
     }
 

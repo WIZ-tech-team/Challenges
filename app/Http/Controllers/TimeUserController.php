@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\Team;
 use App\Models\ApiUser;
 use App\Models\TimeUser;
 use App\Models\Challenge;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\ChallengeResult;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,7 @@ class TimeUserController extends Controller
         $team1     = Team::find($team);
         $teamid    = $team1->id;
         $AuthUser  = Auth::guard('api')->user();
-      
+        
        
         $startTime = $request->post('start_time');
         $challengeTime = $challenge->start_time;
@@ -86,27 +87,48 @@ class TimeUserController extends Controller
         $timeUser->user_id       = $Auth_id;
         $timeUser->UserStartTime = $startTime;
         $timeUser->save();
-        $durationTime =$challengeEndTime - $startTime;
-        $result->challenge_duration = $durationTime;
+        $startTime1 = new DateTime($startTime);
+        $challengeEndTime1 = new DateTime($challengeEndTime);
+        $interval = $startTime1->diff($challengeEndTime1);
+      
+        $hours = $interval->h;
+        $minutes = $interval->i;
+        $durationString = '';
+
+       if ($hours > 0) {
+              $durationString .= $hours . ' hour' . ($hours > 1 ? 's' : '');
+                    }
+
+        if ($minutes > 0) {
+           if ($durationString !== '') {
+                 $durationString .= ' and ';
+                }
+
+         $durationString .= $minutes . ' minute' . ($minutes > 1 ? 's' : '');
+        
+          }
+         
+        $result->challenge_duration=$durationString;
         $result->save();
+       
         return response()->json(
           ['message' =>  'start time added successfully',
             
             'status'  =>Response::HTTP_OK]);}
-}else{
+     }else{
     return response()->json(
         ['message' =>  'user not in this team or challenge',
         
         'status'  =>Response::HTTP_OK]);
-}  } 
-else {
+      }  } 
+      else {
    
     return response()->json(
         ['message' =>  'Time should between start and end time for the challlenge',
 
         'status'  =>Response::HTTP_BAD_REQUEST]);
        
-}
+     }
        
     }else{
     
