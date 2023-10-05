@@ -108,7 +108,24 @@ class GhallengesController extends Controller
        
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
-       
+        $existingChallenges = Challenge::where('team_id', $teamID1)
+        ->where(function ($query) use ($start_time, $end_time) {
+            $query->where(function ($q) use ($start_time, $end_time) {
+                $q->where('start_time', '<', $start_time)
+                    ->where('end_time', '>', $start_time);
+            })->orWhere(function ($q) use ($start_time, $end_time) {
+                $q->where('start_time', '<', $end_time)
+                    ->where('end_time', '>', $end_time);
+            });
+        })
+        ->get();
+
+    if ($existingChallenges->count() > 0) {
+        return response()->json([
+            'message' => 'Challenge time conflicts with existing challenges',
+            'status' => Response::HTTP_BAD_REQUEST,
+        ]);
+    }
        
         $challenge = new Challenge();
 
