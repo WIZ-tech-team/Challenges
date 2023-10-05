@@ -108,6 +108,7 @@ class GhallengesController extends Controller
        
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
+
         $existingChallenges = Challenge::where('team_id', $teamID1)
         ->where(function ($query) use ($start_time, $end_time) {
             $query->where(function ($q) use ($start_time, $end_time) {
@@ -270,7 +271,7 @@ class GhallengesController extends Controller
        
         $userId = $user->id;
         $teamId = $user->team_id;
-        $challenges = Challenge::with(['category', 'team'])
+        $challenges = Challenge::with(['category', 'team','oppenent'])
     ->join('team_users', 'challenges.team_id', '=', 'team_users.team_id')
     ->where('team_users.user_id', $userId)
     ->where('team_users.team_id', $teamId) // Check if user is still a member of the team
