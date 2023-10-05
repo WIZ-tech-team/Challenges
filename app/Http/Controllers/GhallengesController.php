@@ -271,7 +271,7 @@ class GhallengesController extends Controller
        
         $userId = $user->id;
         $teamId = $user->team_id;
-        $challenges = Challenge::with(['category', 'team','opponent'])
+        $challenges = Challenge::with(['category', 'team','opponent','results'])
     ->join('team_users', 'challenges.team_id', '=', 'team_users.team_id')
     ->where('team_users.user_id', $userId)
     ->where('team_users.team_id', $teamId) // Check if user is still a member of the team

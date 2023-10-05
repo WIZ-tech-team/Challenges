@@ -405,7 +405,8 @@ $usersCollection->set([
    public function viewTeam($id){
     $team       = Team::where('id',$id)->first();
     $teamID     = $team->id;
-    $challenges = Challenge::where('team_id', $teamID)->get();
+    $challenges = Challenge::with(['category', 'team','opponent','results'])
+   ->where('team_id', $teamID)->get();
     $members    = ApiUser::where('team_id', $teamID)->get();
     $membersData=[];
     foreach($members as $qqq){
