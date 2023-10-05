@@ -112,15 +112,14 @@ class GhallengesController extends Controller
         $existingChallenges = Challenge::where('team_id', $teamID1)
         ->where(function ($query) use ($start_time, $end_time) {
             $query->where(function ($q) use ($start_time, $end_time) {
-                $q->where('start_time', '<', $start_time)
-                    ->where('end_time', '>', $start_time);
+                $q->where('start_time', '<=', $start_time)
+                    ->where('end_time', '>=', $start_time);
             })->orWhere(function ($q) use ($start_time, $end_time) {
-                $q->where('start_time', '<', $end_time)
-                    ->where('end_time', '>', $end_time);
+                $q->where('start_time', '<=', $end_time)
+                    ->where('end_time', '>=', $end_time);
             });
         })
         ->get();
-
     if ($existingChallenges->count() > 0) {
         return response()->json([
             'message' => 'Challenge time conflicts with existing challenges',
