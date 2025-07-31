@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('layouts.dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
+    return view('home');})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/sign-up', function () {
 //     return view('layouts.sign-up');
