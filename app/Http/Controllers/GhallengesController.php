@@ -442,4 +442,50 @@ class GhallengesController extends Controller
               ]);
     }
 
+    public function challengesBeforeOrAfter(Request $request, $interval_category, $limit)
+{
+    $user = Auth::guard('api')->user();
+    if (!$user) {
+        return response()->json([
+            'message' => 'Unauthenticated',
+            'status' => Response::HTTP_UNAUTHORIZED,
+        ]);
+    }
+
+    $comparisonOperator = $interval_category === 'next' ? '>=' : ($interval_category === 'previous' ? '<' : '');
+
+    if(!$comparisonOperator) {
+        return response()->json([
+            'message' => 'Invalid interval category',
+            'status' => Response::HTTP_BAD_REQUEST,
+        ]);
+    }
+
+    $challenges = Challenge::with(['category', 'team', 'opponent', 'results'])
+        ->join('api_users', function ($join) use ($user) {
+            $join->on('challenges.team_id', '=', 'api_users.team_id')
+                 ->where('api_users.id', '=', $user->id);
+        })
+        ->leftJoin('challenge_results', 'challenges.id', '=', 'challenge_results.challenge_id')
+        ->whereNull('challenge_results.challenge_id') // No results yet
+        ->where('challenges.start_time', $comparisonOperator, now()) // Future or current challenges
+        ->orderBy('challenges.start_time', 'asc')
+        ->select('challenges.*', 'challenge_results.result_data', 'challenge_results.opponent_result')
+        ->limit($limit)
+        ->get();
+
+    if ($challenges->isEmpty()) {
+        return response()->json([
+            'message' => 'No ' . ($interval_category === 'next' ? 'next' : 'previous') . ' challenges found',
+            'status' => Response::HTTP_NOT_FOUND,
+        ]);
+    }
+
+    return response()->json([
+        'message' => ($interval_category === 'next' ? 'Next' : 'Previous') . ' challenges retrieved successfully',
+        'data' => $challenges,
+        'status' => Response::HTTP_OK,
+    ]);
+}
+
 }

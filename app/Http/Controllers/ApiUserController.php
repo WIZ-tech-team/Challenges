@@ -313,62 +313,140 @@ class ApiUserController extends Controller
      */
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'phone' => ['required', 'string', 'max:255', 'regex:/^\+[0-9]+$/'],
+            'password' => ['required', 'string'],
+            'fcm_token' => ['nullable', 'string'],
+        ]);
 
-        // $credentials = [
-        //     'password' => $request->password,
-        // ];
-
-        // // Check if the request contains the 'email' field
-        // if ($request->filled('email')) {
-        //     $credentials['email'] = $request->email;
-        // } elseif ($request->filled('phone')) {
-        //     $credentials['phone'] = $request->phone;
-        // } else {
-        //     // If neither email nor phone is provided, return an error response
-        //     return response()->json([
-        //         'message' => 'Please provide either email or phone for login.',
-        //         'status'  => Response::HTTP_BAD_REQUEST,
-        //     ]);
-        // }
-        // $uid = $request->post('firebase_uid');
-        //     $credentials = [ 
-        //         'firebase_uid' => $request->uid ,
-        //         'password' => $request->password,];
-        //   $user =Auth::guard('api')->getProvider()->retrieveByCredentials($credentials);
-
-        //         if (!$user) {
-        //             return response()->json([
-        //                 'message' => 'User not found',
-        //                 'status'  => Response::HTTP_NOT_FOUND,
-        //             ]);
-        //         }
-
-        //         if (!Auth::guard('api')->getProvider()->validateCredentials($user, $credentials)) {
-        //             return response()->json([
-        //                 'message' => 'Incorrect password',
-        //                 'status'  => Response::HTTP_UNAUTHORIZED,
-        //             ]);
-        //         }
-        $firebase_uid = $request->uid;
-        $fcmToken = $request->fcm_token;
-        $user = ApiUser::where('firebase_uid', $firebase_uid)->first();
-        if (!$user) {
+        if ($validator->fails()) {
             return response()->json([
-                'message' => 'User not found',
-                'status'  => Response::HTTP_NOT_FOUND,
+                'message' => implode(' ', $validator->errors()->all()),
+                'status' => Response::HTTP_BAD_REQUEST,
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $phone = $request->input('phone');
+        $password = $request->input('password');
+        $fcmToken = $request->input('fcm_token');
+
+        $phoneNumberUtil = PhoneNumberUtil::getInstance();
+        try {
+            $phoneNumberObj = $phoneNumberUtil->parse($phone);
+            $formattedPhone = $phoneNumberUtil->format($phoneNumberObj, PhoneNumberFormat::E164);
+        } catch (\libphonenumber\NumberParseException $e) {
+            return response()->json([
+                'message' => 'Invalid phone number format',
+                'status' => Response::HTTP_BAD_REQUEST,
             ]);
         }
-        $apiToken        = Str::random(60);
-        $user->fcm_token = $fcmToken;
-        $user->api_token = $apiToken;
-        $user->save();
 
-        return response()->json([
-            'message' => 'User login successfully.',
-            'data' => $user,
-            'status'  => Response::HTTP_OK
-        ]);
+        try {
+            $fields = [
+                'phone' => $formattedPhone,
+                'password' => $password,
+            ];
+            $uri = $this->supabase->getUriBase('auth/v1/token?grant_type=password');
+            $options = [
+                'headers' => $this->supabase->getHeaders(),
+                'body' => json_encode($fields),
+            ];
+            $response = $this->supabase->executeHttpRequest('POST', $uri, $options);
+
+            if ($this->supabase->getError()) {
+                return response()->json([
+                    'message' => $this->supabase->getError(),
+                    'status' => Response::HTTP_UNAUTHORIZED,
+                ]);
+            }
+
+            // $userData = json_decode($response);
+            // $supabaseUser = $userData->user ?? $userData; // Adjust based on response structure
+            $user = ApiUser::where('phone', ltrim($formattedPhone, '+'))->first();
+
+            if (!$user) {
+                $user = new ApiUser();
+                $user->phone = ltrim($formattedPhone, '+');
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+
+            $apiToken = Str::random(60);
+            $user->fcm_token = $fcmToken;
+            $user->api_token = $apiToken;
+            $user->save();
+
+            return response()->json([
+                'message' => 'User login successfully.',
+                'data' => $user,
+                'status' => Response::HTTP_OK,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to login',
+                'error' => $e->getMessage(),
+                'status' => Response::HTTP_BAD_REQUEST,
+            ]);
+        }
     }
+    // public function login(Request $request)
+    // {
+
+    //     // $credentials = [
+    //     //     'password' => $request->password,
+    //     // ];
+
+    //     // // Check if the request contains the 'email' field
+    //     // if ($request->filled('email')) {
+    //     //     $credentials['email'] = $request->email;
+    //     // } elseif ($request->filled('phone')) {
+    //     //     $credentials['phone'] = $request->phone;
+    //     // } else {
+    //     //     // If neither email nor phone is provided, return an error response
+    //     //     return response()->json([
+    //     //         'message' => 'Please provide either email or phone for login.',
+    //     //         'status'  => Response::HTTP_BAD_REQUEST,
+    //     //     ]);
+    //     // }
+    //     // $uid = $request->post('firebase_uid');
+    //     //     $credentials = [ 
+    //     //         'firebase_uid' => $request->uid ,
+    //     //         'password' => $request->password,];
+    //     //   $user =Auth::guard('api')->getProvider()->retrieveByCredentials($credentials);
+
+    //     //         if (!$user) {
+    //     //             return response()->json([
+    //     //                 'message' => 'User not found',
+    //     //                 'status'  => Response::HTTP_NOT_FOUND,
+    //     //             ]);
+    //     //         }
+
+    //     //         if (!Auth::guard('api')->getProvider()->validateCredentials($user, $credentials)) {
+    //     //             return response()->json([
+    //     //                 'message' => 'Incorrect password',
+    //     //                 'status'  => Response::HTTP_UNAUTHORIZED,
+    //     //             ]);
+    //     //         }
+    //     $firebase_uid = $request->uid;
+    //     $fcmToken = $request->fcm_token;
+    //     $user = ApiUser::where('firebase_uid', $firebase_uid)->first();
+    //     if (!$user) {
+    //         return response()->json([
+    //             'message' => 'User not found',
+    //             'status'  => Response::HTTP_NOT_FOUND,
+    //         ]);
+    //     }
+    //     $apiToken        = Str::random(60);
+    //     $user->fcm_token = $fcmToken;
+    //     $user->api_token = $apiToken;
+    //     $user->save();
+
+    //     return response()->json([
+    //         'message' => 'User login successfully.',
+    //         'data' => $user,
+    //         'status'  => Response::HTTP_OK
+    //     ]);
+    // }
     /************************************** */
 
     public function register1(Request $request)

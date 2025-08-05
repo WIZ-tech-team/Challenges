@@ -81,3 +81,4 @@ Route::post('/startTime/{challengeID}/{team}',      [TimeUserController::class, 
 Route::post('/cylic/{id}', [footballcylicontroller::class,'update'])->named('editCylic');
 Route::post('/match/{id}', [footballmatchController::class,'store']);
 
+Route::get('/challenges/{interval_category}/{limit}', [GhallengesController::class, 'challengesBeforeOrAfter']);
