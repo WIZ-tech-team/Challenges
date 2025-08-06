@@ -43,43 +43,43 @@ class GhallengesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$teamID)
+    public function store(Request $request, $teamID)
     {   $validator    = Validator::make($request->all(),[
-        'title'       => ['required', 'string', 'max:255'],
-        'category_id' => ['required', 'string', 'max:255'],
-        'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
-        'end_time'    => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
-       
-        'latitude'    => ['required', 'numeric', 'max:255'],
-        'longitude'   => ['required', 'numeric', 'max:255'],
-    ], );
-    
-    if ($validator->fails()) {
-        $errorMessages = $validator->errors()->all();
-        $formattedErrorMessages = implode(' ', $errorMessages);
-
-        return response()->json([
-            'message' => $formattedErrorMessages,
-            'status'  => Response::HTTP_BAD_REQUEST,
-        ], Response::HTTP_BAD_REQUEST);
-    }
-      
+            'title'       => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:255'],
+            'start_time'  => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
+            'end_time'    => ['required', 'date_format:Y-m-d H:i:s', 'max:255'],
         
+            'latitude'    => ['required', 'numeric', 'max:255'],
+            'longitude'   => ['required', 'numeric', 'max:255']
+        ], );
+        
+        if ($validator->fails()) {
+            $errorMessages = $validator->errors()->all();
+            $formattedErrorMessages = implode(' ', $errorMessages);
+
+            return response()->json([
+                'message' => $formattedErrorMessages,
+                'status'  => Response::HTTP_BAD_REQUEST,
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
+            
         $team = Team::where('firebase_document',$teamID)->first();
-        if(! $team){
+        if(!$team){
             return response()->json([
                 'message'=>'Team not found',
                 'status'=>Response::HTTP_NOT_FOUND,
             ]);
         }
         $teamID1= $team->id;
-       
+        
         $usersTeam = ApiUser::where('team_id', $teamID1)->get();
         
-      foreach ($usersTeam as $user) {
-         $user->points  += 2;
-         $user->save();
-                                   }
+        foreach ($usersTeam as $user) {
+            $user->points  += 2;
+            $user->save();
+                                    }
         $leader = Auth::guard('api')->user();
         if(!$leader){
             return response()->json([
@@ -91,10 +91,10 @@ class GhallengesController extends Controller
         $leaderTeam = $leader->team_id;
         if( $leaderTeam == $teamID1 && $leader->type =='leader'){
 
-       
+        
         
         $category= $request->post('category_id');
-    
+
         $categoryExists = Category::where('id',  $category)->first();
         if (!$categoryExists) {
             return response()->json(['message' => 'Invalid category_id provided',
@@ -105,7 +105,7 @@ class GhallengesController extends Controller
         $longitude  = $request->post('longitude') ;
         $start_time = $request->post('start_time') ;
         $end_time   = $request->post('end_time') ;
-       
+        
         $opponent_id= $request->post('opponent_id');
         $opponent_firebase= Team::where('firebase_document',$opponent_id)->first();
 
@@ -120,13 +120,13 @@ class GhallengesController extends Controller
             });
         })
         ->get();
-    if ($existingChallenges->count() > 0) {
-        return response()->json([
-            'message' => 'Challenge time conflicts with existing challenges',
-            'status' => Response::HTTP_BAD_REQUEST,
-        ]);
-    }
-       
+        if ($existingChallenges->count() > 0) {
+            return response()->json([
+                'message' => 'Challenge time conflicts with existing challenges',
+                'status' => Response::HTTP_BAD_REQUEST,
+            ]);
+        }
+        
         $challenge = new Challenge();
 
         $challenge->title =$title ;
@@ -137,8 +137,8 @@ class GhallengesController extends Controller
         $challenge->team_id =$teamID1;
         $challenge->start_time = $start_time ;
         $challenge->end_time =  $end_time;
-       
-       
+        
+        
 
         if ($category == 1) {
             if (!$opponent_firebase) {
@@ -153,7 +153,7 @@ class GhallengesController extends Controller
                 ]);
             }
         $refree = $usersTeam->pluck('firebase_uid')->toArray();
-    
+
         $RefreeId = $request->post('refree_id');
         $refree_firebase= ApiUser::where('firebase_uid',$RefreeId)->first();
 
@@ -169,7 +169,7 @@ class GhallengesController extends Controller
             $challenge->refree_id = null;
             $challenge->opponent_id= null;
         }
-    
+
         // Set the stepsNum based on the category ID
         if ($category == 2) {
             $challenge->stepsNum = $request->post('stepsNum');
@@ -179,7 +179,7 @@ class GhallengesController extends Controller
             $challenge->stepsNum = null;
             $challenge->distance =null;
         }
-     
+        
         $challenge->save();
         $firebase =
         (new Factory)->withServiceAccount(public_path('challenge-88-firebase-adminsdk-7plca-d3ba680858.json'));
@@ -198,7 +198,7 @@ class GhallengesController extends Controller
             'teamID'      => $team->firebase_document,
             'start_time'  => $start_time,
             'end_time'    => $end_time,
-           
+            
 
         ];
         $challenge->document_id = $challengeRef->id();
@@ -214,10 +214,10 @@ class GhallengesController extends Controller
             $challengeData['refree_id'] = null;
             $challengeData['opponent_id']= null;
         }
-    
+
         // Set the stepsNum based on the category ID
         
-       
+        
         $challengeRef->set($challengeData);
         return response()->json([
             'message' => 'Challenge added successfully',
@@ -228,7 +228,7 @@ class GhallengesController extends Controller
         ]);}else {
             return response()->json([
                 'message' => 'Only team leader can add challenges to this team',
-           ]);
+            ]);
         }
     }
    

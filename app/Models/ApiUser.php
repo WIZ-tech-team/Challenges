@@ -65,7 +65,12 @@ class ApiUser extends Model  implements Authenticatable
     public function challenges()
     {
         return $this->belongsToMany(Challenge::class, 'challenges_api_users', 'challenge_id', 'users_id');
-    } 
+    }
+    
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class ,'team_users', 'user_id', 'team_id');
+    }
    
    
 }

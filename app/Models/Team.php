@@ -15,7 +15,7 @@ class Team extends Model
         'name',
         'image',
         'user_id',
-        
+        'category'
     ];
 
     public function apiUsers()

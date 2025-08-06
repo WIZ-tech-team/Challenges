@@ -15,6 +15,8 @@ use App\Http\Controllers\footballcylicontroller;
 use App\Http\Controllers\HealthPlacesController;
 use App\Http\Controllers\footballmatchController;
 use App\Http\Controllers\ChallengeResultController;
+use App\Http\Controllers\Mobile\InvitationsController;
+use App\Http\Controllers\Mobile\TeamsController;
 use App\Http\Controllers\PublicChallengeController;
 
 /*
@@ -46,8 +48,9 @@ Route::get('/getCategories' ,   [CategoryController::class , 'AllCategories']);
 
 Route::get('/getPosts' ,        [PostController::class , 'AllPosts']);
 
-Route::get('/createTeam',       [TeamController::class, 'index'])->name('createTeam');
-Route::post('/createTeam',      [TeamController::class, 'store'])->name('createTeam');
+Route::get('/createTeam',       [TeamController::class, 'index'])->name('getTeams');
+// /createTeam API TeamController store method replaced with Mobile/TeamsController store method
+// Route::post('/createTeam',      [TeamController::class, 'store'])->name('createTeam');
 Route::post('/updateTeam/{id}', [TeamController::class, 'update'])->name('updateTeam');
 Route::get('/myTeams',          [TeamController::class, 'myTeams'])->name('myTeams');
 Route::get('/allTeams',          [TeamController::class, 'index'])->name('allTeams');
@@ -75,10 +78,25 @@ Route::post('/allHealthyPlaces',                    [HealthPlacesController::cla
 Route::post('/newContact',                          [ContactsController::class, 'store']);
 Route::get('/ViewContact',                          [ContactsController::class, 'show']);
 Route::post('/addContacts',                         [ApiUserController::class,'contactTest'])->middleware('api');
-Route::post('/leaveTeam',                           [ApiUserController::class, 'destroy']);
+// /leaveTeam API ApiUserController destroy method replaced with Mobile/TeamsController leaveTeam method
+// Route::post('/leaveTeam',                           [ApiUserController::class, 'destroy']);
 Route::post('/startTime/{challengeID}/{team}',      [TimeUserController::class, 'store']);
 
 Route::post('/cylic/{id}', [footballcylicontroller::class,'update'])->named('editCylic');
 Route::post('/match/{id}', [footballmatchController::class,'store']);
 
+// New API Routes for new updates
 Route::get('/challenges/{interval_category}/{limit}', [GhallengesController::class, 'challengesBeforeOrAfter']);
+
+Route::prefix('/teams')->controller(TeamsController::class)->group(function () {
+    Route::post('/', 'store');
+    Route::post('/leave', 'leaveTeam');
+});
+Route::post('/createTeam', [TeamsController::class, 'store'])->name('createTeam'); // Bind createTeam API to new Controller
+Route::post('/leaveTeam', [TeamsController::class, 'leaveTeam']); // Bind leaveTeam API to new Controller
+
+Route::prefix('/invitations')->controller(InvitationsController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::post('/{invitation_id}/status', 'resppondToInvitation');
+});
