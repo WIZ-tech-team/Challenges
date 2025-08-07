@@ -75,24 +75,25 @@ class TeamsController extends Controller
                         continue; // Skip if the user ID is the same as the authenticated user
                     }
 
-                    $existingInvitation = Invitation::where('team_id', $team->id)
-                        ->where('user_id', $user_id)
-                        ->where('status', 'pending')
-                        ->first();
+                    // no need to check since it is new team
+                    // $existingInvitation = Invitation::where('team_id', $team->id)
+                    //     ->where('user_id', $user_id)
+                    //     ->where('status', 'pending')
+                    //     ->first();
 
-                    if ($existingInvitation) {
-                        throw new Exception('An invitation is already pending for user ID: ' . $user_id);
-                    }
+                    // if ($existingInvitation) {
+                    //     throw new Exception('An invitation is already pending for user ID: ' . $user_id);
+                    // }
 
-                    $user = ApiUser::find($user_id);
-                    if (!$user) {
-                        throw new Exception('User with ID ' . $user_id . ' not found.');
-                    }
+                    // $user = ApiUser::find($user_id);
+                    // if (!$user) {
+                    //     throw new Exception('User with ID ' . $user_id . ' not found.');
+                    // }
 
-                    $isUserEnrolled = $user->teams()->where('teams.id', $team->id)->exists();
-                    if ($isUserEnrolled) {
-                        throw new Exception('User with ID ' . $user_id . ' already enrolled in this team.');
-                    }
+                    // $isUserEnrolled = $user->teams()->where('teams.id', $team->id)->exists();
+                    // if ($isUserEnrolled) {
+                    //     throw new Exception('User with ID ' . $user_id . ' already enrolled in this team.');
+                    // }
 
                     $invitations[] = Invitation::create([
                         'team_id' => $team->id,
