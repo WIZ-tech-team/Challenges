@@ -169,4 +169,26 @@ class TeamsController extends Controller
             'status' => Response::HTTP_OK,
         ]);
     }
+
+    public function membersList($team_id)
+    {
+        $team = Team::findOrFail($team_id);
+        $members = $team->members()->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $members,
+        ], Response::HTTP_OK);
+    }
+
+    public function challengesParticipatedInList($team_id)
+    {
+        $team = Team::findOrFail($team_id);
+        $challenges = $team->challengesParticipatedIn()->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $challenges,
+        ], Response::HTTP_OK);
+    }
 }

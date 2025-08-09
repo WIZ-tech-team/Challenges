@@ -52,4 +52,25 @@ public function opponent()
     return $this->belongsTo(Team::class, 'opponent_id');
 }
 
+    public function awards()
+    {
+        return $this->hasMany(Award::class);
+    }
+
+    public function footballResults()
+    {
+        return $this->hasMany(FootballResult::class);
+    }
+
+    public function runningResults()
+    {
+        return $this->hasMany(RunningResult::class);
+    }
+
+    public function categoryResults()
+    {
+        return $this->category === "football" ? $this->footballResults() : 
+               ($this->category === "running" ? $this->runningResults() : $this->results());
+    }
+
 }
