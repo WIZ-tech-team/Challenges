@@ -15,6 +15,7 @@ use App\Http\Controllers\footballcylicontroller;
 use App\Http\Controllers\HealthPlacesController;
 use App\Http\Controllers\footballmatchController;
 use App\Http\Controllers\ChallengeResultController;
+use App\Http\Controllers\Mobile\ChallengeInvitationsController;
 use App\Http\Controllers\Mobile\ChallengesController;
 use App\Http\Controllers\Mobile\InvitationsController;
 use App\Http\Controllers\Mobile\TeamsController;
@@ -90,6 +91,8 @@ Route::post('/match/{id}', [footballmatchController::class,'store']);
 Route::get('/challenges/user/football', [ChallengesController::class, 'userFootballChallenges']);
 Route::get('/challenges/user/running', [ChallengesController::class, 'userRunningChallenges']);
 Route::get('/challenges/{challenge_id}/results', [ChallengesController::class, 'challengeResults']);
+Route::get('/challenges/invitations/{status}', [ChallengeInvitationsController::class, 'index']);
+Route::post('/challenges/invitations/{invitation_id}', [ChallengeInvitationsController::class, 'respondToInvitation']);
 Route::get('/challenges/{interval_category}/{limit}', [GhallengesController::class, 'challengesBeforeOrAfter']);
 Route::post('/challenges', [ChallengesController::class, 'store']);
 

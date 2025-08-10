@@ -75,20 +75,35 @@ class ChallengesController extends Controller
             ]);
         }
 
+        $apiUser = ApiUser::findOrFail(12);
+        $team = $apiUser->team()->first();
+        $category = $team->category;
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'category' => 'required|in:football,running',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'team_id' => 'required|exists:teams,id',
-            'invited_team_id' => 'nullable|exists:teams,id|different:team_id',
             'distance' => 'required_if:category,running|numeric',
             'stepsNum' => 'required_if:category,running|numeric',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
             'opponent_id' => 'nullable|exists:teams,id',
             'image' => 'nullable|image|max:2048'
+        ], [
+            'distance.required_if' => 'The distance field is required for running challenges.',
+            'stepsNum.required_if' => 'The stepsNum field is required for running challenges.',
         ]);
+
+        // Replace 'category' with the team's category in validation conditions
+        $validator->sometimes('distance', 'required|numeric', function () use ($category) {
+            return $category === 'running';
+        });
+        $validator->sometimes('stepsNum', 'required|numeric', function () use ($category) {
+            return $category === 'running';
+        });
+        $validator->sometimes('opponent_id', 'nullable|exists:teams,id|different:team_id', function () use ($category) {
+            return $category === 'football';
+        });
 
         if ($validator->fails()) {
             return response()->json([
@@ -100,27 +115,29 @@ class ChallengesController extends Controller
         try {
             DB::beginTransaction();
 
-            $challengeData = $request->only(['title', 'category', 'latitude', 'longitude', 'start_time', 'end_time']);
+            $challengeData = $request->only(['title', 'latitude', 'longitude', 'start_time', 'end_time']);
+            $challengeData['team_id'] = $team->id;
+            $challengeData['user_id'] = $apiUser->id;
+            $challengeData['category'] = $category; // Set category from team
             $challenge = Challenge::create($challengeData);
-            $team = Team::findOrFail($request->input('team_id'));
 
             if ($request->hasFile('image')) {
                 $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
                 $request->file('image')->move(public_path('storage/images/challenges'), $imageName);
-                $challenge->image = 'images/challenges/' . $imageName;
+                $challenge->image = 'storage/images/challenges/' . $imageName;
                 $challenge->save();
             }
 
-            if ($request->input('category') === 'football') {
-                if ($request->has('invited_team_id')) {
+            if ($category === 'football') {
+                if ($request->has('opponent_id')) {
                     ChallengeInvitation::create([
                         'challenge_id' => $challenge->id,
                         'model_type' => Team::class,
-                        'model_id' => $request->input('invited_team_id'),
+                        'model_id' => $request->input('opponent_id'),
                         'status' => 'pending',
                     ]);
                 } else {
-                    $teams = Team::where('id', '!=', $request->input('team_id'))->get();
+                    $teams = Team::where('id', '!=', $request->input('team_id'))->where('category', 'football')->get();
                     foreach ($teams as $team) {
                         ChallengeInvitation::create([
                             'challenge_id' => $challenge->id,
@@ -130,7 +147,7 @@ class ChallengesController extends Controller
                         ]);
                     }
                 }
-            } elseif ($request->input('category') === 'running') {
+            } elseif ($category === 'running') {
                 $teamUsers = $team->members()->get();
                 foreach ($teamUsers as $user) {
                     ChallengeInvitation::create([

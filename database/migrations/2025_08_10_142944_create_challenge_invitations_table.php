@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
             $table->string('model_type');
             $table->unsignedBigInteger('model_id');
-            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');
+            $table->enum('status', ['pending', 'accepted', 'refused'])->default('pending');
             $table->timestamps();
         });
     }
