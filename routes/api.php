@@ -91,6 +91,7 @@ Route::get('/challenges/user/football', [ChallengesController::class, 'userFootb
 Route::get('/challenges/user/running', [ChallengesController::class, 'userRunningChallenges']);
 Route::get('/challenges/{challenge_id}/results', [ChallengesController::class, 'challengeResults']);
 Route::get('/challenges/{interval_category}/{limit}', [GhallengesController::class, 'challengesBeforeOrAfter']);
+Route::post('/challenges', [ChallengesController::class, 'store']);
 
 Route::prefix('/teams')->controller(TeamsController::class)->group(function () {
     Route::post('/', 'store');

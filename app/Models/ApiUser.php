@@ -71,6 +71,11 @@ class ApiUser extends Model  implements Authenticatable
     {
         return $this->belongsToMany(Team::class ,'team_users', 'user_id', 'team_id');
     }
+
+    public function challengeInvitations()
+    {
+        return $this->morphMany(ChallengeInvitation::class, 'model');
+    }
    
    
 }

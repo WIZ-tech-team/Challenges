@@ -40,4 +40,9 @@ class Team extends Model
     {
         return $this->belongsToMany(Challenge::class, 'challenge_team', 'team_id', 'challenge_id');
     }
+
+    public function challengeInvitations()
+    {
+        return $this->morphMany(ChallengeInvitation::class, 'model');
+    }
 }

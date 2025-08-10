@@ -25,7 +25,9 @@ class Challenge extends Model
         'distance',
         'stepsNum',
         'opponent_id',
-        'prize'
+        'prize',
+        'category',
+        'image'
         
     ];
     public function users()
@@ -71,6 +73,11 @@ public function opponent()
     {
         return $this->category === "football" ? $this->footballResults() : 
                ($this->category === "running" ? $this->runningResults() : $this->results());
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(ChallengeInvitation::class);
     }
 
 }
