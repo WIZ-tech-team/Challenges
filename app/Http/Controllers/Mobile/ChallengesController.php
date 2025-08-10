@@ -121,6 +121,12 @@ class ChallengesController extends Controller
             $challengeData['category'] = $category; // Set category from team
             $challenge = Challenge::create($challengeData);
 
+            if($challenge->category === 'football') {
+                $team->challengesParticipatedIn()->attach($challenge->id);
+            } elseif($challenge->category === 'running') {
+                $apiUser->challenges()->attach($challenge->id);
+            }
+
             if ($request->hasFile('image')) {
                 $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
                 $request->file('image')->move(public_path('storage/images/challenges'), $imageName);
