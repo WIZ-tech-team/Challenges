@@ -81,4 +81,9 @@ public function opponent()
         return $this->hasMany(ChallengeInvitation::class);
     }
 
+    public function participantTeams()
+    {
+        return $this->belongsToMany(Team::class, 'challenge_team', 'challenge_id', 'team_id');
+    }
+
 }
