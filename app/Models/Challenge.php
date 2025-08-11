@@ -17,6 +17,7 @@ class Challenge extends Model
         'type',
         'latitude',
         'longitude',
+        'address',
         'team_id',
         'refree_id',
         'category_id',
