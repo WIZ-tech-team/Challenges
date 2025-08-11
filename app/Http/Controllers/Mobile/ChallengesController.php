@@ -75,7 +75,7 @@ class ChallengesController extends Controller
             ]);
         }
 
-        $apiUser = ApiUser::findOrFail(12);
+        $apiUser = ApiUser::findOrFail($user->id);
         $team = $apiUser->team()->first();
         $category = $team->category;
 
@@ -83,6 +83,7 @@ class ChallengesController extends Controller
             'title' => 'required|string|max:255',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'address' => 'nullable|string',
             'distance' => 'required_if:category,running|numeric',
             'stepsNum' => 'required_if:category,running|numeric',
             'start_time' => 'required|date',
@@ -115,7 +116,7 @@ class ChallengesController extends Controller
         try {
             DB::beginTransaction();
 
-            $challengeData = $request->only(['title', 'latitude', 'longitude', 'start_time', 'end_time']);
+            $challengeData = $request->only(['title', 'latitude', 'longitude', 'address', 'start_time', 'end_time']);
             $challengeData['team_id'] = $team->id;
             $challengeData['user_id'] = $apiUser->id;
             $challengeData['category'] = $category; // Set category from team

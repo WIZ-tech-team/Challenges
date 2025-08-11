@@ -17,6 +17,7 @@ use App\Http\Controllers\footballmatchController;
 use App\Http\Controllers\ChallengeResultController;
 use App\Http\Controllers\Mobile\ChallengeInvitationsController;
 use App\Http\Controllers\Mobile\ChallengesController;
+use App\Http\Controllers\Mobile\HealthPlacesController as MobileHealthPlacesController;
 use App\Http\Controllers\Mobile\InvitationsController;
 use App\Http\Controllers\Mobile\TeamsController;
 use App\Http\Controllers\PublicChallengeController;
@@ -75,7 +76,8 @@ Route::get('/challengeDetails/{id}',                [GhallengesController::class
 Route::get('/challengeData',                        [GhallengesController::class, 'show']);
 Route::get('/viewChallenge/{id}',                   [GhallengesController::class, 'viewChallenge']);
 Route::get('/challenges',                           [GhallengesController::class, 'challenges']);
-Route::post('/allHealthyPlaces',                    [HealthPlacesController::class, 'getAll']);
+// // /allHealthPlaces API connect to new controller method Mobile/HealthPlacesController index
+// Route::post('/allHealthyPlaces',                    [HealthPlacesController::class, 'getAll']);
 
 Route::post('/newContact',                          [ContactsController::class, 'store']);
 Route::get('/ViewContact',                          [ContactsController::class, 'show']);
@@ -105,6 +107,7 @@ Route::prefix('/teams')->controller(TeamsController::class)->group(function () {
 
 Route::post('/createTeam', [TeamsController::class, 'store'])->name('createTeam'); // Bind createTeam API to new Controller
 Route::post('/leaveTeam', [TeamsController::class, 'leaveTeam']); // Bind leaveTeam API to new Controller
+Route::get('/allHealthyPlaces', [MobileHealthPlacesController::class, 'index']); // Bind allHealthyPlaces API to new controller
 
 Route::prefix('/invitations')->controller(InvitationsController::class)->group(function () {
     Route::get('/', 'index');
