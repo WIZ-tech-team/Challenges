@@ -15,7 +15,7 @@ class Team extends Model
         'name',
         'image',
         'user_id',
-        
+        'category'
     ];
 
     public function apiUsers()
@@ -29,5 +29,20 @@ class Team extends Model
 
     public function challenges() {
         return $this->hasMany(Challenge::class);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(ApiUser::class, 'team_users', 'team_id', 'user_id');
+    }
+
+    public function challengesParticipatedIn()
+    {
+        return $this->belongsToMany(Challenge::class, 'challenge_team', 'team_id', 'challenge_id');
+    }
+
+    public function challengeInvitations()
+    {
+        return $this->morphMany(ChallengeInvitation::class, 'model');
     }
 }
