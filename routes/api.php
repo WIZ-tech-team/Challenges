@@ -123,5 +123,9 @@ Route::prefix('/chat')->group(function () {
     Route::prefix('/groups')->controller(ChatGroupsController::class)->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::post('/{group_id}/users/add', 'addUsersToGroup');
+        Route::post('/{group_id}/users/remove', 'removeUsersFromGroup');
+        Route::post('/{group_id}/users/change-status', 'changeUserRole');
+        Route::delete('/{group_id}', 'destroy');
     });
 });
