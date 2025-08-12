@@ -17,6 +17,7 @@ use App\Http\Controllers\footballmatchController;
 use App\Http\Controllers\ChallengeResultController;
 use App\Http\Controllers\Mobile\ChallengeInvitationsController;
 use App\Http\Controllers\Mobile\ChallengesController;
+use App\Http\Controllers\Mobile\ChatGroupsController;
 use App\Http\Controllers\Mobile\FootballResultsController;
 use App\Http\Controllers\Mobile\HealthPlacesController as MobileHealthPlacesController;
 use App\Http\Controllers\Mobile\InvitationsController;
@@ -37,21 +38,20 @@ use App\Http\Controllers\PublicChallengeController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
 });
-Route::post('/register',        [ApiUserController::class,'store'])->middleware('api');
-Route::post('/login',           [ApiUserController::class,'login'])->middleware('api');
-Route::post('/updateUser/{id}', [ApiUserController::class,'update']);
-Route::get('/getUser', [ApiUserController::class,'getAllUsers']);
-Route::get('/search'           ,[ApiUserController::class,'search']);
-Route::get('/AllUsers'           ,[ApiUserController::class,'show']);
-Route::post('/refreshToken'           ,[ApiUserController::class,'refreshToken']);
+Route::post('/register',        [ApiUserController::class, 'store'])->middleware('api');
+Route::post('/login',           [ApiUserController::class, 'login'])->middleware('api');
+Route::post('/updateUser/{id}', [ApiUserController::class, 'update']);
+Route::get('/getUser', [ApiUserController::class, 'getAllUsers']);
+Route::get('/search', [ApiUserController::class, 'search']);
+Route::get('/AllUsers', [ApiUserController::class, 'show']);
+Route::post('/refreshToken', [ApiUserController::class, 'refreshToken']);
 /***CHAT_PEERS */
-Route::post('/createChatPreer', [ChatPeerController::class,'store']);
+Route::post('/createChatPreer', [ChatPeerController::class, 'store']);
 /*Categories*/
-Route::get('/getCategories' ,   [CategoryController::class , 'AllCategories']);
+Route::get('/getCategories',   [CategoryController::class, 'AllCategories']);
 
-Route::get('/getPosts' ,        [PostController::class , 'AllPosts']);
+Route::get('/getPosts',        [PostController::class, 'AllPosts']);
 
 Route::get('/createTeam',       [TeamController::class, 'index'])->name('getTeams');
 // /createTeam API TeamController store method replaced with Mobile/TeamsController store method
@@ -62,16 +62,16 @@ Route::get('/allTeams',          [TeamController::class, 'index'])->name('allTea
 Route::get('/teamUsers/{id}',          [TeamController::class, 'teamUsers'])->name('teamUsers');
 
 Route::post('/invitation/{id}', [TeamController::class, 'invitation'])->name('invitation');;
-Route::get('/viewTeam/{id}',    [TeamController::class,  'viewTeam'] );
+Route::get('/viewTeam/{id}',    [TeamController::class,  'viewTeam']);
 
 Route::get('/createChallengeTeam',                  [GhallengesController::class, 'index']);
 Route::post('/createChallengeTeam/{teamID}',        [GhallengesController::class, 'store']);
-Route::post('/updatePublicChallenge/{id}',          [PublicChallengeController::class,'update']);
-Route::post('/ChallengeResult/{challengeID}/{team}',[ChallengeResultController::class,'store']);
-Route::get('/viewResultChallenge/{challenge}',      [ChallengeResultController::class,'show']);
-Route::get('/viewResultRunning/{challenge}',        [ChallengeResultController::class,'showRunning']);
-Route::get('/viewResultfootball/{challenge}',       [ChallengeResultController::class,'showFootball']);
-Route::get('/challengeDetails/{id}',                [GhallengesController::class,'viewChallenge']);
+Route::post('/updatePublicChallenge/{id}',          [PublicChallengeController::class, 'update']);
+Route::post('/ChallengeResult/{challengeID}/{team}', [ChallengeResultController::class, 'store']);
+Route::get('/viewResultChallenge/{challenge}',      [ChallengeResultController::class, 'show']);
+Route::get('/viewResultRunning/{challenge}',        [ChallengeResultController::class, 'showRunning']);
+Route::get('/viewResultfootball/{challenge}',       [ChallengeResultController::class, 'showFootball']);
+Route::get('/challengeDetails/{id}',                [GhallengesController::class, 'viewChallenge']);
 
 
 
@@ -83,13 +83,13 @@ Route::get('/challenges',                           [GhallengesController::class
 
 Route::post('/newContact',                          [ContactsController::class, 'store']);
 Route::get('/ViewContact',                          [ContactsController::class, 'show']);
-Route::post('/addContacts',                         [ApiUserController::class,'contactTest'])->middleware('api');
+Route::post('/addContacts',                         [ApiUserController::class, 'contactTest'])->middleware('api');
 // /leaveTeam API ApiUserController destroy method replaced with Mobile/TeamsController leaveTeam method
 // Route::post('/leaveTeam',                           [ApiUserController::class, 'destroy']);
 Route::post('/startTime/{challengeID}/{team}',      [TimeUserController::class, 'store']);
 
-Route::post('/cylic/{id}', [footballcylicontroller::class,'update'])->named('editCylic');
-Route::post('/match/{id}', [footballmatchController::class,'store']);
+Route::post('/cylic/{id}', [footballcylicontroller::class, 'update'])->named('editCylic');
+Route::post('/match/{id}', [footballmatchController::class, 'store']);
 
 // New API Routes for new updates
 Route::get('/challenges/user/football', [ChallengesController::class, 'userFootballChallenges']);
@@ -117,4 +117,11 @@ Route::prefix('/invitations')->controller(InvitationsController::class)->group(f
     Route::get('/', 'index');
     Route::post('/', 'store');
     Route::post('/{invitation_id}/status', 'resppondToInvitation');
+});
+
+Route::prefix('/chat')->group(function () {
+    Route::prefix('/groups')->controller(ChatGroupsController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+    });
 });
