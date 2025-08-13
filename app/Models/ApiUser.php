@@ -15,7 +15,7 @@ class ApiUser extends Model  implements Authenticatable
     use HasFactory;
     public function getAuthIdentifierName()
     {
-        return 'id'; 
+        return 'id';
     }
 
     public function getAuthIdentifier()
@@ -53,29 +53,39 @@ class ApiUser extends Model  implements Authenticatable
     ];
 
 
-    public function ChatPeeUser(){
+    public function ChatPeeUser()
+    {
         return $this->belongsToMany(ChatPeer::class, 'chatpeer_apiuser', 'chat_peer_id', 'participants_id');
     }
 
     public function team()
     {
-        return $this->belongsTo(Team::class, 'team_id','id');
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
     public function challenges()
     {
         return $this->belongsToMany(Challenge::class, 'challenges_api_users', 'users_id', 'challenge_id');
     }
-    
+
     public function teams()
     {
-        return $this->belongsToMany(Team::class ,'team_users', 'user_id', 'team_id');
+        return $this->belongsToMany(Team::class, 'team_users', 'user_id', 'team_id');
     }
 
     public function challengeInvitations()
     {
         return $this->morphMany(ChallengeInvitation::class, 'model');
     }
-   
-   
+
+    public function ownedChatGroups()
+    {
+        return $this->hasMany(ChatGroup::class, 'created_by');
+    }
+
+    public function participatedChatGroups()
+    {
+        return $this->belongsToMany(ChatGroup::class, 'chat_group_api_user', 'api_user_id', 'chat_group_id')
+            ->withPivot('role');
+    }
 }
