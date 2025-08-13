@@ -88,4 +88,9 @@ class ApiUser extends Model  implements Authenticatable
         return $this->belongsToMany(ChatGroup::class, 'chat_group_api_user', 'api_user_id', 'chat_group_id')
             ->withPivot('role');
     }
+
+    public function storeOrders()
+    {
+        return $this->hasMany(StoreOrder::class, 'api_user_id');
+    }
 }

@@ -21,4 +21,9 @@ class Award extends Model
         return $this->belongsTo(Challenge::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(StoreProduct::class, 'award_store_product');
+    }
+
 }

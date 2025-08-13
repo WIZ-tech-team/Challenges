@@ -51,7 +51,7 @@ class ChallengesController extends Controller
         if ($challenge->category == 'football') {
             $results = $challenge->footballResults()->with(['team1', 'team2', 'team1Award', 'team2Award'])->get();
         } elseif ($challenge->category == 'running') {
-            $results = $challenge->runningResults()->with(['team', 'user', 'award'])->get();
+            $results = $challenge->runningResults()->with(['team', 'user', 'award.products'])->get();
         } else {
             return response()->json([
                 'status' => 'error',
