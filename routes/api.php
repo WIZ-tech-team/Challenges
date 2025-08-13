@@ -22,6 +22,8 @@ use App\Http\Controllers\Mobile\FootballResultsController;
 use App\Http\Controllers\Mobile\HealthPlacesController as MobileHealthPlacesController;
 use App\Http\Controllers\Mobile\InvitationsController;
 use App\Http\Controllers\Mobile\RunningResultsController;
+use App\Http\Controllers\Mobile\StoreOrdersController;
+use App\Http\Controllers\Mobile\StoreProductsController;
 use App\Http\Controllers\Mobile\TeamsController;
 use App\Http\Controllers\PublicChallengeController;
 
@@ -128,4 +130,9 @@ Route::prefix('/chat')->group(function () {
         Route::post('/{group_id}/users/change-status', 'changeUserRole');
         Route::delete('/{group_id}', 'destroy');
     });
+});
+
+Route::prefix('store')->group(function () {
+    Route::get('/products/categories/{category_id}', [StoreProductsController::class, 'productsByCategory']);
+    Route::post('/orders/products/{product_id}', [StoreOrdersController::class, 'store']);
 });
