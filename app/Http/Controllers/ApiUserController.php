@@ -155,7 +155,7 @@ class ApiUserController extends Controller
         try {
             // Create user in Supabase Auth
             $auth = $this->supabase->createAuth();
-            $user_metadata = ['name' => $name, 'phone' => $formattedPhoneNumber];
+            $user_metadata = ['name' => $name, 'phone' => $formattedPhoneNumber, 'email' => $email];
             $response = $auth->createUserWithPhoneAndPassword($formattedPhoneNumber, $password, $user_metadata);
 
             if ($auth->getError()) {
@@ -169,9 +169,12 @@ class ApiUserController extends Controller
             $supabaseUser = $userData->user;
 
             // Store user data in Laravel's ApiUser model
-            $apiUser = new ApiUser();
-            $apiUser->name = $name;
-            $apiUser->email = $email;
+            $apiUser = ApiUser::where('phone', $formattedPhoneNumber)->first();
+            if (!$apiUser) {
+                $apiUser = new ApiUser();
+            }
+            $apiUser->name = $supabaseUser->user_metadata->name;
+            $apiUser->email = $supabaseUser->user_metadata->email;
             $apiUser->password = Hash::make($password);
             $apiUser->phone = $formattedPhoneNumber;
             $apiUser->save();
@@ -198,7 +201,6 @@ class ApiUserController extends Controller
                 'status' => Response::HTTP_BAD_REQUEST,
             ]);
         }
-
     }
 
     // public function store(Request $request)
@@ -362,14 +364,15 @@ class ApiUserController extends Controller
 
             // $userData = json_decode($response);
             // $supabaseUser = $userData->user ?? $userData; // Adjust based on response structure
-            $user = ApiUser::where('phone', ltrim($formattedPhone, '+'))->first();
+            $user = ApiUser::where('phone', $formattedPhone)->first();
 
             if (!$user) {
                 $user = new ApiUser();
                 $user->phone = ltrim($formattedPhone, '+');
                 $user->password = Hash::make($password);
                 $user->name = $response->user->user_metadata->name;
-                $user->email = $response->user->email;
+                $user->email = $response->user->user_metadata->email;
+                // dd($response);
                 $user->save();
             }
 
