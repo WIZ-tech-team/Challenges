@@ -368,6 +368,8 @@ class ApiUserController extends Controller
                 $user = new ApiUser();
                 $user->phone = ltrim($formattedPhone, '+');
                 $user->password = Hash::make($password);
+                $user->name = $response->user->user_metadata->name;
+                $user->email = $response->user->email;
                 $user->save();
             }
 
