@@ -23,7 +23,7 @@ class GhallengesController extends Controller
      */
     public function index()
     {
-      $challenge = Challenge::with('awards')->get();
+      $challenge = Challenge::with('awards.products')->get();
       return $challenge;
     }
 
@@ -461,7 +461,7 @@ class GhallengesController extends Controller
             ]);
         }
 
-        $challenges = Challenge::with(['category', 'team', 'opponent', 'results', 'awards'])
+        $challenges = Challenge::with(['category', 'team', 'opponent', 'results', 'awards.products'])
             ->join('api_users', function ($join) use ($user) {
                 $join->on('challenges.team_id', '=', 'api_users.team_id')
                     ->where('api_users.id', '=', $user->id);
