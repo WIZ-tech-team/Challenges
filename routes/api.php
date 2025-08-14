@@ -136,5 +136,9 @@ Route::prefix('/chat')->group(function () {
 
 Route::prefix('store')->group(function () {
     Route::get('/products/categories/{category_id}', [StoreProductsController::class, 'productsByCategory']);
-    Route::post('/orders/products/{product_id}', [StoreOrdersController::class, 'store']);
+    Route::prefix('/orders')->controller(StoreOrdersController::class)->group(function () {
+        Route::post('/products/{product_id}', 'store');
+        Route::get('/user', 'userOrders');
+        Route::post('/{order_id}/cancel', 'cancelOrder');
+    });
 });

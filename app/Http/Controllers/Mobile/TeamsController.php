@@ -26,7 +26,6 @@ class TeamsController extends Controller
             ]);
         }
 
-
         $teams = $user->teams()->get();
         $invitations = Invitation::where('user_id', $user->id)
             ->where('status', 'pending')
