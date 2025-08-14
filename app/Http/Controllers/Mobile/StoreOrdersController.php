@@ -13,6 +13,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StoreOrdersController extends Controller
 {
+
+    public function userOrders(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated.',
+                'status' => Response::HTTP_UNAUTHORIZED
+            ]);
+        }
+
+        $request->validate([
+            'status' => 'nullable|in:pending,approved,completed,cancelled'
+        ]);
+
+        $query = $user->storeOrders();
+        if ($request->has('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        $orders = $query->with('product')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $orders
+        ], Response::HTTP_OK);
+    }
+
     public function store(Request $request, $product_id)
     {
         $user = Auth::guard('api')->user();
@@ -68,5 +96,41 @@ class StoreOrdersController extends Controller
                 'error' => $e
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function cancelOrder($order_id)
+    {
+        $user = Auth::guard('api')->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated.',
+                'status' => Response::HTTP_UNAUTHORIZED
+            ]);
+        }
+
+        $order = $user->storeOrders()->where('id', $order_id)->first();
+
+        if(!$order) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Order not found.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        if($order->status !== 'pending') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'This order is not pending.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $order->status = 'cancelled';
+        $order->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $order->fresh()
+        ], Response::HTTP_OK);
+
     }
 }
