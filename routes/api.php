@@ -59,7 +59,8 @@ Route::get('/createTeam',       [TeamController::class, 'index'])->name('getTeam
 // /createTeam API TeamController store method replaced with Mobile/TeamsController store method
 // Route::post('/createTeam',      [TeamController::class, 'store'])->name('createTeam');
 Route::post('/updateTeam/{id}', [TeamController::class, 'update'])->name('updateTeam');
-Route::get('/myTeams',          [TeamController::class, 'myTeams'])->name('myTeams');
+// /myTeams API TeamController myTeams method replaced with Mobile/TeamsController index method
+// Route::get('/myTeams',          [TeamController::class, 'myTeams'])->name('myTeams');
 Route::get('/allTeams',          [TeamController::class, 'index'])->name('allTeams');
 Route::get('/teamUsers/{id}',          [TeamController::class, 'teamUsers'])->name('teamUsers');
 
@@ -113,6 +114,7 @@ Route::prefix('/teams')->controller(TeamsController::class)->group(function () {
 
 Route::post('/createTeam', [TeamsController::class, 'store'])->name('createTeam'); // Bind createTeam API to new Controller
 Route::post('/leaveTeam', [TeamsController::class, 'leaveTeam']); // Bind leaveTeam API to new Controller
+Route::get('/myTeams', [TeamsController::class, 'userTeams']); // Bind userTeams API to new Controller
 Route::get('/allHealthyPlaces', [MobileHealthPlacesController::class, 'index']); // Bind allHealthyPlaces API to new controller
 
 Route::prefix('/invitations')->controller(InvitationsController::class)->group(function () {

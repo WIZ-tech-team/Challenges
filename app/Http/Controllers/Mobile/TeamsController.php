@@ -15,12 +15,39 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeamsController extends Controller
 {
+
+    public function userTeams()
+    {
+        $user = Auth::guard('api')->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated.',
+                'status' => Response::HTTP_UNAUTHORIZED,
+            ]);
+        }
+
+
+        $teams = $user->teams()->get();
+        $invitations = Invitation::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->with('team')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'date' => [
+                'teams' => $teams,
+                'invitations' => $invitations
+            ]
+        ], Response::HTTP_OK);
+    }
+
     public function store(Request $request)
     {
         $user = Auth::guard('api')->user();
         if (!$user) {
             return response()->json([
-                'message' => 'Unauthenticated',
+                'message' => 'Unauthenticated.',
                 'status' => Response::HTTP_UNAUTHORIZED,
             ]);
         }
