@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class ContactsController extends Controller
 {
@@ -47,6 +49,20 @@ class ContactsController extends Controller
                 'status'  =>Response::HTTP_NOT_FOUND,
             ]);
         }
+
+        $validator = Validator::make($request->all(), [
+            'First-Name' => 'required|string|max:255',
+            'Last-Name' => 'required|string|max:255',
+            'phone' => ['required', 'string', 'max:255', 'regex:/^\+[0-9]+$/', 'unique:contacts,phone']
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'messages' => implode(' ', $validator->errors()->all())
+            ], HttpFoundationResponse::HTTP_BAD_REQUEST);
+        }
+
         $phonesInput = $request->post('phone'); 
         $userWithPhone = ApiUser::where('phone', $phonesInput)->first();
 
@@ -62,7 +78,7 @@ class ContactsController extends Controller
 
         $phones = explode(',', $phonesInput);
         $previousContacts = json_decode($user->contacts, true);
-        $phones = array_merge($previousContacts, $phones);
+        $phones = array_merge($previousContacts ?? [], $phones ?? []);
 
         $user->contacts= $phones ;
         $contact->save();
@@ -99,25 +115,26 @@ class ContactsController extends Controller
         $users= ApiUser::all();
         $output = [];
 
-        foreach ($contact as $phone) {
-              $found = false;
-    
-          foreach ($users as $user) {
-            if ($phone === $user->phone) {
-           $found = true;
-           break;
-       } 
-      }
-    $a =ApiUser::where('phone', $phone)->first();
-    $status = $found ? 'found' : 'not found';
-     $user_id = $found ? $a : null;
-    $output[] = [
-      'phone' => $phone,
-      'status' => $status,
-      'user_data' =>$user_id,
-    ];
-    
-    }
+        if($contact) {
+            foreach ($contact as $phone) {
+                $found = false;
+        
+                foreach ($users as $user) {
+                    if ($phone === $user->phone) {
+                        $found = true;
+                        break;
+                    } 
+                }
+                $a =ApiUser::where('phone', $phone)->first();
+                $status = $found ? 'found' : 'not found';
+                $user_id = $found ? $a : null;
+                $output[] = [
+                'phone' => $phone,
+                'status' => $status,
+                'user_data' =>$user_id,
+                ];
+            }
+        }
 
         return response()->json(['message' => 'Contacts',
         'data'  => $output,
