@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class ContactsController extends Controller
@@ -53,7 +54,12 @@ class ContactsController extends Controller
         $validator = Validator::make($request->all(), [
             'First-Name' => 'required|string|max:255',
             'Last-Name' => 'required|string|max:255',
-            'phone' => ['required', 'string', 'max:255', 'regex:/^\+[0-9]+$/', 'unique:contacts,phone']
+            'phone' => ['required', 'string', 'max:255', 'regex:/^\+[0-9]+$/',
+                Rule::unique('contacts', 'phone')->where(function ($query) use ($user) {
+                    return $query->where('user_id', $user->id);
+                }
+            )
+        ]
         ]);
 
         if($validator->fails()) {
