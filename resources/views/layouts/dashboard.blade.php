@@ -69,11 +69,11 @@
 					<!--begin::Aside Menu-->
 					<div class="w-100 hover-scroll-y d-flex pe-2" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_footer, #kt_header" data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu, #kt_aside_menu_wrapper" data-kt-scroll-offset="102">
 						<!--begin::Menu-->
-						<div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto" id="#kt_aside_menu" data-kt-menu="true">
+						<div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto h-100 align-items-start" id="#kt_aside_menu" data-kt-menu="true">
 							<!--begin:Menu item-->
 							<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="ki-duotone ki-element-11 fs-2">
 											<span class="path1"></span>
@@ -84,7 +84,7 @@
 									</span>
 									<span class="menu-title">Dashboards</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -106,7 +106,7 @@
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa fa-list-alt" aria-hidden="true"></i>
 
@@ -118,7 +118,7 @@
 									</span>
 									<span class="menu-title">Cities</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -149,7 +149,7 @@
 
 							<!--begin:Menu link-->
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa fa-list-alt" aria-hidden="true"></i>
 
@@ -161,7 +161,7 @@
 									</span>
 									<span class="menu-title">Categories</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -214,13 +214,19 @@
 									<!--begin:Menu item-->
 									<div class="menu-item">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="/createChallenge">
+										<a class="menu-link" href="/dashboard/challenges">
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">Create Challenge</span>
+											<span class="menu-title">List</span>
 										</a>
-										<div class="menu-item">
+										<a class="menu-link" href="/dashboard/challenges/create">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Create</span>
+										</a>
+										{{-- <div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link" href="/readChallenges">
 												<span class="menu-bullet">
@@ -237,7 +243,7 @@
 												<span class="menu-title">Show Running Challenges</span>
 											</a>
 											<!--end:Menu link-->
-										</div>
+										</div> --}}
 										<!--end:Menu link-->
 									</div>
 									<!--end:Menu item-->
@@ -287,7 +293,7 @@
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa-solid fa-blog"></i>
 
@@ -298,7 +304,7 @@
 									</span>
 									<span class="menu-title">Blog</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -328,7 +334,7 @@
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="ki-duotone ki-address-book fs-2">
 											<span class="path1"></span>
@@ -338,7 +344,7 @@
 									</span>
 									<span class="menu-title">User Profile</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -362,7 +368,7 @@
 							<!--begin:Menu item-->
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa-solid fa-football"></i>
 										<span class="path1"></span>
@@ -374,7 +380,7 @@
 									</span>
 									<span class="menu-title">Football League </span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">

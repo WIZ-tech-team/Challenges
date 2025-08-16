@@ -9,6 +9,7 @@ use App\Http\Controllers\footballcylicontroller;
 use App\Http\Controllers\HealthPlacesController;
 use App\Http\Controllers\PublicChallengeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Web\ChallengesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,5 +88,14 @@ Route::get('/cities/{id}/edit', [CityController::class,'edit'])->name('edit_city
 Route::put('/cities/{id}', [CityController::class,'update'])->name('update_city');
 Route::delete('/cities/{id}', [CityController::class,'destroy'])->name('delete_city');
 //Route::get('/cities/{id}', [CityController::class,'show'])->name('view_city');
+
+Route::prefix('dashboard')->group(function () {
+    Route::prefix('challenges')->controller(ChallengesController::class)->group(function () {
+        Route::get('/', 'index')->name('challenges.index');
+        Route::get('/create', 'create')->name('challenges.create');
+        Route::delete('/{challenge_id}', 'destroy')->name('challenges.destroy');
+    });
+    
+});
 
 require __DIR__.'/auth.php';
