@@ -9,6 +9,7 @@ use App\Http\Controllers\footballcylicontroller;
 use App\Http\Controllers\HealthPlacesController;
 use App\Http\Controllers\PublicChallengeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Web\AwardsController;
 use App\Http\Controllers\Web\ChallengesController;
 
 /*
@@ -94,6 +95,12 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', 'index')->name('challenges.index');
         Route::get('/create', 'create')->name('challenges.create');
         Route::delete('/{challenge_id}', 'destroy')->name('challenges.destroy');
+    });
+
+    Route::prefix('awards')->controller(AwardsController::class)->group(function () {
+        Route::get('/', 'index')->name('awards.index');
+        Route::get('/create', 'create')->name('awards.create');
+        Route::delete('/{challenge_id}', 'destroy')->name('awards.destroy');
     });
     
 });
