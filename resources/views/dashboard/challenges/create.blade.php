@@ -1,14 +1,24 @@
-{{-- filepath: d:\Work\Wiz-Tech\Global Challenges\Challenges\resources\views\dashboard\challenges\create.blade.php --}}
 @extends('layouts.dashboard')
 
 @section('content')
     <div class="container mt-4">
-        <h3 class="mb-4">Create New Challenge</h3>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <form action="{{ route('createChallenge') }}" method="POST" enctype="multipart/form-data">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <h3 class="mb-4">Create New Challenge</h3>
+
+        <form action="{{ route('challenges.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             {{-- Challenge Info --}}
@@ -96,25 +106,34 @@
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
-                    {{-- Football Teams --}}
+                    {{-- Football Teams Tag Input --}}
                     <div class="col-md-6 mb-3" id="football-teams" style="display: none;">
-                        <label for="team_1">Team 1</label>
-                        <input type="text" name="team_1" class="form-control mb-2" value="{{ old('team_1') }}"
-                            placeholder="Team 1 Name">
-                        <label for="team_2">Team 2</label>
-                        <input type="text" name="team_2" class="form-control" value="{{ old('team_2') }}"
-                            placeholder="Team 2 Name">
-                    </div>
-                    {{-- Running Teams --}}
-                    <div class="col-md-6 mb-3" id="running-teams" style="display: none;">
                         <label for="teams">Teams</label>
                         <select name="teams[]" id="teams" class="form-control tags-input" multiple>
-                            @foreach (['Team A', 'Team B', 'Team C', 'Team D'] as $team)
-                                <option value="{{ $team }}"
-                                    {{ collect(old('teams'))->contains($team) ? 'selected' : '' }}>{{ $team }}
+                            @foreach ($teams as $team)
+                                <option value="{{ $team->id }}"
+                                    {{ collect(old('teams'))->contains($team) ? 'selected' : '' }}>{{ $team->name }}
                                 </option>
                             @endforeach
                         </select>
+                        <small class="form-text text-muted">
+                            For "Invite": select at least 2 teams.<br>
+                            For "Participate": select exactly 2 teams.
+                        </small>
+                    </div>
+                    {{-- Running Teams --}}
+                    <div class="col-md-6 mb-3" id="running-teams" style="display: none;">
+                        <label for="teams_running">Teams</label>
+                        <select name="teams_running[]" id="teams_running" class="form-control tags-input" multiple>
+                            @foreach ($teams as $team)
+                                <option value="{{ $team->id }}"
+                                    {{ collect(old('teams'))->contains($team) ? 'selected' : '' }}>
+                                    {{ $team->name }}</option>
+                            @endforeach
+                        </select>
+                        <small class="form-text text-muted">
+                            Add teams for running challenge.
+                        </small>
                     </div>
                 </div>
             </div>
@@ -158,25 +177,16 @@
             </div>
 
             {{-- Custom Fields --}}
-            <div class="card mb-3" id="football-fields" style="display: none;">
+            {{-- <div class="card mb-3" id="football-fields" style="display: none;">
                 <div class="card-header">
                     <div class="card-title">
                         Football Challenge Details
                     </div>
                 </div>
                 <div class="card-body row">
-                    <div class="col-md-6 mb-3">
-                        <label for="team_1_award">Team 1 Award</label>
-                        <input type="text" name="team_1_award" class="form-control tags-input"
-                            value="{{ old('team_1_award') }}" placeholder="Award for Team 1">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="team_2_award">Team 2 Award</label>
-                        <input type="text" name="team_2_award" class="form-control tags-input"
-                            value="{{ old('team_2_award') }}" placeholder="Award for Team 2">
-                    </div>
+                    No additional details.
                 </div>
-            </div>
+            </div> --}}
 
             <div class="card mb-3" id="running-fields" style="display: none;">
                 <div class="card-header">
@@ -189,41 +199,6 @@
                         <label for="distance">Distance (km)</label>
                         <input type="number" step="0.01" name="distance" class="form-control"
                             value="{{ old('distance') }}" placeholder="Distance">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="awards">Awards</label>
-                        <select name="awards[]" id="awards" class="form-control tags-input" multiple>
-                            <option value="gold" {{ collect(old('awards'))->contains('gold') ? 'selected' : '' }}>Gold
-                            </option>
-                            <option value="silver" {{ collect(old('awards'))->contains('silver') ? 'selected' : '' }}>
-                                Silver</option>
-                            <option value="bronze" {{ collect(old('awards'))->contains('bronze') ? 'selected' : '' }}>
-                                Bronze</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-3" id="running-fields" style="display: none;">
-                <div class="card-header">
-                    <div class="card-title">Challenge Details</div>
-                </div>
-                <div class="card-body row">
-                    <div class="col-md-6 mb-3">
-                        <label for="distance">Distance (km)</label>
-                        <input type="number" step="0.01" name="distance" class="form-control"
-                            value="{{ old('distance') }}" placeholder="Distance">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="awards">Awards</label>
-                        <select name="awards[]" id="awards" class="form-control" multiple>
-                            <option value="gold" {{ collect(old('awards'))->contains('gold') ? 'selected' : '' }}>Gold
-                            </option>
-                            <option value="silver" {{ collect(old('awards'))->contains('silver') ? 'selected' : '' }}>
-                                Silver</option>
-                            <option value="bronze" {{ collect(old('awards'))->contains('bronze') ? 'selected' : '' }}>
-                                Bronze</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -245,23 +220,48 @@
         $(function() {
             function toggleCategoryFields() {
                 var cat = $('#category').val();
-                $('#football-fields, #football-teams').hide();
+                $('#football-teams').hide();
+                // $('#football-fields, #football-teams').hide();
                 $('#running-fields, #running-teams').hide();
                 if (cat === 'football') {
-                    $('#football-fields, #football-teams').show();
+                    $('#football-teams').show();
+                    // $('#football-fields, #football-teams').show();
+                    $('#running-teams').hide();
                 } else if (cat === 'running') {
                     $('#running-fields, #running-teams').show();
+                    $('#football-teams').hide();
+                    // $('#football-fields, #football-teams').hide();
                 }
             }
             $('#category').on('change', toggleCategoryFields);
             toggleCategoryFields();
 
-            // Initialize select2 for tags input
+            // Select2 for tags input
             $('.tags-input').select2({
                 tags: true,
                 tokenSeparators: [','],
                 width: '100%'
             });
+
+            // Teams validation for football
+            function validateFootballTeams() {
+                var cat = $('#category').val();
+                var participantType = $('#participant_type').val();
+                var teams = $('#teams').val() || [];
+                if (cat === 'football') {
+                    if (participantType === 'invite' && teams.length < 2) {
+                        $('#teams').addClass('is-invalid');
+                    } else if (participantType === 'participate' && teams.length !== 2) {
+                        $('#teams').addClass('is-invalid');
+                    } else {
+                        $('#teams').removeClass('is-invalid');
+                    }
+                } else {
+                    $('#teams').removeClass('is-invalid');
+                }
+            }
+            $('#participant_type, #teams').on('change', validateFootballTeams);
+            $('#category').on('change', validateFootballTeams);
         });
     </script>
 @endsection

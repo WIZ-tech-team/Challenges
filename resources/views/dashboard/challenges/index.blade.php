@@ -2,6 +2,19 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h2>Challenges</h2>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -23,7 +36,7 @@
                 <tbody>
                     @foreach ($challenges as $index => $challenge)
                         <tr>
-                            <td>{{ $index+1 }}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $challenge->id }}</td>
                             <td>{{ $challenge->title }}</td>
                             <td>{{ $challenge->category }}</td>
@@ -42,7 +55,7 @@
                             <td>
                                 <div class="d-flex gap-2 flex-wrap align-items-center justify-content-center">
                                     {{-- <a href="{{ route('challenges.setResult', $challenge->id) }}" class="btn btn-sm btn-primary">Set Result</a> --}}
-                                    <a href="#" class="btn btn-sm btn-light-success">Set Result</a>
+                                    {{-- <a href="#" class="btn btn-sm btn-light-success">Set Result</a> --}}
                                     <form action="{{ route('challenges.destroy', $challenge->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf

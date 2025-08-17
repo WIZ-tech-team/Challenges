@@ -98,6 +98,7 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('challenges')->controller(ChallengesController::class)->group(function () {
         Route::get('/', 'index')->name('challenges.index');
         Route::get('/create', 'create')->name('challenges.create');
+        Route::post('/', 'store')->name('challenges.store');
         Route::delete('/{challenge_id}', 'destroy')->name('challenges.destroy');
     });
 
