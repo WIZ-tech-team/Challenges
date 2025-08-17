@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\StoreCategory;
+use Exception;
 use Illuminate\Http\Request;
 
 class StoreCategoriesController extends Controller
@@ -37,7 +38,17 @@ class StoreCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'title' => 'required|string|unique:store_categories,title'
+            ]);
+
+            StoreCategory::create(['title' => $request['title']]);
+
+            return redirect()->back()->with('success', 'Store category created successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -72,7 +83,21 @@ class StoreCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $category = StoreCategory::findOrFail($id);
+
+            $request->validate([
+                'title' => 'required|string|unique:store_categories,title'
+            ]);
+
+            $category->title = $request['title'];
+            $category->update();
+
+            return redirect()->back()->with('success', 'Store category updated successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -85,6 +110,6 @@ class StoreCategoriesController extends Controller
     {
         $category = StoreCategory::findOrFail($id);
         $category->delete();
-        return redirect()->route('dashboard.store.categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 }

@@ -2,6 +2,29 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Categories</h2>
             <a href="{{ route('storeCategories.create') }}" class="btn btn-primary">Create New Category</a>
@@ -24,8 +47,10 @@
                             <td>{{ $category->title }}</td>
                             <td>
                                 <div class="d-flex gap-2 flex-wrap align-items-center justify-content-center">
-                                    <a href="{{ route('storeCategories.edit', $category->id) }}" class="btn btn-sm btn-light-success">Update</a>
-                                    <form action="{{ route('storeCategories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                                    <a href="{{ route('storeCategories.edit', $category->id) }}"
+                                        class="btn btn-sm btn-light-success">Update</a>
+                                    <form action="{{ route('storeCategories.destroy', $category->id) }}" method="POST"
+                                        style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"

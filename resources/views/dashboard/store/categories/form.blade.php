@@ -3,19 +3,35 @@
 
 @section('content')
     <div class="container mt-4">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h3 class="mb-4">
             {{ isset($category) ? 'Update Category' : 'Create New Category' }}
         </h3>
-        <form action="{{ isset($category) ? route('storeCategories.update', $category->id) : route('storeCategories.store') }}" method="POST">
+        <form
+            action="{{ isset($category) ? route('storeCategories.update', $category->id) : route('storeCategories.store') }}"
+            method="POST">
             @csrf
-            @if(isset($category))
+            @if (isset($category))
                 @method('PUT')
             @endif
 
             <div class="mb-3">
                 <label for="title" class="form-label">Category Title</label>
-                <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                       value="{{ old('title', $category->title ?? '') }}" required>
+                <input type="text" name="title" id="title"
+                    class="form-control @error('title') is-invalid @enderror"
+                    value="{{ old('title', $category->title ?? '') }}" required>
                 @error('title')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
