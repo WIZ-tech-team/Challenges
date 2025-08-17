@@ -2,6 +2,19 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h2>Awards</h2>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -24,9 +37,11 @@
                             <td>{{ $award->details }}</td>
                             <td>
                                 @if (is_array($award->products))
-                                    {{ implode(', ', $award->products) }}
+                                    {{ implode(', ', array_column($award->products, 'name')) }}
+                                @elseif ($award->products instanceof \Illuminate\Support\Collection)
+                                    {{ $award->products->pluck('name')->implode(', ') }}
                                 @else
-                                    {{ $award->products }}
+                                    {{ $award->products->name ?? $award->products }}
                                 @endif
                             </td>
                             <td>

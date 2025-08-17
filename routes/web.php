@@ -105,7 +105,8 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('awards')->controller(AwardsController::class)->group(function () {
         Route::get('/', 'index')->name('awards.index');
         Route::get('/create', 'create')->name('awards.create');
-        Route::delete('/{challenge_id}', 'destroy')->name('awards.destroy');
+        Route::post('/', 'store')->name('awards.store');
+        Route::delete('/{award_id}', 'destroy')->name('awards.destroy');
     });
 
     Route::prefix('store')->group(function () {

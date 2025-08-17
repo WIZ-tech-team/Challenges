@@ -2,8 +2,21 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h2>Create Award</h2>
-        <form action="#" method="POST">
+        <form action="{{ route('awards.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -33,10 +46,10 @@
             <div class="mb-3">
                 <label for="products">Products</label>
                 <select name="products[]" id="products" class="form-control tags-input" multiple>
-                    @foreach (['Product A', 'Product B', 'Product C', 'Product D'] as $product)
-                        <option value="{{ $product }}"
-                            {{ collect(old('products'))->contains($product) ? 'selected' : '' }}>
-                            {{ $product }}
+                    @foreach ($storeProducts as $product)
+                        <option value="{{ $product->id }}"
+                            {{ collect(old('products'))->contains($product->id) ? 'selected' : '' }}>
+                            {{ $product->name }}
                         </option>
                     @endforeach
                 </select>
