@@ -353,6 +353,14 @@
 											<span class="menu-title">Categories</span>
 										</a>
 										<!--end:Menu link-->
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/dashboard/store/products">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Products</span>
+										</a>
+										<!--end:Menu link-->
 									</div>
 									<!--end:Menu item-->
 								</div>

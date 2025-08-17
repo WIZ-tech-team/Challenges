@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Web\AwardsController;
 use App\Http\Controllers\Web\ChallengesController;
 use App\Http\Controllers\Web\StoreCategoriesController;
+use App\Http\Controllers\Web\StoreProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,11 +116,14 @@ Route::prefix('dashboard')->group(function () {
             Route::delete('/{category_id}', 'destroy')->name('storeCategories.destroy');
         });
 
-        // Route::prefix('awards')->controller(AwardsController::class)->group(function () {
-        //     Route::get('/', 'index')->name('awards.index');
-        //     Route::get('/create', 'create')->name('awards.create');
-        //     Route::delete('/{challenge_id}', 'destroy')->name('awards.destroy');
-        // });
+        Route::prefix('products')->controller(StoreProductsController::class)->group(function () {
+            Route::get('/', 'index')->name('storeProducts.index');
+            Route::get('/create', 'create')->name('storeProducts.create');
+            Route::post('/', 'store')->name('storeProducts.store');
+            Route::get('/edit/{product_id}', 'edit')->name('storeProducts.edit');
+            Route::post('/{product_id}', 'update')->name('storeProducts.update');
+            Route::delete('/{product_id}', 'destroy')->name('storeProducts.destroy');
+        });
     });
 });
 
