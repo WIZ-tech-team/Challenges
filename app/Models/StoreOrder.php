@@ -11,7 +11,7 @@ class StoreOrder extends Model
 
     protected $fillable = ['api_user_id', 'store_product_id', 'points', 'status'];
     
-    public function apiUsers()
+    public function apiUser()
     {
         return $this->belongsTo(ApiUser::class, 'api_user_id');
     }

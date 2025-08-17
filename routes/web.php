@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Web\AwardsController;
 use App\Http\Controllers\Web\ChallengesController;
 use App\Http\Controllers\Web\StoreCategoriesController;
+use App\Http\Controllers\Web\StoreOrdersController;
 use App\Http\Controllers\Web\StoreProductsController;
 
 /*
@@ -123,6 +124,11 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/edit/{product_id}', 'edit')->name('storeProducts.edit');
             Route::post('/{product_id}', 'update')->name('storeProducts.update');
             Route::delete('/{product_id}', 'destroy')->name('storeProducts.destroy');
+        });
+
+        Route::prefix('orders')->controller(StoreOrdersController::class)->group(function () {
+            Route::get('/', 'index')->name('storeOrders.index');
+            Route::put('/update-status', 'updateStatus')->name('storeOrders.updateStatus');
         });
     });
 });
