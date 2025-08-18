@@ -2,6 +2,20 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Store Orders</h2>
         </div>
@@ -40,14 +54,14 @@
                             <td>
                                 @if ($order->status === 'pending')
                                     <div class="d-flex gap-2 flex-wrap align-items-center justify-content-center">
-                                        <form action="{{ route('storeOrders.updateStatus', [$order->id, 'approved']) }}"
+                                        <form action="{{ route('storeOrders.approve', [$order->id]) }}"
                                             method="POST" style="display:inline;">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-sm btn-success"
                                                 onclick="return confirm('Approve this order?')">Approve</button>
                                         </form>
-                                        <form action="{{ route('storeOrders.updateStatus', [$order->id, 'not-approved']) }}"
+                                        <form action="{{ route('storeOrders.notApprove', [$order->id]) }}"
                                             method="POST" style="display:inline;">
                                             @csrf
                                             @method('PATCH')

@@ -130,7 +130,8 @@ Route::prefix('dashboard')->group(function () {
 
         Route::prefix('orders')->controller(StoreOrdersController::class)->group(function () {
             Route::get('/', 'index')->name('storeOrders.index');
-            Route::put('/update-status', 'updateStatus')->name('storeOrders.updateStatus');
+            Route::patch('/{order_id}/approve', 'approve')->name('storeOrders.approve');
+            Route::patch('/{order_id}/not-approve', 'notApprove')->name('storeOrders.notApprove');
         });
     });
 });

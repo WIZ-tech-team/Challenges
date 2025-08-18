@@ -16,15 +16,6 @@
             </div>
         @endif
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Categories</h2>
             <a href="{{ route('storeCategories.create') }}" class="btn btn-primary">Create New Category</a>

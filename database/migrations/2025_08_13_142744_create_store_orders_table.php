@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('api_user_id')->constrained('api_users')->onDelete('cascade');
             $table->foreignId('store_product_id')->constrained('store_products')->onDelete('cascade');
             $table->double('points');
-            $table->enum('status', ['pending', 'approved', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'not-approved', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
