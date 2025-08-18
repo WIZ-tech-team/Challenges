@@ -2,29 +2,43 @@
 
 @section('content')
     <div class="container mt-4">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <h3 class="mb-4">
             {{ isset($product) ? 'Update Product' : 'Create New Product' }}
         </h3>
         <form action="{{ isset($product) ? route('storeProducts.update', $product->id) : route('storeProducts.store') }}"
-            method="POST">
+            method="POST" enctype="multipart/form-data">
             @csrf
             @if (isset($product))
                 @method('PUT')
             @endif
 
             <div class="mb-3">
-                <label for="category_id" class="form-label">Category</label>
-                <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror"
-                    required>
+                <label for="store_category_id" class="form-label">Category</label>
+                <select name="store_category_id" id="store_category_id"
+                    class="form-select @error('store_category_id') is-invalid @enderror" required>
                     <option value="">Select Category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
-                            {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                            {{ old('store_category_id', $product->category->id ?? '') == $category->id ? 'selected' : '' }}>
                             {{ $category->title }}
                         </option>
                     @endforeach
                 </select>
-                @error('category_id')
+                @error('store_category_id')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
@@ -58,10 +72,24 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                <div class="">
+                    <input type="file" name="image" accept=".jpg,.jpeg,.png,.gif" class="form-control @error('image') is-invalid @enderror">
+                    @error('image')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
             <div class="mb-3 form-check">
-                <input type="checkbox" name="is_available" id="is_available" class="form-check-input"
-                    {{ old('is_available', $product->is_available ?? false) ? 'checked' : '' }}>
-                <label for="is_available" class="form-check-label">Available</label>
+                {{-- <label class="form-label">Availability</label> --}}
+                <div class="">
+                    <input type="hidden" name="is_available" value="0">
+                    <input type="checkbox" name="is_available" id="is_available" class="form-check-input" value="1"
+                        {{ old('is_available', $product->is_available ?? 0) ? 'checked' : '' }}>
+                    <label for="is_available" class="form-check-label">Available</label>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">

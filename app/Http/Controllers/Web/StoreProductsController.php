@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\StoreCategory;
 use App\Models\StoreProduct;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StoreProductsController extends Controller
 {
@@ -39,7 +41,35 @@ class StoreProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $request->validate([
+                'name' => 'required|string|unique:store_products,name',
+                'store_category_id' => 'required|integer|exists:store_categories,id',
+                'price_in_points' => 'required|numeric|min:0',
+                'quantity' => 'required|integer',
+                'is_available' => 'required|boolean',
+                'image' => 'required|image'
+            ]);
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('storeProducts', 'public');
+            }
+
+            $product = StoreProduct::create([
+                'name' => $request['name'],
+                'store_category_id' => $request['store_category_id'],
+                'price_in_points' => $request['price_in_points'],
+                'quantity' => $request['quantity'],
+                'is_available' => $request['is_available'],
+                'image' => $imagePath
+            ]);
+
+            return redirect()->back()->with('success', 'Store product created successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -75,7 +105,37 @@ class StoreProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $product = StoreProduct::findOrFail($id);
+
+            $request->validate([
+                'name' => ['required', 'string', Rule::unique('store_products', 'name')->ignore($product->id)],
+                'store_category_id' => 'required|integer|exists:store_categories,id',
+                'price_in_points' => 'required|numeric|min:0',
+                'quantity' => 'required|integer',
+                'is_available' => 'required|boolean',
+                'image' => 'nullable|image'
+            ]);
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('storeProducts', 'public');
+            }
+
+            $product->update([
+                'name' => $request['name'],
+                'store_category_id' => $request['store_category_id'],
+                'price_in_points' => $request['price_in_points'],
+                'quantity' => $request['quantity'],
+                'is_available' => $request['is_available'],
+                'image' => $imagePath
+            ]);
+
+            return redirect()->back()->with('success', 'Store product updated successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -89,6 +149,6 @@ class StoreProductsController extends Controller
         $product = StoreProduct::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('dashboard.store.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->back()->with('success', 'Store product deleted successfully.');
     }
 }

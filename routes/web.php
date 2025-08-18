@@ -124,7 +124,7 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/create', 'create')->name('storeProducts.create');
             Route::post('/', 'store')->name('storeProducts.store');
             Route::get('/edit/{product_id}', 'edit')->name('storeProducts.edit');
-            Route::post('/{product_id}', 'update')->name('storeProducts.update');
+            Route::put('/{product_id}', 'update')->name('storeProducts.update');
             Route::delete('/{product_id}', 'destroy')->name('storeProducts.destroy');
         });
 
