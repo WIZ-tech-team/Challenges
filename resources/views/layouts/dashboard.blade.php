@@ -69,11 +69,11 @@
 					<!--begin::Aside Menu-->
 					<div class="w-100 hover-scroll-y d-flex pe-2" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_footer, #kt_header" data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu, #kt_aside_menu_wrapper" data-kt-scroll-offset="102">
 						<!--begin::Menu-->
-						<div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto" id="#kt_aside_menu" data-kt-menu="true">
+						<div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto h-100 align-items-start" id="#kt_aside_menu" data-kt-menu="true">
 							<!--begin:Menu item-->
 							<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="ki-duotone ki-element-11 fs-2">
 											<span class="path1"></span>
@@ -84,7 +84,7 @@
 									</span>
 									<span class="menu-title">Dashboards</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -106,7 +106,7 @@
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa fa-list-alt" aria-hidden="true"></i>
 
@@ -118,7 +118,7 @@
 									</span>
 									<span class="menu-title">Cities</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -149,7 +149,7 @@
 
 							<!--begin:Menu link-->
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa fa-list-alt" aria-hidden="true"></i>
 
@@ -161,7 +161,7 @@
 									</span>
 									<span class="menu-title">Categories</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -198,12 +198,10 @@
 								<!--begin:Menu link-->
 								<span class="menu-link">
 									<span class="menu-icon">
-										<i class="fas fa-trophy fa-lg"></i>
-
+										<i class="fas fa-bolt fa-lg"></i>
 										<span class="path1"></span>
 										<span class="path2"></span>
 										<span class="path3"></span>
-										</i>
 									</span>
 									<span class="menu-title">Challenges</span>
 									<span class="menu-arrow"></span>
@@ -214,13 +212,19 @@
 									<!--begin:Menu item-->
 									<div class="menu-item">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="/createChallenge">
+										<a class="menu-link" href="/dashboard/challenges">
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">Create Challenge</span>
+											<span class="menu-title">List</span>
 										</a>
-										<div class="menu-item">
+										<a class="menu-link" href="/dashboard/challenges/create">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Create</span>
+										</a>
+										{{-- <div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link" href="/readChallenges">
 												<span class="menu-bullet">
@@ -237,12 +241,51 @@
 												<span class="menu-title">Show Running Challenges</span>
 											</a>
 											<!--end:Menu link-->
-										</div>
+										</div> --}}
 										<!--end:Menu link-->
 									</div>
 									<!--end:Menu item-->
 								</div>
 							</div>
+
+							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+
+								<!--begin:Menu link-->
+								<span class="menu-link">
+									<span class="menu-icon">
+										<i class="fas fa-trophy fa-lg"></i>
+
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>
+										</i>
+									</span>
+									<span class="menu-title">Awards</span>
+									<span class="menu-arrow"></span>
+								</span>
+								<!--end:Menu link-->
+								<!--begin:Menu sub-->
+								<div class="menu-sub menu-sub-accordion">
+									<!--begin:Menu item-->
+									<div class="menu-item">
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/dashboard/awards">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">List</span>
+										</a>
+										<a class="menu-link" href="/dashboard/awards/create">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Create</span>
+										</a>
+									</div>
+									<!--end:Menu item-->
+								</div>
+							</div>
+
 							<!--Health Places-->
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
@@ -289,6 +332,54 @@
 								<!--begin:Menu link-->
 								<span class="menu-link">
 									<span class="menu-icon">
+										<i class="fas fa-store"></i>
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>
+									</span>
+									<span class="menu-title">Store</span>
+									<span class="menu-arrow"></span>
+								</span>
+								<!--end:Menu link-->
+								<!--begin:Menu sub-->
+								<div class="menu-sub menu-sub-accordion">
+									<!--begin:Menu item-->
+									<div class="menu-item">
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/dashboard/store/categories">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Categories</span>
+										</a>
+										<!--end:Menu link-->
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/dashboard/store/products">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Products</span>
+										</a>
+										<!--end:Menu link-->
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/dashboard/store/orders">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Orders</span>
+										</a>
+										<!--end:Menu link-->
+									</div>
+									<!--end:Menu item-->
+								</div>
+							</div>
+
+							<!--Blog-->
+							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+
+								<!--begin:Menu link-->
+								{{-- <span class="menu-link">
+									<span class="menu-icon">
 										<i class="fa-solid fa-blog"></i>
 
 										<span class="path1"></span>
@@ -298,7 +389,7 @@
 									</span>
 									<span class="menu-title">Blog</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -328,7 +419,7 @@
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="ki-duotone ki-address-book fs-2">
 											<span class="path1"></span>
@@ -338,7 +429,7 @@
 									</span>
 									<span class="menu-title">User Profile</span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -362,7 +453,7 @@
 							<!--begin:Menu item-->
 							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 								<!--begin:Menu link-->
-								<span class="menu-link">
+								{{-- <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa-solid fa-football"></i>
 										<span class="path1"></span>
@@ -374,7 +465,7 @@
 									</span>
 									<span class="menu-title">Football League </span>
 									<span class="menu-arrow"></span>
-								</span>
+								</span> --}}
 								<!--end:Menu link-->
 								<!--begin:Menu sub-->
 								<div class="menu-sub menu-sub-accordion">
@@ -465,7 +556,7 @@
 									<div class="menu-content d-flex align-items-center px-3">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-50px me-5">
-											<img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+											<img alt="Logo" src="/assets/media/avatars/300-1.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Username-->
@@ -483,9 +574,9 @@
 								<div class="separator my-2"></div>
 								<!--end::Menu separator-->
 								<!--begin::Menu item-->
-								<div class="menu-item px-5">
+								{{-- <div class="menu-item px-5">
 									<a href="../../demo10/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-								</div>
+								</div> --}}
 								<!--end::Menu item-->
 								<!-- Removed Code -->
 								<!--begin::Menu separator-->
@@ -527,8 +618,8 @@
 							<!--end::Aside toggle-->
 							<!--begin::Logo-->
 
-							<img alt="Logo" src="assets/media/logos/logo-removebg-preview.png" class="h-25px h-lg-90px d-none d-md-block" />
-							<img alt="Logo" src="assets/media/logos/default-small.svg" class="h-25px d-block d-md-none" />
+							<img alt="Logo" src="/assets/media/logos/logo-removebg-preview.png" class="h-25px h-lg-90px d-none d-md-block" />
+							<img alt="Logo" src="/assets/media/logos/default-small.svg" class="h-25px d-block d-md-none" />
 
 							<!--end::Logo-->
 						</div>
@@ -550,7 +641,7 @@
 									</div>
 									<!--end::Tablet and mobile search toggle-->
 									<!--begin::Form(use d-none d-lg-block classes for responsive search)-->
-									<form data-kt-search-element="form" class="d-none d-lg-block w-100 position-relative mb-2 mb-lg-0" autocomplete="off">
+									{{-- <form data-kt-search-element="form" class="d-none d-lg-block w-100 position-relative mb-2 mb-lg-0" autocomplete="off">
 										<!--begin::Hidden input(Added to disable form autocomplete)-->
 										<input type="hidden" />
 										<!--end::Hidden input-->
@@ -576,7 +667,7 @@
 											</i>
 										</span>
 										<!--end::Reset-->
-									</form>
+									</form> --}}
 									<!--end::Form-->
 									<!--begin::Menu-->
 									<div data-kt-search-element="content" class="menu menu-sub menu-sub-dropdown py-7 px-7 overflow-hidden w-300px w-md-350px">
@@ -593,7 +684,7 @@
 													<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
-															<img src="assets/media/avatars/300-6.jpg" alt="" />
+															<img src="/assets/media/avatars/300-6.jpg" alt="" />
 														</div>
 														<!--end::Symbol-->
 														<!--begin::Title-->
@@ -608,7 +699,7 @@
 													<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
-															<img src="assets/media/avatars/300-2.jpg" alt="" />
+															<img src="/assets/media/avatars/300-2.jpg" alt="" />
 														</div>
 														<!--end::Symbol-->
 														<!--begin::Title-->
@@ -623,7 +714,7 @@
 													<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
-															<img src="assets/media/avatars/300-9.jpg" alt="" />
+															<img src="/assets/media/avatars/300-9.jpg" alt="" />
 														</div>
 														<!--end::Symbol-->
 														<!--begin::Title-->
@@ -638,7 +729,7 @@
 													<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
-															<img src="assets/media/avatars/300-14.jpg" alt="" />
+															<img src="/assets/media/avatars/300-14.jpg" alt="" />
 														</div>
 														<!--end::Symbol-->
 														<!--begin::Title-->
@@ -653,7 +744,7 @@
 													<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
-															<img src="assets/media/avatars/300-11.jpg" alt="" />
+															<img src="/assets/media/avatars/300-11.jpg" alt="" />
 														</div>
 														<!--end::Symbol-->
 														<!--begin::Title-->
@@ -672,7 +763,7 @@
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
 															<span class="symbol-label bg-light">
-																<img class="w-20px h-20px" src="assets/media/svg/brand-logos/volicity-9.svg" alt="" />
+																<img class="w-20px h-20px" src="/assets/media/svg/brand-logos/volicity-9.svg" alt="" />
 															</span>
 														</div>
 														<!--end::Symbol-->
@@ -689,7 +780,7 @@
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
 															<span class="symbol-label bg-light">
-																<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tvit.svg" alt="" />
+																<img class="w-20px h-20px" src="/assets/media/svg/brand-logos/tvit.svg" alt="" />
 															</span>
 														</div>
 														<!--end::Symbol-->
@@ -706,7 +797,7 @@
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
 															<span class="symbol-label bg-light">
-																<img class="w-20px h-20px" src="assets/media/svg/misc/infography.svg" alt="" />
+																<img class="w-20px h-20px" src="/assets/media/svg/misc/infography.svg" alt="" />
 															</span>
 														</div>
 														<!--end::Symbol-->
@@ -723,7 +814,7 @@
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
 															<span class="symbol-label bg-light">
-																<img class="w-20px h-20px" src="assets/media/svg/brand-logos/leaf.svg" alt="" />
+																<img class="w-20px h-20px" src="/assets/media/svg/brand-logos/leaf.svg" alt="" />
 															</span>
 														</div>
 														<!--end::Symbol-->
@@ -740,7 +831,7 @@
 														<!--begin::Symbol-->
 														<div class="symbol symbol-40px me-4">
 															<span class="symbol-label bg-light">
-																<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tower.svg" alt="" />
+																<img class="w-20px h-20px" src="/assets/media/svg/brand-logos/tower.svg" alt="" />
 															</span>
 														</div>
 														<!--end::Symbol-->
@@ -1210,7 +1301,7 @@
 							</div>
 							<!--end::Item-->
 							<!--begin::Item-->
-							<div class="d-flex align-items-center me-2 me-lg-4">
+							{{-- <div class="d-flex align-items-center me-2 me-lg-4">
 								<a href="#" class="btn btn-icon btn-borderless btn-color-white btn-active-primary bg-white bg-opacity-10 position-relative" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 									<i class="ki-duotone ki-notification-bing fs-1 text-white">
 										<span class="path1"></span>
@@ -1491,7 +1582,7 @@
 												<!--end::Section-->
 												<!--begin::Illustration-->
 												<div class="text-center px-4">
-													<img class="mw-100 mh-200px" alt="image" src="assets/media/illustrations/sigma-1/1.png" />
+													<img class="mw-100 mh-200px" alt="image" src="/assets/media/illustrations/sigma-1/1.png" />
 												</div>
 												<!--end::Illustration-->
 											</div>
@@ -1723,7 +1814,7 @@
 									<!--end::Tab content-->
 								</div>
 								<!--end::Menu-->
-							</div>
+							</div> --}}
 							<!--end::Item-->
 							<!--begin::Item-->
 							<div class="d-flex align-items-center me-2 me-lg-4">
@@ -1740,7 +1831,7 @@
 										<div class="menu-content d-flex align-items-center px-3">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-50px me-5">
-												<img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+												<img alt="Logo" src="/assets/media/avatars/300-1.jpg" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Username-->
@@ -1758,9 +1849,9 @@
 									<div class="separator my-2"></div>
 									<!--end::Menu separator-->
 									<!--begin::Menu item-->
-									<div class="menu-item px-5">
+									{{-- <div class="menu-item px-5">
 										<a href="../../demo10/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-									</div>
+									</div> --}}
 									<!--end::Menu item-->
 									<!-- Removed Code -->
 									<!--begin::Menu separator-->
@@ -1876,7 +1967,7 @@
 								<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
 									<!--begin::Item-->
 									<li class="breadcrumb-item text-muted">
-										<a href="../../demo10/dist/index.html" class="text-muted text-hover-primary">Home</a>
+										<a href="/" class="text-muted text-hover-primary">Home</a>
 									</li>
 									<!--end::Item-->
 									<!--begin::Item-->
@@ -2006,7 +2097,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="assets/media/avatars/300-14.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-14.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2029,12 +2120,12 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/300-2.jpg" alt="img" />
+													<img src="/assets/media/avatars/300-2.jpg" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/300-14.jpg" alt="img" />
+													<img src="/assets/media/avatars/300-14.jpg" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -2068,7 +2159,7 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/300-20.jpg" alt="img" />
+													<img src="/assets/media/avatars/300-20.jpg" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -2123,7 +2214,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Alan Nilson">
-												<img src="assets/media/avatars/300-1.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-1.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2166,7 +2257,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Jan Hummer">
-												<img src="assets/media/avatars/300-23.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-23.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2179,7 +2270,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="assets/media/svg/files/pdf.svg" />
+												<img alt="" class="w-30px me-3" src="/assets/media/svg/files/pdf.svg" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -2196,7 +2287,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="../../demo10/dist/apps/projects/project.html" class="w-30px me-3" src="assets/media/svg/files/doc.svg" />
+												<img alt="../../demo10/dist/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/doc.svg" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -2213,7 +2304,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center">
 												<!--begin::Icon-->
-												<img alt="../../demo10/dist/apps/projects/project.html" class="w-30px me-3" src="assets/media/svg/files/css.svg" />
+												<img alt="../../demo10/dist/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/css.svg" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -2266,7 +2357,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="assets/media/avatars/300-14.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-14.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2306,7 +2397,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Marcus Dotson">
-												<img src="assets/media/avatars/300-2.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-2.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2320,7 +2411,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="assets/media/stock/600x400/img-29.jpg" />
+													<img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-29.jpg" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -2334,7 +2425,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="assets/media/stock/600x400/img-31.jpg" />
+													<img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-31.jpg" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -2348,7 +2439,7 @@
 											<div class="overlay">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="assets/media/stock/600x400/img-40.jpg" />
+													<img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-40.jpg" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -2438,7 +2529,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Robert Rich">
-												<img src="assets/media/avatars/300-4.jpg" alt="img" />
+												<img src="/assets/media/avatars/300-4.jpg" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -2654,7 +2745,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -2686,7 +2777,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -2706,7 +2797,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -2738,7 +2829,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -2758,7 +2849,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -2792,7 +2883,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -2812,7 +2903,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -2844,7 +2935,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -2864,7 +2955,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -2969,7 +3060,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-1.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-1.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3004,7 +3095,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-3.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-3.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3039,7 +3130,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-8.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-8.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3074,7 +3165,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-26.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-26.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3109,7 +3200,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-21.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-21.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3144,7 +3235,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-34.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-34.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -3179,7 +3270,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="assets/media/stock/600x400/img-27.jpg" alt="" />
+							<img src="/assets/media/stock/600x400/img-27.jpg" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -4026,7 +4117,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/pdf.svg" alt="icon" />
+															<img src="/assets/media/svg/files/pdf.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4053,7 +4144,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/tif.svg" alt="icon" />
+															<img src="/assets/media/svg/files/tif.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4080,7 +4171,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/folder-document.svg" alt="icon" />
+															<img src="/assets/media/svg/files/folder-document.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4107,7 +4198,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/css.svg" alt="icon" />
+															<img src="/assets/media/svg/files/css.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4134,7 +4225,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/ai.svg" alt="icon" />
+															<img src="/assets/media/svg/files/ai.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4161,7 +4252,7 @@
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-35px">
-															<img src="assets/media/svg/files/doc.svg" alt="icon" />
+															<img src="/assets/media/svg/files/doc.svg" alt="icon" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
@@ -4418,7 +4509,7 @@
 										<!--end::Actions-->
 										<!--begin::Illustration-->
 										<div class="text-center px-4">
-											<img src="assets/media/illustrations/sigma-1/9.png" alt="" class="mww-100 mh-350px" />
+											<img src="/assets/media/illustrations/sigma-1/9.png" alt="" class="mww-100 mh-350px" />
 										</div>
 										<!--end::Illustration-->
 									</div>
@@ -5041,9 +5132,9 @@
 													<!--end::Input-->
 													<!--begin::Card logos-->
 													<div class="position-absolute translate-middle-y top-50 end-0 me-5">
-														<img src="assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
-														<img src="assets/media/svg/card-logos/mastercard.svg" alt="" class="h-25px" />
-														<img src="assets/media/svg/card-logos/american-express.svg" alt="" class="h-25px" />
+														<img src="/assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
+														<img src="/assets/media/svg/card-logos/mastercard.svg" alt="" class="h-25px" />
+														<img src="/assets/media/svg/card-logos/american-express.svg" alt="" class="h-25px" />
 													</div>
 													<!--end::Card logos-->
 												</div>
@@ -5163,7 +5254,7 @@
 											<!--end::Description-->
 											<!--begin::Illustration-->
 											<div class="text-center px-4 py-15">
-												<img src="assets/media/illustrations/sigma-1/9.png" alt="" class="mw-100 mh-300px" />
+												<img src="/assets/media/illustrations/sigma-1/9.png" alt="" class="mw-100 mh-300px" />
 											</div>
 											<!--end::Illustration-->
 										</div>
@@ -5248,7 +5339,7 @@
 						<!--end::Heading-->
 						<!--begin::Google Contacts Invite-->
 						<div class="btn btn-light-primary fw-bold w-100 mb-8">
-							<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts
+							<img alt="Logo" src="/assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts
 						</div>
 						<!--end::Google Contacts Invite-->
 						<!--begin::Separator-->
@@ -5272,7 +5363,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-6.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-6.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5328,7 +5419,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5356,7 +5447,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-5.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-5.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5384,7 +5475,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5440,7 +5531,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-9.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-9.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5524,7 +5615,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-23.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-23.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5580,7 +5671,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-12.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-12.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5636,7 +5727,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-13.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-13.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5692,7 +5783,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-21.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-21.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5720,7 +5811,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/300-9.jpg" />
+											<img alt="Pic" src="/assets/media/avatars/300-9.jpg" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5840,7 +5931,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="assets/media/avatars/300-6.jpg" />
+												<img alt="Pic" src="/assets/media/avatars/300-6.jpg" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -5870,7 +5961,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+												<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -5885,7 +5976,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="assets/media/avatars/300-5.jpg" />
+												<img alt="Pic" src="/assets/media/avatars/300-5.jpg" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -5900,7 +5991,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+												<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -5930,7 +6021,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-6.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-6.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6002,7 +6093,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6038,7 +6129,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-5.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-5.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6074,7 +6165,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6146,7 +6237,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-9.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-9.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6254,7 +6345,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-23.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-23.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6326,7 +6417,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-12.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-12.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6398,7 +6489,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-13.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-13.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6470,7 +6561,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="assets/media/avatars/300-21.jpg" />
+													<img alt="Pic" src="/assets/media/avatars/300-21.jpg" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -6548,7 +6639,7 @@
 									<!--end::Message-->
 									<!--begin::Illustration-->
 									<div class="text-center px-5">
-										<img src="assets/media/illustrations/sigma-1/1.png" alt="" class="w-100 h-200px h-sm-325px" />
+										<img src="/assets/media/illustrations/sigma-1/1.png" alt="" class="w-100 h-200px h-sm-325px" />
 									</div>
 									<!--end::Illustration-->
 								</div>
