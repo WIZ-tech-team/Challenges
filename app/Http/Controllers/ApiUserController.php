@@ -173,6 +173,7 @@ class ApiUserController extends Controller
             if (!$apiUser) {
                 $apiUser = new ApiUser();
             }
+            $apiUser->supabase_uid = $supabaseUser->id;
             $apiUser->name = $supabaseUser->user_metadata->name;
             $apiUser->email = $supabaseUser->user_metadata->email;
             $apiUser->password = Hash::make($password);
