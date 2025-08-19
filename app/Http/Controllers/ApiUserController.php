@@ -204,110 +204,6 @@ class ApiUserController extends Controller
         }
     }
 
-    // public function store(Request $request)
-    // {   $validator = Validator::make($request->all(),[
-    //     'name'     =>  ['required', 'string', 'max:255'],
-    //     'phone'    =>  ['required', 'string', 'max:255'],
-    //     'email'    =>  ['required', 'email', 'max:255'],
-    //     'password' =>  ['required', Rules\Password::defaults()],
-    //     'confirm_password' => ['required', 'same:password'],
-    // ], );
-
-    // if ($validator->fails()) {
-    //     $errorMessages = $validator->errors()->all();
-    //     $formattedErrorMessages = implode(' ', $errorMessages);
-
-    //     return response()->json([
-    //         'message' => $formattedErrorMessages,
-    //         'status'  => Response::HTTP_BAD_REQUEST,
-    //     ], Response::HTTP_BAD_REQUEST);
-    // }
-
-
-
-    //     $serviceAccount = ServiceAccount::fromValue(public_path('challenge-88-firebase-adminsdk-7plca-d3ba680858.json'));
-    //     $firebase       = (new Factory)->withServiceAccount(public_path('challenge-88-firebase-adminsdk-7plca-d3ba680858.json'));
-    //     $name           = $request->input('name');
-    //     $phoneNumber    = $request->input('phone');
-    //     $password       = $request->input('password');
-    //     $email          = $request->input('email');
-
-    //     $firebaseAuth = app(AuthFirebase::class);
-    //     if (!$this->isValidEmailDomain($email)) {
-    //         return response()->json([
-    //             'message' => 'Invalid email domain',
-    //             'status' => Response::HTTP_BAD_REQUEST,
-    //         ]);
-    //     }
-    //    $phoneNumberUtil = PhoneNumberUtil::getInstance();
-    //    $phoneNumberObj = $phoneNumberUtil->parse($phoneNumber, 'PS');
-
-    //    if (!$phoneNumberUtil->isValidNumber($phoneNumberObj)) {
-    //       return (['message' =>'Invalid phone number', 'status' => Response::HTTP_BAD_REQUEST,]);
-    //    }
-
-    //    $formattedPhoneNumber = $phoneNumberUtil->format($phoneNumberObj, PhoneNumberFormat::E164);
-    //    $userProperties = [
-
-    //     'password' => $password ,
-    //     'phone'    => $formattedPhoneNumber,
-    // ];
-    // $existingUserByEmail = ApiUser::where('email', $email)->first();
-
-    // if ($existingUserByEmail) {
-    //     return response()->json([
-    //         'message' => 'Email already registered',
-    //         'status'  => Response::HTTP_BAD_REQUEST,
-    //     ]);
-    // }
-    // try {
-    //     $existingUser = $firebaseAuth->getUserByPhoneNumber($formattedPhoneNumber);
-    //     // If the email is already registered, return an error
-    //     return response()->json([
-    //         'message' => 'Phone already registered',
-    //         'status'  => Response::HTTP_BAD_REQUEST,
-    //     ]);
-
-
-    // } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
-    //     // User not found, continue with registration
-    // }
-
-    // $firebaseAuth = app(AuthFirebase::class);
-
-    //     $user1 = $firebaseAuth->createUser($userProperties);
-
-    //     $apiUser = new ApiUser();
-    //     $apiUser->name         = $request->post('name');
-    //     $apiUser->phone        = $phoneNumber;
-    //     $apiUser->email        = $email;
-    //     $apiUser->password     = Hash::make($password);
-    //    // $apiUser->api_token    = Str::random(60);
-    //     $apiUser->firebase_uid = $user1->uid;
-
-    //     $firestore = $firebase->createFirestore();
-    //     $database = $firestore->database();
-    //     $usersCollection = $database->collection('Users');
-    //     $usersCollection->document($apiUser->firebase_uid)->set([
-    //      'name'         => $apiUser->name,
-    //      'email'        => $apiUser->email,
-    //      'phone'        => $apiUser->phone,
-    //      'password'     => $apiUser->password,
-    //      'firebase_uid' => $apiUser->firebase_uid,
-    //      'fcm_token'    => $apiUser->fcm_token,
-
-    //      // Add other user data fields as needed
-    //  ]);
-    //     $apiUser->save();
-    //     return response()->json([
-    //         'message' => 'User added successfully',
-    //         'data'    => $apiUser,
-    //         'status'  => Response::HTTP_OK
-    //     ]
-    //     );
-
-    // }
-
     /**
      * Display the specified resource.
      *
@@ -363,18 +259,22 @@ class ApiUserController extends Controller
                 ]);
             }
 
-            // $userData = json_decode($response);
-            // $supabaseUser = $userData->user ?? $userData; // Adjust based on response structure
+            $supabaseUser = $response->user ?? null; // Adjust based on response 
             $user = ApiUser::where('phone', $formattedPhone)->first();
 
             if (!$user) {
                 $user = new ApiUser();
+                $user->supabase_uid = $supabaseUser->id;
                 $user->phone = ltrim($formattedPhone, '+');
                 $user->password = Hash::make($password);
                 $user->name = $response->user->user_metadata->name;
                 $user->email = $response->user->user_metadata->email;
                 // dd($response);
                 $user->save();
+            }
+
+            if($user->supabase_uid == null) {
+                $user->supabase_uid = $supabaseUser->id;
             }
 
             $apiToken = Str::random(60);
