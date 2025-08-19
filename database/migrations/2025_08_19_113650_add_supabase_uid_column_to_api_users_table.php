@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('store_orders', function (Blueprint $table) {
-            $table->enum('status', ['pending', 'approved', 'not-approved', 'completed', 'cancelled'])->default('pending')->change();
+        Schema::table('api_users', function (Blueprint $table) {
+            $table->uuid('supabase_uid')->unique()->nullable()->after('id');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('store_orders', function (Blueprint $table) {
-            $table->enum('status', ['pending', 'approved', 'completed', 'cancelled'])->default('pending')->change();
+        Schema::table('api_users', function (Blueprint $table) {
+            $table->dropColumn('supabase_uid');
         });
     }
 };
