@@ -121,7 +121,6 @@ class InvitationsController extends Controller
     public function resppondToInvitation(Request $request, $invitation_id)
     {
         $user = Auth::guard('api')->user();
-        $user = ApiUser::findOrFail(12);
         if (!$user) {
             return response()->json([
                 'message' => 'Unauthenticated.',
