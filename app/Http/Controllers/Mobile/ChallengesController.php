@@ -88,6 +88,7 @@ class ChallengesController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
             'opponent_id' => 'nullable|exists:teams,id',
+            'refree_id' => 'nullable|exists:api_users,id',
             'image' => 'nullable|image|max:2048'
         ], [
             'distance.required_if' => 'The distance field is required for running challenges.',
@@ -102,6 +103,9 @@ class ChallengesController extends Controller
             return isset($request['category']) && ($request['category'] === 'running');
         });
         $validator->sometimes('opponent_id', 'nullable|exists:teams,id|different:team_id', function () use ($request) {
+            return isset($request['category']) && ($request['category'] === 'football');
+        });
+        $validator->sometimes('refree_id', 'nullable|exists:api_users,id', function () use ($request) {
             return isset($request['category']) && ($request['category'] === 'football');
         });
 
@@ -128,6 +132,16 @@ class ChallengesController extends Controller
             $challengeData['team_id'] = $team->id;
             $challengeData['user_id'] = $apiUser->id;
             $challengeData['category'] = $category; // Set category from team
+
+            // Set custom data
+            if($category === 'football') {
+                $challengeData['opponent_id'] = $request['opponent_id'] ?? null;
+                $challengeData['refree_id'] = $request['refree_id'] ?? null;
+            } elseif($category === 'running') {
+                $challengeData['distance'] = $request['distance'] ?? null;
+                $challengeData['stepsNum'] = $request['stepsNum'] ?? null;
+            }
+
             $challenge = Challenge::create($challengeData);
 
             if ($challenge->category === 'football') {

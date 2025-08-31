@@ -15,7 +15,9 @@ class Team extends Model
         'name',
         'image',
         'user_id',
-        'category'
+        'category',
+        'lead_by',
+        'created_by'
     ];
 
     public function apiUsers()
@@ -44,5 +46,15 @@ class Team extends Model
     public function challengeInvitations()
     {
         return $this->morphMany(ChallengeInvitation::class, 'model');
+    }
+
+    public function leader()
+    {
+        return $this->belongsTo(ApiUser::class, 'lead_by');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(ApiUser::class, 'created_by');
     }
 }
