@@ -76,10 +76,9 @@ class ChallengesController extends Controller
         }
 
         $apiUser = ApiUser::findOrFail($user->id);
-        $team = $apiUser->team()->first();
-        $category = $team->category;
 
         $validator = Validator::make($request->all(), [
+            'category' => 'required|in:football,running',
             'title' => 'required|string|max:255',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
@@ -96,14 +95,14 @@ class ChallengesController extends Controller
         ]);
 
         // Replace 'category' with the team's category in validation conditions
-        $validator->sometimes('distance', 'required|numeric', function () use ($category) {
-            return $category === 'running';
+        $validator->sometimes('distance', 'required|numeric', function () use ($request) {
+            return isset($request['category']) && ($request['category'] === 'running');
         });
-        $validator->sometimes('stepsNum', 'required|numeric', function () use ($category) {
-            return $category === 'running';
+        $validator->sometimes('stepsNum', 'required|numeric', function () use ($request) {
+            return isset($request['category']) && ($request['category'] === 'running');
         });
-        $validator->sometimes('opponent_id', 'nullable|exists:teams,id|different:team_id', function () use ($category) {
-            return $category === 'football';
+        $validator->sometimes('opponent_id', 'nullable|exists:teams,id|different:team_id', function () use ($request) {
+            return isset($request['category']) && ($request['category'] === 'football');
         });
 
         if ($validator->fails()) {
@@ -116,15 +115,24 @@ class ChallengesController extends Controller
         try {
             DB::beginTransaction();
 
+            $team = $apiUser->teams()->where('category', $request['category'])->first();
+            if (!$team) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Sorry, you are not a team member of the requested category.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            $category = $team->category;
+
             $challengeData = $request->only(['title', 'latitude', 'longitude', 'address', 'start_time', 'end_time']);
             $challengeData['team_id'] = $team->id;
             $challengeData['user_id'] = $apiUser->id;
             $challengeData['category'] = $category; // Set category from team
             $challenge = Challenge::create($challengeData);
 
-            if($challenge->category === 'football') {
+            if ($challenge->category === 'football') {
                 $team->challengesParticipatedIn()->attach($challenge->id);
-            } elseif($challenge->category === 'running') {
+            } elseif ($challenge->category === 'running') {
                 $apiUser->challenges()->attach($challenge->id);
             }
 
