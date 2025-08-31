@@ -93,4 +93,9 @@ class ApiUser extends Model  implements Authenticatable
     {
         return $this->hasMany(StoreOrder::class, 'api_user_id');
     }
+
+    public function leadTeams()
+    {
+        return $this->hasMany(Team::class, 'lead_by');
+    }
 }

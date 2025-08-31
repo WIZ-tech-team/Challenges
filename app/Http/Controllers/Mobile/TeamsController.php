@@ -79,7 +79,9 @@ class TeamsController extends Controller
         try {
             DB::beginTransaction();
 
-            $teamData = $request->only(['name', 'category', 'city', 'firebase_document']);
+            $request['lead_by'] = $user->id;
+            $request['created_by'] = $user->id;
+            $teamData = $request->only(['name', 'category', 'city', 'lead_by', 'created_by']);
             $team = Team::create($teamData);
 
             if ($request->hasFile('image')) {
