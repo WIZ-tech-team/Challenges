@@ -86,4 +86,9 @@ public function opponent()
         return $this->belongsToMany(Team::class, 'challenge_team', 'challenge_id', 'team_id');
     }
 
+    public function referee()
+    {
+        return $this->belongsTo(ApiUser::class, 'refree_id');
+    }
+
 }
