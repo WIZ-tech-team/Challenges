@@ -426,7 +426,7 @@ class GhallengesController extends Controller
       $userTeamsIds = $user->teams()->get()->pluck('id')->toArray();
           $challenge = Challenge::with(['category', 'team', 'opponent'])
           ->where('id', $id)
-         ->whereIn('team_id', $userTeamsIds)
+        //  ->whereIn('team_id', $userTeamsIds)
           ->first();
 
          if(!$challenge){
@@ -435,6 +435,10 @@ class GhallengesController extends Controller
              'status'=>Response::HTTP_NOT_FOUND,
             ]);
           }
+
+        if($challenge->category === 'football') {
+            $challenge->load('referee', 'participantTeams');
+        }
           $userResults = $challenge->results->where('user_id', $user->id);
           $latestUserResult = $userResults->last();
           $challenge->setAttribute('user_result', $latestUserResult);
