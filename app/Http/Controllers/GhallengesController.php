@@ -23,8 +23,13 @@ class GhallengesController extends Controller
      */
     public function index()
     {
-      $challenge = Challenge::with('awards.products')->get();
-      return $challenge;
+      $challenges = Challenge::with('awards.products')->get();
+      foreach ($challenges as $challenge) {
+        if($challenge->category === 'football') {
+            $challenge->load('referee', 'participantTeams');
+        }
+      }
+      return $challenges;
     }
 
     /**
@@ -418,10 +423,10 @@ class GhallengesController extends Controller
            ]);
        }
        
-      $userTeam = $user->team_id;
+      $userTeamsIds = $user->teams()->get()->pluck('id')->toArray();
           $challenge = Challenge::with(['category', 'team', 'opponent'])
-          ->where('id',$id)
-         ->where('team_id',$userTeam)
+          ->where('id', $id)
+         ->whereIn('team_id', $userTeamsIds)
           ->first();
 
          if(!$challenge){
