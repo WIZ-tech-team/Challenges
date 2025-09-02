@@ -26,7 +26,7 @@ class GhallengesController extends Controller
       $challenges = Challenge::with('awards.products')->get();
       foreach ($challenges as $challenge) {
         if($challenge->category === 'football') {
-            $challenge->load('referee', 'participantTeams');
+            $challenge->load('opponent', 'referee', 'participantTeams');
         }
       }
       return $challenges;
