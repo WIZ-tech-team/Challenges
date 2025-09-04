@@ -12,8 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ChallengeInvitationsController extends Controller
 {
-    public function index($status)
+    public function userInvitations($status)
     {
+        if ($status !== 'pending' && $status !== 'accepted' && $status !== 'refused') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Invalid status. Allowed values are: pending, accepted, refused.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         $user = Auth::guard('api')->user();
         $apiUser = ApiUser::findOrFail($user->id);
         $invitations = $apiUser->challengeInvitations()
@@ -25,6 +32,45 @@ class ChallengeInvitationsController extends Controller
             'status' => 'success',
             'data' => $invitations
         ], Response::HTTP_OK);
+    }
+
+    public function teamInvitations($status, $team_id)
+    {
+        try {
+
+            if ($status !== 'pending' && $status !== 'accepted' && $status !== 'refused') {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Invalid status. Allowed values are: pending, accepted, refused.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $user = Auth::guard('api')->user();
+            $apiUser = ApiUser::findOrFail($user->id);
+            $userLeadTeamsWithInvitations = $apiUser->leadTeams()
+                ->with(['challengeInvitations' => function ($query) use ($status) {
+                    $query->where('status', $status)->with('challenge');
+                }])
+                ->where('id', $team_id)
+                ->first();
+
+            if (!$userLeadTeamsWithInvitations) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'You are not the leader of this team or the team does not exist.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $userLeadTeamsWithInvitations
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function respondToInvitation(Request $request, $invitation_id)
@@ -54,7 +100,7 @@ class ChallengeInvitationsController extends Controller
         $invitation = ChallengeInvitation::findOrFail($invitation_id);
         $challenge = $invitation->challenge;
 
-        if($invitation->status != 'pending') {
+        if ($invitation->status != 'pending') {
             return response()->json([
                 'status' => 'error',
                 'message' => 'This invitation has already been responded to.'
@@ -105,7 +151,7 @@ class ChallengeInvitationsController extends Controller
                 ], Response::HTTP_OK);
             }
         }
-        
+
         return response()->json([
             'status' => 'success',
             'message' => 'Invitation ' . $request->input('status') . ' successfully.'
