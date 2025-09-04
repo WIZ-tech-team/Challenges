@@ -100,7 +100,8 @@ Route::get('/challenges/user/running', [ChallengesController::class, 'userRunnin
 Route::get('/challenges/{challenge_id}/results', [ChallengesController::class, 'challengeResults']);
 Route::post('/challenges/{challenge_id}/results/football', [FootballResultsController::class, 'store']);
 Route::post('/challenges/{challenge_id}/results/running', [RunningResultsController::class, 'store']);
-Route::get('/challenges/invitations/{status}', [ChallengeInvitationsController::class, 'index']);
+Route::get('/challenges/invitations/{status}', [ChallengeInvitationsController::class, 'userInvitations']);
+Route::get('/challenges/invitations/{status}/lead-teams/{team_id}', [ChallengeInvitationsController::class, 'teamInvitations']);
 Route::post('/challenges/invitations/{invitation_id}', [ChallengeInvitationsController::class, 'respondToInvitation']);
 Route::get('/challenges/{interval_category}/{limit}', [GhallengesController::class, 'challengesBeforeOrAfter']);
 Route::post('/challenges', [ChallengesController::class, 'store']);

@@ -36,10 +36,9 @@ class InvitationsController extends Controller
         $invitations = $query->with('team')->get();
 
         return response()->json([
-            'message' => 'Invitations retrieved successfully.',
-            'data' => $invitations,
-            'status' => Response::HTTP_OK
-        ]);
+            'status' => 'success',
+            'data' => $invitations
+        ], Response::HTTP_OK);
     }
 
     public function store(Request $request)
