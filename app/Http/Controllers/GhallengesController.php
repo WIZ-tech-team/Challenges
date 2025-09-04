@@ -424,7 +424,7 @@ class GhallengesController extends Controller
        }
        
       $userTeamsIds = $user->teams()->get()->pluck('id')->toArray();
-          $challenge = Challenge::with(['category', 'team', 'opponent'])
+          $challenge = Challenge::with(['team', 'opponent'])
           ->where('id', $id)
         //  ->whereIn('team_id', $userTeamsIds)
           ->first();
