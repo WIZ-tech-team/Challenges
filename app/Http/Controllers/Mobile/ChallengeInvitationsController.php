@@ -108,7 +108,7 @@ class ChallengeInvitationsController extends Controller
         }
 
         if ($challenge->category === 'football') {
-            $team = $apiUser->team()->where('category', 'football')->first();
+            $team = $apiUser->leadTeams()->where('category', 'football')->first();
             if (!$team) {
                 return response()->json([
                     'status' => 'error',
